@@ -1,4 +1,4 @@
-# Polytech-Codev-Frontend
+# Polytech-CryptoWallet-Frontend
 
 ## Members
 - DELORME Loïc
@@ -11,15 +11,15 @@
 npm install -g ionic@latest
 ```
 
-- Clone Polytech-Codev-Frontend project
+- Clone Polytech-CryptoWallet-Frontend project
 ```
 cd [YOUR WORKSPACE]
-git clone https://github.com/LoicDelorme/Polytech-Codev-Frontend.git
+git clone https://github.com/LoicDelorme/Polytech-CryptoWallet-Frontend.git
 ```
 
-- Start Polytech-Codev-Frontend project
+- Start Polytech-CryptoWallet-Frontend project
 ```
-cd Polytech-Codev-Frontend/
+cd Polytech-CryptoWallet-Frontend/
 ionic serve --lab
 ```
 
