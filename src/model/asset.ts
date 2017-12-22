@@ -1,9 +1,8 @@
-import { Cryptocurrency } from './cryptocurrency';
-
 export class Asset {
-  constructor(private wallet:Wallet, private cryptocurrency:Cryptocurrency, private amount:number, private purchasePrice:number){
-    this.wallet = wallet;
-    this.cryptocurrency = cryptocurrency;
+  
+  constructor(private walletId: number, private cryptocurrencyId: number, private amount: number, private purchasePrice: number) {
+    this.walletId = walletId;
+    this.cryptocurrencyId = cryptocurrencyId;
     this.amount = amount;
     this.purchasePrice = purchasePrice;
   }
