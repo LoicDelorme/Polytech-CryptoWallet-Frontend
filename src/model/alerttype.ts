@@ -6,4 +6,20 @@ export class AlertType {
     this.creationDate = creationDate;
     this.lastUpdate = lastUpdate;
   }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getCreationDate(): Date {
+    return this.creationDate;
+  }
+
+  public getLastUpdate(): Date {
+    return this.lastUpdate;
+  }
 }

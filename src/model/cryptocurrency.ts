@@ -10,4 +10,36 @@ export class Cryptocurrency {
     this.creationDate = creationDate;
     this.lastUpdate = lastUpdate;
   }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getSymbol(): string {
+    return this.symbol;
+  }
+
+  public getImageUrl(): string {
+    return this.imageUrl;
+  }
+
+  public getBaseUrl(): string {
+    return this.baseUrl;
+  }
+
+  public getResourceUrl(): string {
+    return this.resourceUrl;
+  }
+
+  public getCreationDate(): Date {
+    return this.creationDate;
+  }
+
+  public getLastUpdate(): Date {
+    return this.lastUpdate;
+  }
 }

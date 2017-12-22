@@ -7,4 +7,24 @@ export class Log {
     this.lastUpdate = lastUpdate;
     this.userId = userId;
   }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getIpAddress(): string {
+    return this.ipAddress;
+  }
+
+  public getCreationDate(): Date {
+    return this.creationDate;
+  }
+
+  public getLastUpdate(): Date {
+    return this.lastUpdate;
+  }
+
+  public getUserId(): number {
+    return this.userId;
+  }
 }

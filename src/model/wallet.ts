@@ -10,4 +10,28 @@ export class Wallet {
     this.userId = userId;
     this.assets = assets;
   }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getCreationDate(): Date {
+    return this.creationDate;
+  }
+
+  public getLastUpdate(): Date {
+    return this.lastUpdate;
+  }
+
+  public getUserId(): number {
+    return this.userId;
+  }
+
+  public getAssets(): Asset[] {
+    return this.assets;
+  }
 }

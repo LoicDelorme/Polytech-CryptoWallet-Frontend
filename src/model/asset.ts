@@ -6,4 +6,20 @@ export class Asset {
     this.amount = amount;
     this.purchasePrice = purchasePrice;
   }
+
+  public getWalletId(): number {
+    return this.walletId;
+  }
+
+  public getCryptocurrencyId(): number {
+    return this.cryptocurrencyId;
+  }
+
+  public getAmount(): number {
+    return this.amount;
+  }
+
+  public getPurchasePrice(): number {
+    return this.purchasePrice;
+  }
 }

@@ -25,4 +25,68 @@ export class User {
     this.tokens = tokens;
     this.logs = logs;
   }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getLastame(): string {
+    return this.lastname;
+  }
+
+  public getFirstname(): string {
+    return this.firstname;
+  }
+
+  public getEmail(): string {
+    return this.email;
+  }
+
+  public getPassword(): string {
+    return this.password;
+  }
+
+  public isEnabled(): boolean {
+    return this.enabled;
+  }
+
+  public isAdministrator(): boolean {
+    return this.administrator;
+  }
+
+  public getCreationDate(): Date {
+    return this.creationDate;
+  }
+
+  public getLastUpdate(): Date {
+    return this.lastUpdate;
+  }
+
+  public getLastActivity(): Date {
+    return this.lastActivity;
+  }
+
+  public getFavorites(): Cryptocurrency[] {
+    return this.favorites;
+  }
+
+  public getWallets(): Wallet[] {
+    return this.wallets;
+  }
+
+  public getAlerts(): Alert[] {
+    return this.alerts;
+  }
+
+  public getSettings(): Setting[] {
+    return this.settings;
+  }
+
+  public getTokens(): Token[] {
+    return this.tokens;
+  }
+
+  public getLogs(): Log[] {
+    return this.logs;
+  }
 }

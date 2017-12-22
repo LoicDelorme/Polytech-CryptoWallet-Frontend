@@ -11,4 +11,40 @@ export class Alert {
     this.cryptocurrencyId = cryptocurrencyId;
     this.typeId = typeId;
   }
+
+  public getId(): number {
+    return this.id;
+  }
+
+  public getThreshold(): number {
+    return this.threshold;
+  }
+
+  public isOneShot(): boolean {
+    return this.oneShot;
+  }
+
+  public isActive(): boolean {
+    return this.active;
+  }
+
+  public getCreationDate(): Date {
+    return this.creationDate;
+  }
+
+  public getLastUpdate(): Date {
+    return this.lastUpdate;
+  }
+
+  public getUserId(): number {
+    return this.userId;
+  }
+
+  public getCryptocurrencyId(): number {
+    return this.cryptocurrencyId;
+  }
+
+  public getTypeId(): number {
+    return this.typeId;
+  }
 }
