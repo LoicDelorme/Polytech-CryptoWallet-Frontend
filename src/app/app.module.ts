@@ -5,12 +5,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+
+import { CryptocurrenciesPage } from '../pages/cryptocurrencies/cryptocurrencies';
+
+import { CryptocurrenciesProvider } from '../providers/cryptocurrencies/cryptocurrencies';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    CryptocurrenciesPage
   ],
   imports: [
     BrowserModule,
@@ -19,12 +22,13 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    CryptocurrenciesPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CryptocurrenciesProvider
   ]
 })
 export class AppModule {}
