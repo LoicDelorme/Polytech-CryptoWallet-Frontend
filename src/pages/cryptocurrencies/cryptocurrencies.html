@@ -1,0 +1,23 @@
+<!--
+  Generated template for the CryptocurrenciesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Cryptocurrencies</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="getCryptocurrencies($event)"></ion-searchbar>
+  <ion-list>
+    <button ion-item *ngFor="let cryptocurrency of filteredCryptocurrencies">
+      <ion-avatar item-start>
+        <img src="{{ cryptocurrency.getImageUrl() }}" />
+      </ion-avatar>
+      <h3>{{ cryptocurrency.getName() }}</h3>
+    </button>
+  </ion-list>
+</ion-content>
