@@ -5,13 +5,6 @@ import { Cryptocurrency } from '../../model/cryptocurrency';
 
 import { CryptocurrenciesProvider } from '../../providers/cryptocurrencies/cryptocurrencies';
 
-/**
- * Generated class for the CryptocurrenciesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @Component({
   selector: 'page-cryptocurrencies',
   templateUrl: 'cryptocurrencies.html',
@@ -23,20 +16,20 @@ export class CryptocurrenciesPage {
   filteredCryptocurrencies : Cryptocurrency[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public cryptocurrenciesProvider: CryptocurrenciesProvider) {
-    let cryptocurrencies = cryptocurrenciesProvider.getAll();
-    
-    this.allCryptocurrencies = cryptocurrencies;
-    this.filteredCryptocurrencies = cryptocurrencies;
+    cryptocurrenciesProvider.all().subscribe(data => {
+      this.allCryptocurrencies = data.data;
+      this.filteredCryptocurrencies = data.data;
+    });
   }
 
-  getCryptocurrencies(event: any) {
-    let filter = event.target.value.toLowerCase();
-    if (filter != null && filter.trim() != '') {
-      this.filteredCryptocurrencies = this.allCryptocurrencies.filter((cryptocurrency) => {
-        return (cryptocurrency.getName().toLowerCase().indexOf(filter) > -1) || (cryptocurrency.getSymbol().toLowerCase().indexOf(filter) > -1);
+  public getCryptocurrencies(event: any): void {
+    this.filteredCryptocurrencies = this.allCryptocurrencies;
+
+    let filter = event.target.value;
+    if (filter && filter.trim() != '') {
+      this.filteredCryptocurrencies = this.filteredCryptocurrencies.filter((cryptocurrency: Cryptocurrency) => {
+        return (cryptocurrency.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (cryptocurrency.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
-    } else {
-      this.filteredCryptocurrencies = this.allCryptocurrencies;
     }
   }
 }

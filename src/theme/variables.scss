@@ -35,7 +35,6 @@ $colors: (
   dark:       #222
 );
 
-
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -59,13 +58,11 @@ $colors: (
 // default are overridden.
 @import "ionic.theme.default";
 
-
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/ionicons/
 @import "ionic.ionicons";
-
 
 // Fonts
 // --------------------------------------------------

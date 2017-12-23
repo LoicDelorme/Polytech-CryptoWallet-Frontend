@@ -1,6 +1,14 @@
 export class Token {
-  
-  constructor(private id: number, private value: string, private beginDate: Date, private endDate: Date, private creationDate: Date, private lastUpdate: Date, private userId: number) {
+
+  public id: number;
+  public value: string;
+  public beginDate: Date;
+  public endDate: Date;
+  public creationDate: Date;
+  public lastUpdate: Date;
+  public userId: number;
+
+  constructor(id: number, value: string, beginDate: Date, endDate: Date, creationDate: Date, lastUpdate: Date, userId: number) {
     this.id = id;
     this.value = value;
     this.beginDate = beginDate;
@@ -8,33 +16,5 @@ export class Token {
     this.creationDate = creationDate;
     this.lastUpdate = lastUpdate;
     this.userId = userId;
-  }
-
-  public getId(): number {
-    return this.id;
-  }
-
-  public getValue(): string {
-    return this.value;
-  }
-
-  public getBeginDate(): Date {
-    return this.beginDate;
-  }
-
-  public getEndDate(): Date {
-    return this.endDate;
-  }
-
-  public getCreationDate(): Date {
-    return this.creationDate;
-  }
-
-  public getLastUpdate(): Date {
-    return this.lastUpdate;
-  }
-
-  public getUserId(): number {
-    return this.userId;
   }
 }

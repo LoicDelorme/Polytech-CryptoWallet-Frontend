@@ -2,7 +2,14 @@
   "name": "CryptoWallet",
   "app_id": "",
   "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/cryptowallet",
+      "proxyUrl": "http://localhost/api/cryptowallet/"
+    }
+  ],
   "integrations": {
-    "cordova": {}
+    "cordova": {
+    }
   }
 }

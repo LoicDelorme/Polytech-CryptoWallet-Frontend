@@ -6,8 +6,25 @@ import { Token } from './token';
 import { Log } from './log';
 
 export class User {
-  
-  constructor(private id: number, private lastname: string, private firstname: string, private email: string, private password: string, private enabled: boolean, private administrator: boolean, private creationDate: Date, private lastUpdate: Date, private lastActivity: Date, private favorites: Cryptocurrency[], private wallets: Wallet[], private alerts: Alert[], private settings: Setting[], private tokens: Token[], private logs: Log[]) {
+
+  public id: number;
+  public lastname: string;
+  public firstname: string;
+  public email: string;
+  public password: string;
+  public enabled: boolean;
+  public administrator: boolean;
+  public creationDate: Date;
+  public lastUpdate: Date;
+  public lastActivity: Date;
+  public favorites: Array<Cryptocurrency>;
+  public wallets: Array<Wallet>;
+  public alerts: Array<Alert>;
+  public settings: Array<Setting>;
+  public tokens: Array<Token>;
+  public logs: Array<Log>;
+
+  constructor(id: number, lastname: string, firstname: string, email: string, password: string, enabled: boolean, administrator: boolean, creationDate: Date, lastUpdate: Date, lastActivity: Date, favorites: Array<Cryptocurrency>, wallets: Array<Wallet>, alerts: Array<Alert>, settings: Array<Setting>, tokens: Array<Token>, logs: Array<Log>) {
     this.id = id;
     this.lastname = lastname;
     this.firstname = firstname;
@@ -24,69 +41,5 @@ export class User {
     this.settings = settings;
     this.tokens = tokens;
     this.logs = logs;
-  }
-
-  public getId(): number {
-    return this.id;
-  }
-
-  public getLastame(): string {
-    return this.lastname;
-  }
-
-  public getFirstname(): string {
-    return this.firstname;
-  }
-
-  public getEmail(): string {
-    return this.email;
-  }
-
-  public getPassword(): string {
-    return this.password;
-  }
-
-  public isEnabled(): boolean {
-    return this.enabled;
-  }
-
-  public isAdministrator(): boolean {
-    return this.administrator;
-  }
-
-  public getCreationDate(): Date {
-    return this.creationDate;
-  }
-
-  public getLastUpdate(): Date {
-    return this.lastUpdate;
-  }
-
-  public getLastActivity(): Date {
-    return this.lastActivity;
-  }
-
-  public getFavorites(): Cryptocurrency[] {
-    return this.favorites;
-  }
-
-  public getWallets(): Wallet[] {
-    return this.wallets;
-  }
-
-  public getAlerts(): Alert[] {
-    return this.alerts;
-  }
-
-  public getSettings(): Setting[] {
-    return this.settings;
-  }
-
-  public getTokens(): Token[] {
-    return this.tokens;
-  }
-
-  public getLogs(): Log[] {
-    return this.logs;
   }
 }

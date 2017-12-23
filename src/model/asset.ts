@@ -1,25 +1,14 @@
 export class Asset {
-  
-  constructor(private walletId: number, private cryptocurrencyId: number, private amount: number, private purchasePrice: number) {
+
+  public walletId: number;
+  public cryptocurrencyId: number;
+  public amount: number;
+  public purchasePrice: number;
+
+  constructor(walletId: number, cryptocurrencyId: number, amount: number, purchasePrice: number) {
     this.walletId = walletId;
     this.cryptocurrencyId = cryptocurrencyId;
     this.amount = amount;
     this.purchasePrice = purchasePrice;
-  }
-
-  public getWalletId(): number {
-    return this.walletId;
-  }
-
-  public getCryptocurrencyId(): number {
-    return this.cryptocurrencyId;
-  }
-
-  public getAmount(): number {
-    return this.amount;
-  }
-
-  public getPurchasePrice(): number {
-    return this.purchasePrice;
   }
 }
