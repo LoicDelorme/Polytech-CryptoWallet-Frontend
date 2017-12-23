@@ -8,13 +8,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 
 import { CryptocurrenciesPage } from '../pages/cryptocurrencies/cryptocurrencies';
+import { FavoritesPage } from '../pages/favorites/favorites';
+import { WalletsPage } from '../pages/wallets/wallets';
+import { AlertsPage } from '../pages/alerts/alerts';
+import { SettingsPage } from '../pages/settings/settings';
+import { TabsPage } from '../pages/tabs/tabs';
 
 import { CryptocurrenciesProvider } from '../providers/cryptocurrencies/cryptocurrencies';
 
 @NgModule({
   declarations: [
     MyApp,
-    CryptocurrenciesPage
+    CryptocurrenciesPage,
+    FavoritesPage,
+    WalletsPage,
+    AlertsPage,
+    SettingsPage,
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +36,12 @@ import { CryptocurrenciesProvider } from '../providers/cryptocurrencies/cryptocu
   ],
   entryComponents: [
     MyApp,
-    CryptocurrenciesPage
+    CryptocurrenciesPage,
+    FavoritesPage,
+    WalletsPage,
+    AlertsPage,
+    SettingsPage,
+    TabsPage
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Alerts</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="getCryptocurrencies($event)"></ion-searchbar>
+  <ion-list>
+    <button ion-item *ngFor="let cryptocurrency of filteredCryptocurrencies">
+      <ion-avatar item-start>
+        <img src="{{ cryptocurrency.imageUrl }}" />
+      </ion-avatar>
+      <h3>{{ cryptocurrency.name }} ({{ cryptocurrency.symbol }})</h3>
+    </button>
+  </ion-list>
+</ion-content>
