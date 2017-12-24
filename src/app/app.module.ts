@@ -14,14 +14,20 @@ import { AlertsPage } from '../pages/alerts/alerts';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { CryptocurrencyProvider } from '../providers/cryptocurrency/cryptocurrency';
-import { UserProvider } from '../providers/user/user';
-import { FavoriteProvider } from '../providers/favorite/favorite';
-import { WalletProvider } from '../providers/wallet/wallet';
-import { AlertProvider } from '../providers/alert/alert';
-import { SettingProvider } from '../providers/setting/setting';
-import { TokenProvider } from '../providers/token/token';
-import { LogProvider } from '../providers/log/log';
+import { AdministratorAlertProvider } from '../providers/administrator/alert/alert';
+import { AdministratorAlertTypeProvider } from '../providers/administrator/alerttype/alerttype';
+import { AdministratorAssetProvider } from '../providers/administrator/asset/asset';
+import { AdministratorCryptocurrencyProvider } from '../providers/administrator/cryptocurrency/cryptocurrency';
+import { AdministratorFavoriteProvider } from '../providers/administrator/favorite/favorite';
+import { AdministratorLogProvider } from '../providers/administrator/log/log';
+import { AdministratorSettingProvider } from '../providers/administrator/setting/setting';
+import { AdministratorTokenProvider } from '../providers/administrator/token/token';
+import { AdministratorUserProvider } from '../providers/administrator/user/user';
+import { AdministratorWalletProvider } from '../providers/administrator/wallet/wallet';
+import { RegisteredAlertTypeProvider } from '../providers/registered/alerttype/alerttype';
+import { RegisteredUserProvider } from '../providers/registered/user/user';
+import { UnregisteredCryptocurrencyProvider } from '../providers/unregistered/cryptocurrency/cryptocurrency';
+import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
 
 @NgModule({
   declarations: [
@@ -54,14 +60,20 @@ import { LogProvider } from '../providers/log/log';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CryptocurrencyProvider,
-    UserProvider,
-    FavoriteProvider,
-    WalletProvider,
-    AlertProvider,
-    SettingProvider,
-    TokenProvider,
-    LogProvider
+    AdministratorAlertProvider,
+    AdministratorAlertTypeProvider,
+    AdministratorAssetProvider,
+    AdministratorCryptocurrencyProvider,
+    AdministratorFavoriteProvider,
+    AdministratorLogProvider,
+    AdministratorSettingProvider,
+    AdministratorTokenProvider,
+    AdministratorUserProvider,
+    AdministratorWalletProvider,
+    RegisteredAlertTypeProvider,
+    RegisteredUserProvider,
+    UnregisteredCryptocurrencyProvider,
+    UnregisteredUserProvider
   ]
 })
 export class AppModule {

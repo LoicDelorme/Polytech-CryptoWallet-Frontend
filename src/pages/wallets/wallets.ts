@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
 
-import { CryptocurrencyProvider } from '../../providers/cryptocurrency/cryptocurrency';
+import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 
 @Component({
   selector: 'page-wallets',
@@ -15,8 +15,8 @@ export class WalletsPage {
 
   filteredCryptocurrencies : Cryptocurrency[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public cryptocurrencyProvider: CryptocurrencyProvider) {
-    cryptocurrencyProvider.all().subscribe(data => {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider) {
+    unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
       this.allCryptocurrencies = data.data;
       this.filteredCryptocurrencies = data.data;
     });
