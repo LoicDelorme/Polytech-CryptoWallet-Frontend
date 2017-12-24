@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Response } from '../../../model/response';
 import { User } from '../../../model/user';
 import { Token } from '../../../model/token';
 import { Favorite } from '../../../model/favorite';
@@ -12,6 +11,7 @@ import { Alert } from '../../../model/alert';
 import { Setting } from '../../../model/setting';
 import { Log } from '../../../model/log';
 import { Asset } from '../../../model/asset';
+import { Response } from '../../../model/response';
 
 @Injectable()
 export class RegisteredUserProvider {
