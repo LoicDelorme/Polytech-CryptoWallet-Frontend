@@ -18,7 +18,7 @@ export class AdministratorUserProvider {
   }
 
   public allUsers(token: string): Observable<Response<Array<User>>> {
-    return this.http.get<Response<Array<User>>>(AdministratorUserProvider.allUsersPath);
+    return this.http.get<Response<Array<User>>>(AdministratorUserProvider.allUsersPath.replace("TOKEN", token));
   }
 
   public getUser(token: string, userId: number): Observable<Response<User>> {

@@ -18,7 +18,7 @@ export class AdministratorCryptocurrencyProvider {
   }
 
   public allCryptocurrencies(token: string): Observable<Response<Array<Cryptocurrency>>> {
-    return this.http.get<Response<Array<Cryptocurrency>>>(AdministratorCryptocurrencyProvider.allCryptocurrenciesPath);
+    return this.http.get<Response<Array<Cryptocurrency>>>(AdministratorCryptocurrencyProvider.allCryptocurrenciesPath.replace("TOKEN", token));
   }
 
   public getCryptocurrency(token: string, cryptocurrencyId: number): Observable<Response<Cryptocurrency>> {
