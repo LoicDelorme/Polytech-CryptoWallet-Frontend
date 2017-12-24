@@ -14,7 +14,14 @@ import { AlertsPage } from '../pages/alerts/alerts';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { CryptocurrenciesProvider } from '../providers/cryptocurrencies/cryptocurrencies';
+import { CryptocurrencyProvider } from '../providers/cryptocurrency/cryptocurrency';
+import { UserProvider } from '../providers/user/user';
+import { FavoriteProvider } from '../providers/favorite/favorite';
+import { WalletProvider } from '../providers/wallet/wallet';
+import { AlertProvider } from '../providers/alert/alert';
+import { SettingProvider } from '../providers/setting/setting';
+import { TokenProvider } from '../providers/token/token';
+import { LogProvider } from '../providers/log/log';
 
 @NgModule({
   declarations: [
@@ -47,7 +54,14 @@ import { CryptocurrenciesProvider } from '../providers/cryptocurrencies/cryptocu
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CryptocurrenciesProvider
+    CryptocurrencyProvider,
+    UserProvider,
+    FavoriteProvider,
+    WalletProvider,
+    AlertProvider,
+    SettingProvider,
+    TokenProvider,
+    LogProvider
   ]
 })
 export class AppModule {
