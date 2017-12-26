@@ -6,10 +6,10 @@
       </button>
     </ion-buttons>
 
-    <ion-title>Wallets</ion-title>
+    <ion-title>My wallets</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="onRefreshWalletsButtonClicked()">
+      <button ion-button icon-only *ngIf="isRegistered" (click)="onRefreshWalletsButtonClicked()">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>

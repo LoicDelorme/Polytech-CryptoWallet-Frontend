@@ -1,2 +1,21 @@
 page-favorites {
+    .ion-ios-chart,
+    .ion-ios-chart-outline,
+    .ion-md-chart {
+        mask-image: url(../../assets/imgs/chart.svg);
+        mask-repeat: no-repeat;
+        background-color: white;
+        width: 12px;
+        height: 12px;
+    }
+
+    .ion-ios-delete,
+    .ion-ios-delete-outline,
+    .ion-md-delete {
+        mask-image: url(../../assets/imgs/delete.svg);
+        mask-repeat: no-repeat;
+        background-color: white;
+        width: 10px;
+        height: 12px;
+    }
 }

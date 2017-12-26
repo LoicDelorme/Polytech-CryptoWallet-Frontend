@@ -3,10 +3,10 @@
     <ion-buttons start>
     </ion-buttons>
 
-    <ion-title>Favorites</ion-title>
+    <ion-title>My favorites</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="onRefreshFavoritesButtonClicked()">
+      <button ion-button icon-only *ngIf="isRegistered" (click)="onRefreshFavoritesButtonClicked()">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -25,11 +25,11 @@
       <h3>{{ filteredFavoriteCryptocurrency.name }} ({{ filteredFavoriteCryptocurrency.symbol }})</h3>
 
       <button ion-button round *ngIf="isRegistered" (click)="onCryptocurrencyChartButtonClicked(filteredFavoriteCryptocurrency)" item-end>
-        <ion-icon name="analytics"></ion-icon>
+        <ion-icon name="chart"></ion-icon>
       </button>
 
       <button ion-button round *ngIf="isRegistered" (click)="onDeleteFavoriteButtonClicked(filteredFavoriteCryptocurrency)" item-end>
-        <ion-icon name="trash"></ion-icon>
+        <ion-icon name="delete"></ion-icon>
       </button>
     </ion-item>
   </ion-list>

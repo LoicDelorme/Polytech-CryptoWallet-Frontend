@@ -6,6 +6,7 @@ import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 
 import { AuthenticationPage } from '../authentication/authentication';
+import { ChartPage } from '../chart/chart';
 
 @Component({
   selector: 'page-favorites',
@@ -48,7 +49,7 @@ export class FavoritesPage {
   }
 
   public onCryptocurrencyChartButtonClicked(cryptocurrency: Cryptocurrency): void {
-    console.warn("Cryptocurrency chart button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
+    this.navCtrl.push(ChartPage, { cryptocurrency: cryptocurrency });
   }
 
   public onDeleteFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {

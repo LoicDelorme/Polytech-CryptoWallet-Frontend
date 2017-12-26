@@ -5,6 +5,8 @@ import { Cryptocurrency } from '../../model/cryptocurrency';
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 
+import { ChartPage } from '../chart/chart';
+
 @Component({
   selector: 'page-cryptocurrencies',
   templateUrl: 'cryptocurrencies.html',
@@ -48,7 +50,7 @@ export class CryptocurrenciesPage {
   }
 
   public onCryptocurrencyChartButtonClicked(cryptocurrency: Cryptocurrency): void {
-    console.warn("Cryptocurrency chart button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
+    this.navCtrl.push(ChartPage, { cryptocurrency: cryptocurrency });
   }
 
   public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {

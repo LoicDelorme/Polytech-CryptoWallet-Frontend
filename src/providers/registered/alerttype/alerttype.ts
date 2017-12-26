@@ -8,8 +8,8 @@ import { Response } from '../../../model/response';
 @Injectable()
 export class RegisteredAlertTypeProvider {
 
-  public static readonly allAlertTypesPath: string = "cryptowallet/registered/TOKEN/user/USER_ID/alert-type";
-  public static readonly getAlertTypePath: string = "cryptowallet/registered/TOKEN/user/USER_ID/alert-type/ALERT_TYPE_ID";
+  public static readonly allAlertTypesPath: string = "cryptowallet/registered/TOKEN/alert-type";
+  public static readonly getAlertTypePath: string = "cryptowallet/registered/TOKEN/alert-type/ALERT_TYPE_ID";
 
   constructor(private http: HttpClient) {
   }

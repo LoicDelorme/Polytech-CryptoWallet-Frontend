@@ -4,10 +4,10 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Cryptocurrency } from '../../model/cryptocurrency';
 
 @Component({
-  selector: 'page-charts',
-  templateUrl: 'charts.html',
+  selector: 'page-chart',
+  templateUrl: 'chart.html',
 })
-export class ChartsPage {
+export class ChartPage {
 
   public cryptocurrency: Cryptocurrency;
 

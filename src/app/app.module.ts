@@ -13,7 +13,7 @@ import { WalletsPage } from '../pages/wallets/wallets';
 import { AlertsPage } from '../pages/alerts/alerts';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
-import { ChartsPage } from '../pages/charts/charts';
+import { ChartPage } from '../pages/chart/chart';
 import { AuthenticationPage } from '../pages/authentication/authentication';
 
 import { AdministratorAlertProvider } from '../providers/administrator/alert/alert';
@@ -40,7 +40,7 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     AlertsPage,
     SettingsPage,
     TabsPage,
-    ChartsPage,
+    ChartPage,
     AuthenticationPage
   ],
   imports: [
@@ -59,7 +59,7 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     AlertsPage,
     SettingsPage,
     TabsPage,
-    ChartsPage,
+    ChartPage,
     AuthenticationPage
   ],
   providers: [

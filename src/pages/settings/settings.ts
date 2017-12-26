@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Setting } from '../../model/setting';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
-
 import { AuthenticationPage } from '../authentication/authentication';
 
 @Component({
@@ -13,7 +12,6 @@ import { AuthenticationPage } from '../authentication/authentication';
 export class SettingsPage {
 
   public isRegistered: boolean = null;
-  public filteredSettings: Setting[] = [];
   public allSettings: Setting[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
@@ -24,7 +22,6 @@ export class SettingsPage {
 
     this.registeredUserProvider.allSettings(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allSettings = data.data;
-      this.filteredSettings = data.data;
     });
   }
 
@@ -35,23 +32,11 @@ export class SettingsPage {
   public onRefreshSettingsButtonClicked(): void {
     this.registeredUserProvider.allSettings(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allSettings = data.data;
-      this.filteredSettings = data.data;
     });
   }
 
-  public onFilterTriggered(event: any): void {
-    this.filteredSettings = this.allSettings;
-
-    let filter = event.target.value;
-    if (filter && filter.trim() != '') {
-      this.filteredSettings = this.filteredSettings.filter((setting: Setting) => {
-        return setting.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
-      });
-    }
-  }
-
   public onSettingOverviewButtonClicked(setting: Setting): void {
-    console.warn("Setting chart button has been clicked for the following setting: " + setting.name);
+    console.warn("Setting overview button has been clicked for the following setting: " + setting.name);
   }
 
   public onUpdateSettingButtonClicked(setting: Setting): void {
@@ -59,6 +44,13 @@ export class SettingsPage {
   }
 
   public onDeleteSettingButtonClicked(setting: Setting): void {
-    console.warn("Delete setting button has been clicked for the following setting: " + setting.name);
+    this.registeredUserProvider.deleteSetting(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), setting).subscribe(data => {
+      console.warn(data);
+
+      let allIndex: number = this.allSettings.indexOf(setting);
+      if (allIndex != -1) {
+        this.allSettings.splice(allIndex, 1);
+      }
+    });
   }
 }
