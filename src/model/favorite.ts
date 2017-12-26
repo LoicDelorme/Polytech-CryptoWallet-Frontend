@@ -1,6 +1,9 @@
 export class Favorite {
 
-  constructor(private cryptocurrencyId: number, private userId: number){
+  public cryptocurrencyId: number;
+  public userId: number;
+
+  constructor(cryptocurrencyId: number, userId: number){
     this.cryptocurrencyId = cryptocurrencyId;
     this.userId = userId;
   }

@@ -1,8 +1,15 @@
 import { Asset } from './asset';
 
 export class Wallet {
-  
-  constructor(private id: number, private name: string, private creationDate: Date, private lastUpdate: Date, private userId: number, private assets: Asset[]) {
+
+  public id: number;
+  public name: string;
+  public creationDate: Date;
+  public lastUpdate: Date;
+  public userId: number;
+  public assets: Array<Asset>;
+
+  constructor(id: number, name: string, creationDate: Date, lastUpdate: Date, userId: number, assets: Array<Asset>) {
     this.id = id;
     this.name = name;
     this.creationDate = creationDate;

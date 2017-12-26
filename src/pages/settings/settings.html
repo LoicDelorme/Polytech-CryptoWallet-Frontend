@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only *ngIf="isRegistered" (click)="onInsertSettingButtonClicked()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My settings</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only *ngIf="isRegistered" (click)="onRefreshSettingsButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list inset>
+    <ion-item *ngFor="let setting of allSettings">
+      <ion-avatar item-start>
+        <ion-icon name="setting"></ion-icon>
+      </ion-avatar>
+
+      <h3>{{ setting.name }}</h3>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onSettingOverviewButtonClicked(setting)" item-end>
+        <ion-icon name="overview"></ion-icon>
+      </button>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onUpdateSettingButtonClicked(setting)" item-end>
+        <ion-icon name="update"></ion-icon>
+      </button>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onDeleteSettingButtonClicked(setting)" item-end>
+        <ion-icon name="delete"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
+</ion-content>

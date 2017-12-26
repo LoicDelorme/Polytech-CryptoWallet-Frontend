@@ -1,6 +1,16 @@
 export class Alert {
 
-  constructor(private id: number, private threshold: number, private oneShot: boolean, private active: boolean, private creationDate: Date, private lastUpdate: Date, private userId: number, private cryptocurrencyId: number, private typeId: number) {
+  public id: number;
+  public threshold: number;
+  public oneShot: boolean;
+  public active: boolean;
+  public creationDate: Date;
+  public lastUpdate: Date;
+  public userId: number;
+  public cryptocurrencyId: number;
+  public typeId: number;
+
+  constructor(id: number, threshold: number, oneShot: boolean, active: boolean, creationDate: Date, lastUpdate: Date, userId: number, cryptocurrencyId: number, typeId: number) {
     this.id = id;
     this.threshold = threshold;
     this.oneShot = oneShot;

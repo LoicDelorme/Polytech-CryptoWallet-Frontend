@@ -6,8 +6,25 @@ import { Token } from './token';
 import { Log } from './log';
 
 export class User {
-  
-  constructor(private id: number, private lastname: string, private firstname: string, private email: string, private password: string, private enabled: boolean, private administrator: boolean, private creationDate: Date, private lastUpdate: Date, private lastActivity: Date, private favorites: Cryptocurrency[], private wallets: Wallet[], private alerts: Alert[], private settings: Setting[], private tokens: Token[], private logs: Log[]) {
+
+  public id: number;
+  public lastname: string;
+  public firstname: string;
+  public email: string;
+  public password: string;
+  public enabled: boolean;
+  public administrator: boolean;
+  public creationDate: Date;
+  public lastUpdate: Date;
+  public lastActivity: Date;
+  public favorites: Array<Cryptocurrency>;
+  public wallets: Array<Wallet>;
+  public alerts: Array<Alert>;
+  public settings: Array<Setting>;
+  public tokens: Array<Token>;
+  public logs: Array<Log>;
+
+  constructor(id: number, lastname: string, firstname: string, email: string, password: string, enabled: boolean, administrator: boolean, creationDate: Date, lastUpdate: Date, lastActivity: Date, favorites: Array<Cryptocurrency>, wallets: Array<Wallet>, alerts: Array<Alert>, settings: Array<Setting>, tokens: Array<Token>, logs: Array<Log>) {
     this.id = id;
     this.lastname = lastname;
     this.firstname = firstname;

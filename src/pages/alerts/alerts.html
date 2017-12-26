@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only *ngIf="isRegistered" (click)="onInsertAlertButtonClicked()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My alerts</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only *ngIf="isRegistered" (click)="onRefreshAlertsButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
+  <ion-list inset>
+    <ion-item *ngFor="let filteredAlert of filteredAlerts">
+      <ion-avatar item-start>
+        <img src="{{ allCryptocurrencies[filteredAlert.cryptocurrencyId].imageUrl }}" />
+      </ion-avatar>
+
+      <h3>{{ allCryptocurrencies[filteredAlert.cryptocurrencyId].symbol }} {{ allAlertTypes[filteredAlert.typeId].name }} {{ filteredAlert.threshold }} BTC</h3>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onAlertOverviewButtonClicked(filteredAlert)" item-end>
+          <ion-icon name="overview"></ion-icon>
+      </button>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onUpdateAlertButtonClicked(filteredAlert)" item-end>
+        <ion-icon name="update"></ion-icon>
+      </button>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onDeleteAlertButtonClicked(filteredAlert)" item-end>
+        <ion-icon name="delete"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
+</ion-content>
