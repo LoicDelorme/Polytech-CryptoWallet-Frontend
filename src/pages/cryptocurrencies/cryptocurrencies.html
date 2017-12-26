@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button icon-only (click)="onAddButtonClicked()">
+      <button *ngIf="isAdministrator" ion-button icon-only (click)="onAddButtonClicked()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
