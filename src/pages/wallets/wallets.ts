@@ -51,7 +51,7 @@ export class WalletsPage {
   }
 
   public onWalletOverviewButtonClicked(wallet: Wallet): void {
-    console.warn("Wallet chart button has been clicked for the following wallet: " + wallet.name);
+    console.warn("Wallet overview button has been clicked for the following wallet: " + wallet.name);
   }
 
   public onUpdateWalletButtonClicked(wallet: Wallet): void {
@@ -59,6 +59,18 @@ export class WalletsPage {
   }
 
   public onDeleteWalletButtonClicked(wallet: Wallet): void {
-    console.warn("Delete wallet button has been clicked for the following wallet: " + wallet.name);
+    this.registeredUserProvider.deleteWallet(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), wallet).subscribe(data => {
+      console.warn(data);
+
+      let filteredIndex: number = this.filteredWallets.indexOf(wallet);
+      if (filteredIndex != -1) {
+        this.filteredWallets.splice(filteredIndex, 1);
+      }
+
+      let allIndex: number = this.allWallets.indexOf(wallet);
+      if (allIndex != -1 && allIndex != filteredIndex) {
+        this.allWallets.splice(allIndex, 1);
+      }
+    });
   }
 }

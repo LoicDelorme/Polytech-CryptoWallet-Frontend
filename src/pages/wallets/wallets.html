@@ -22,21 +22,21 @@
   <ion-list inset>
     <ion-item *ngFor="let filteredWallet of filteredWallets">
       <ion-avatar item-start>
-        <img src="../../assets/imgs/wallet.svg" />
+          <ion-icon name="wallet"></ion-icon>
       </ion-avatar>
 
       <h3>{{ filteredWallet.name }}</h3>
 
       <button ion-button round *ngIf="isRegistered" (click)="onWalletOverviewButtonClicked(filteredWallet)" item-end>
-          <img src="../../assets/imgs/overview.svg" />
+          <ion-icon name="overview"></ion-icon>
       </button>
 
       <button ion-button round *ngIf="isRegistered" (click)="onUpdateWalletButtonClicked(filteredWallet)" item-end>
-        <ion-icon name="clipboard"></ion-icon>
+        <ion-icon name="update"></ion-icon>
       </button>
 
       <button ion-button round *ngIf="isRegistered" (click)="onDeleteWalletButtonClicked(filteredWallet)" item-end>
-        <ion-icon name="trash"></ion-icon>
+        <ion-icon name="delete"></ion-icon>
       </button>
     </ion-item>
   </ion-list>
