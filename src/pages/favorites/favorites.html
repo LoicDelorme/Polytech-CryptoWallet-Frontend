@@ -1,17 +1,28 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Favorites</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (ionInput)="getCryptocurrencies($event)"></ion-searchbar>
-  <ion-list>
-    <button ion-item *ngFor="let cryptocurrency of filteredCryptocurrencies">
+  <ion-searchbar (ionInput)="onFilterFieldUpdated($event)"></ion-searchbar>
+  <ion-list inset>
+    <ion-item *ngFor="let favoriteCryptocurrency of filteredFavoriteCryptocurrencies">
       <ion-avatar item-start>
-        <img src="{{ cryptocurrency.imageUrl }}" />
+        <img src="{{ favoriteCryptocurrency.imageUrl }}" />
       </ion-avatar>
-      <h3>{{ cryptocurrency.name }} ({{ cryptocurrency.symbol }})</h3>
-    </button>
+      <h3>{{ favoriteCryptocurrency.name }} ({{ favoriteCryptocurrency.symbol }})</h3>
+      <button ion-button round (click)="onAnalyticsButtonClicked(favoriteCryptocurrency)" item-end>
+        <ion-icon name="analytics"></ion-icon>
+      </button>
+      <button ion-button round (click)="onDeleteButtonClicked(favoriteCryptocurrency)" item-end>
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-item>
   </ion-list>
 </ion-content>
