@@ -13,8 +13,8 @@ export class CryptocurrenciesPage {
 
   public isRegistered: boolean = null;
   public isAdministrator: boolean = null;
-  public filteredCryptocurrencies : Cryptocurrency[] = [];
-  public allCryptocurrencies : Cryptocurrency[] = [];
+  public filteredCryptocurrencies: Cryptocurrency[] = [];
+  public allCryptocurrencies: Cryptocurrency[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider) {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
