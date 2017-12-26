@@ -1,17 +1,43 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only *ngIf="isRegistered" (click)="onInsertSettingButtonClicked()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Settings</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshSettingsButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (ionInput)="getCryptocurrencies($event)"></ion-searchbar>
-  <ion-list>
-    <button ion-item *ngFor="let cryptocurrency of filteredCryptocurrencies">
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
+  <ion-list inset>
+    <ion-item *ngFor="let filteredSetting of filteredSettings">
       <ion-avatar item-start>
-        <img src="{{ cryptocurrency.imageUrl }}" />
+        <img src="../../assets/imgs/setting.svg" />
       </ion-avatar>
-      <h3>{{ cryptocurrency.name }} ({{ cryptocurrency.symbol }})</h3>
-    </button>
+
+      <h3>{{ filteredSetting.name }}</h3>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onSettingOverviewButtonClicked(filteredSetting)" item-end>
+          <img src="../../assets/imgs/overview.svg" />
+      </button>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onUpdateSettingButtonClicked(filteredSetting)" item-end>
+        <ion-icon name="clipboard"></ion-icon>
+      </button>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onDeleteSettingButtonClicked(filteredSetting)" item-end>
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-item>
   </ion-list>
 </ion-content>
