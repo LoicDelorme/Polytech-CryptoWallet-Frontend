@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button *ngIf="isAdministrator" ion-button icon-only (click)="onAddButtonClicked()">
+      <button ion-button icon-only *ngIf="isAdministrator" (click)="onInsertCryptocurrencyButtonClicked()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
     <ion-title>Cryptocurrencies</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="onRefreshButtonClicked()">
+      <button ion-button icon-only (click)="onRefreshCryptocurrenciesButtonClicked()">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -15,18 +15,30 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar (ionInput)="onFilterFieldUpdated($event)"></ion-searchbar>
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
   <ion-list inset>
-    <ion-item *ngFor="let cryptocurrency of filteredCryptocurrencies">
+    <ion-item *ngFor="let filteredCryptocurrency of filteredCryptocurrencies">
       <ion-avatar item-start>
-        <img src="{{ cryptocurrency.imageUrl }}" />
+        <img src="{{ filteredCryptocurrency.imageUrl }}" />
       </ion-avatar>
-      <h3>{{ cryptocurrency.name }} ({{ cryptocurrency.symbol }})</h3>
-      <button ion-button round (click)="onAnalyticsButtonClicked(cryptocurrency)" item-end>
+
+      <h3>{{ filteredCryptocurrency.name }} ({{ filteredCryptocurrency.symbol }})</h3>
+
+      <button ion-button round (click)="onCryptocurrencyChartButtonClicked(filteredCryptocurrency)" item-end>
         <ion-icon name="analytics"></ion-icon>
       </button>
-      <button ion-button round (click)="onFavoriteButtonClicked(cryptocurrency)" item-end>
+
+      <button ion-button round *ngIf="isRegistered" (click)="onInsertFavoriteButtonClicked(filteredCryptocurrency)" item-end>
         <ion-icon name="star"></ion-icon>
+      </button>
+
+      <button ion-button round *ngIf="isAdministrator" (click)="onUpdateCryptocurrencyButtonClicked(filteredCryptocurrency)" item-end>
+        <ion-icon name="clipboard"></ion-icon>
+      </button>
+
+      <button ion-button round *ngIf="isAdministrator" (click)="onDeleteCryptocurrencyButtonClicked(filteredCryptocurrency)" item-end>
+        <ion-icon name="trash"></ion-icon>
       </button>
     </ion-item>
   </ion-list>

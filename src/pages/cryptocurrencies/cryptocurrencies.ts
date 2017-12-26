@@ -11,12 +11,13 @@ import { RegisteredUserProvider } from '../../providers/registered/user/user';
 })
 export class CryptocurrenciesPage {
 
+  public isRegistered: boolean = null;
   public isAdministrator: boolean = null;
   public filteredCryptocurrencies : Cryptocurrency[] = [];
-
-  private allCryptocurrencies : Cryptocurrency[] = [];
+  public allCryptocurrencies : Cryptocurrency[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider) {
+    this.isRegistered = (window.localStorage.getItem("user") === "true");
     this.isAdministrator = (window.localStorage.getItem("user.administrator") === "true");
     this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
       this.allCryptocurrencies = data.data;
@@ -24,18 +25,18 @@ export class CryptocurrenciesPage {
     });
   }
 
-  public onAddButtonClicked(): void {
-    console.log("Add button has been clicked");
+  public onInsertCryptocurrencyButtonClicked(): void {
+    console.warn("Insert cryptocurrency button has been clicked");
   }
 
-  public onRefreshButtonClicked(): void {
+  public onRefreshCryptocurrenciesButtonClicked(): void {
     this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
       this.allCryptocurrencies = data.data;
       this.filteredCryptocurrencies = data.data;
     });
   }
 
-  public onFilterFieldUpdated(event: any): void {
+  public onFilterTriggered(event: any): void {
     this.filteredCryptocurrencies = this.allCryptocurrencies;
 
     let filter = event.target.value;
@@ -46,13 +47,21 @@ export class CryptocurrenciesPage {
     }
   }
 
-  public onAnalyticsButtonClicked(cryptocurrency: Cryptocurrency): void {
-    console.log("Analytics button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
+  public onCryptocurrencyChartButtonClicked(cryptocurrency: Cryptocurrency): void {
+    console.warn("Cryptocurrency chart button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
   }
 
-  public onFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
+  public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
     this.registeredUserProvider.insertFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
-      console.log(data);
+      console.warn(data);
     });
+  }
+
+  public onUpdateCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
+    console.warn("Update cryptocurrency button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
+  }
+
+  public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
+    console.warn("Delete cryptocurrency button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
   }
 }
