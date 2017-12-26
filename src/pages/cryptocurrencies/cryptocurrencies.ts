@@ -12,7 +12,6 @@ import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered
 export class CryptocurrenciesPage {
 
   allCryptocurrencies : Cryptocurrency[] = [];
-
   filteredCryptocurrencies : Cryptocurrency[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider) {
@@ -22,7 +21,15 @@ export class CryptocurrenciesPage {
     });
   }
 
-  public getCryptocurrencies(event: any): void {
+  public onAddButtonClicked(): void {
+    console.log("Add button has been clicked");
+  }
+
+  public onRefreshButtonClicked(): void {
+    console.log("Refresh button has been clicked");
+  }
+
+  public onFilterFieldUpdated(event: any): void {
     this.filteredCryptocurrencies = this.allCryptocurrencies;
 
     let filter = event.target.value;
@@ -31,5 +38,13 @@ export class CryptocurrenciesPage {
         return (cryptocurrency.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (cryptocurrency.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
+  }
+
+  public onAnalyticsButtonClicked(cryptocurrency: Cryptocurrency): void {
+    console.log("Analytics button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
+  }
+
+  public onFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
+    console.log("Favorite button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
   }
 }
