@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../model/cryptocurrency';
+import { Wallet } from '../../model/wallet';
+import { RegisteredUserProvider } from '../../providers/registered/user/user';
 
-import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
+import { AuthenticationPage } from '../authentication/authentication';
 
 @Component({
   selector: 'page-wallets',
@@ -11,25 +12,53 @@ import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered
 })
 export class WalletsPage {
 
-  allCryptocurrencies : Cryptocurrency[] = [];
+  public isRegistered: boolean = null;
+  public filteredWallets: Wallet[] = [];
+  public allWallets: Wallet[] = [];
 
-  filteredCryptocurrencies : Cryptocurrency[] = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
+    this.isRegistered = (window.localStorage.getItem("user") === "true");
+    if (!this.isRegistered) {
+      this.navCtrl.push(AuthenticationPage);
+    }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider) {
-    unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
-      this.allCryptocurrencies = data.data;
-      this.filteredCryptocurrencies = data.data;
+    this.registeredUserProvider.allWallets(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+      this.allWallets = data.data;
+      this.filteredWallets = data.data;
     });
   }
 
-  public getCryptocurrencies(event: any): void {
-    this.filteredCryptocurrencies = this.allCryptocurrencies;
+  public onInsertWalletButtonClicked(): void {
+    console.warn("Insert wallet button has been clicked");
+  }
+
+  public onRefreshWalletsButtonClicked(): void {
+    this.registeredUserProvider.allWallets(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+      this.allWallets = data.data;
+      this.filteredWallets = data.data;
+    });
+  }
+
+  public onFilterTriggered(event: any): void {
+    this.filteredWallets = this.allWallets;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredCryptocurrencies = this.filteredCryptocurrencies.filter((cryptocurrency: Cryptocurrency) => {
-        return (cryptocurrency.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (cryptocurrency.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+      this.filteredWallets = this.filteredWallets.filter((wallet: Wallet) => {
+        return wallet.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
     }
+  }
+
+  public onWalletOverviewButtonClicked(wallet: Wallet): void {
+    console.warn("Wallet chart button has been clicked for the following wallet: " + wallet.name);
+  }
+
+  public onUpdateWalletButtonClicked(wallet: Wallet): void {
+    console.warn("Update wallet button has been clicked for the following wallet: " + wallet.name);
+  }
+
+  public onDeleteWalletButtonClicked(wallet: Wallet): void {
+    console.warn("Delete wallet button has been clicked for the following wallet: " + wallet.name);
   }
 }
