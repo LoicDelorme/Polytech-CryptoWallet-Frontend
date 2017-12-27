@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Wallet } from '../../model/wallet';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
-
 import { AuthenticationPage } from '../authentication/authentication';
 
 @Component({
@@ -13,8 +12,8 @@ import { AuthenticationPage } from '../authentication/authentication';
 export class WalletsPage {
 
   public isRegistered: boolean = null;
-  public filteredWallets: Wallet[] = [];
-  public allWallets: Wallet[] = [];
+  public filteredWallets: Array<Wallet> = [];
+  public allWallets: Array<Wallet> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
     this.isRegistered = (window.localStorage.getItem("user") === "true");

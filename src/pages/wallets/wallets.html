@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-buttons start>
       <button ion-button icon-only *ngIf="isRegistered" (click)="onInsertWalletButtonClicked()">
-        <ion-icon name="add"></ion-icon>
+        <ion-icon name="insert"></ion-icon>
       </button>
     </ion-buttons>
 
@@ -22,7 +22,7 @@
   <ion-list inset>
     <ion-item *ngFor="let filteredWallet of filteredWallets">
       <ion-avatar item-start>
-          <ion-icon name="wallet"></ion-icon>
+        <ion-icon name="wallet"></ion-icon>
       </ion-avatar>
 
       <h3>{{ filteredWallet.name }}</h3>
