@@ -15,6 +15,9 @@ import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ChartPage } from '../pages/chart/chart';
 import { AuthenticationPage } from '../pages/authentication/authentication';
+import { OverviewWalletPage } from '../pages/overview-wallet/overview-wallet';
+import { InsertWalletPage } from '../pages/insert-wallet/insert-wallet';
+import { UpdateWalletPage } from '../pages/update-wallet/update-wallet';
 
 import { AdministratorAlertProvider } from '../providers/administrator/alert/alert';
 import { AdministratorAlertTypeProvider } from '../providers/administrator/alerttype/alerttype';
@@ -41,7 +44,10 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     SettingsPage,
     TabsPage,
     ChartPage,
-    AuthenticationPage
+    AuthenticationPage,
+    OverviewWalletPage,
+    InsertWalletPage,
+    UpdateWalletPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +66,10 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     SettingsPage,
     TabsPage,
     ChartPage,
-    AuthenticationPage
+    AuthenticationPage,
+    OverviewWalletPage,
+    InsertWalletPage,
+    UpdateWalletPage
   ],
   providers: [
     StatusBar,
