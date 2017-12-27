@@ -25,7 +25,8 @@
         <img src="{{ filteredCryptocurrency.imageUrl }}" />
       </ion-avatar>
 
-      <h3>{{ filteredCryptocurrency.name }} ({{ filteredCryptocurrency.symbol }})</h3>
+      <h3>{{ filteredCryptocurrency.name }}</h3>
+      <p>{{ filteredCryptocurrency.symbol }}</p>
 
       <button ion-button round (click)="onCryptocurrencyChartButtonClicked(filteredCryptocurrency)" item-end>
         <ion-icon name="chart"></ion-icon>

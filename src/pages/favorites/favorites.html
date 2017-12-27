@@ -22,7 +22,8 @@
         <img src="{{ filteredFavorite.imageUrl }}" />
       </ion-avatar>
 
-      <h3>{{ filteredFavorite.name }} ({{ filteredFavorite.symbol }})</h3>
+      <h3>{{ filteredFavorite.name }}</h3>
+      <p>{{ filteredFavorite.symbol }}</p>
 
       <button ion-button round *ngIf="isRegistered" (click)="onCryptocurrencyChartButtonClicked(filteredFavorite)" item-end>
         <ion-icon name="chart"></ion-icon>
