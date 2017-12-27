@@ -2,8 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Setting } from '../../model/setting';
+
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+
 import { AuthenticationPage } from '../authentication/authentication';
+import { OverviewSettingPage } from '../overview-setting/overview-setting';
+import { InsertSettingPage } from '../insert-setting/insert-setting';
+import { UpdateSettingPage } from '../update-setting/update-setting';
 
 @Component({
   selector: 'page-settings',
@@ -16,11 +21,16 @@ export class SettingsPage {
   public allSettings: Array<Setting> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
+  }
+
+  public ionViewWillEnter(): void {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
-      this.navCtrl.setRoot(AuthenticationPage);
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: SettingsPage });
     }
+  }
 
+  public ionViewDidEnter(): void {
     this.registeredUserProvider.allSettings(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allSettings = data.data;
       this.filteredSettings = data.data;
@@ -28,7 +38,7 @@ export class SettingsPage {
   }
 
   public onInsertSettingButtonClicked(): void {
-    console.warn("Insert setting button has been clicked");
+    this.navCtrl.push(InsertSettingPage);
   }
 
   public onRefreshSettingsButtonClicked(): void {
@@ -50,11 +60,11 @@ export class SettingsPage {
   }
 
   public onSettingOverviewButtonClicked(setting: Setting): void {
-    console.warn("Setting overview button has been clicked for the following setting: " + setting.name);
+    this.navCtrl.push(OverviewSettingPage, { setting: setting });
   }
 
   public onUpdateSettingButtonClicked(setting: Setting): void {
-    console.warn("Update setting button has been clicked for the following setting: " + setting.name);
+    this.navCtrl.push(UpdateSettingPage, { setting: setting });
   }
 
   public onDeleteSettingButtonClicked(setting: Setting): void {
