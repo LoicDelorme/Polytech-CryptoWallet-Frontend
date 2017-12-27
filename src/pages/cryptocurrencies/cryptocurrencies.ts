@@ -4,7 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Cryptocurrency } from '../../model/cryptocurrency';
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
-
+import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
 import { ChartPage } from '../chart/chart';
 
 @Component({
@@ -15,10 +15,10 @@ export class CryptocurrenciesPage {
 
   public isRegistered: boolean = null;
   public isAdministrator: boolean = null;
-  public filteredCryptocurrencies: Cryptocurrency[] = [];
-  public allCryptocurrencies: Cryptocurrency[] = [];
+  public filteredCryptocurrencies: Array<Cryptocurrency> = [];
+  public allCryptocurrencies: Array<Cryptocurrency> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     this.isAdministrator = (window.localStorage.getItem("user.administrator") === "true");
     this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
@@ -64,6 +64,8 @@ export class CryptocurrenciesPage {
   }
 
   public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
-    console.warn("Delete cryptocurrency button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
+    this.administratorCryptocurrencyProvider.deleteCryptocurrency(window.localStorage.getItem("user.token.value"), cryptocurrency).subscribe(data => {
+      console.warn(data);
+    });
   }
 }
