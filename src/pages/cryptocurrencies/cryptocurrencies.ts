@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
@@ -18,7 +18,7 @@ export class CryptocurrenciesPage {
   public filteredCryptocurrencies: Array<Cryptocurrency> = [];
   public allCryptocurrencies: Array<Cryptocurrency> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     this.isAdministrator = (window.localStorage.getItem("user.administrator") === "true");
     this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
@@ -56,6 +56,14 @@ export class CryptocurrenciesPage {
   public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
     this.registeredUserProvider.insertFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
       console.warn(data);
+
+      let toast = this.toastCtrl.create({
+        message: cryptocurrency.name + " was added to your favorites!",
+        duration: 2000,
+        position: "top"
+      });
+  
+      toast.present(toast);
     });
   }
 
