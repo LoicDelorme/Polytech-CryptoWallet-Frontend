@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
-import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
-
 import { AuthenticationPage } from '../authentication/authentication';
 import { ChartPage } from '../chart/chart';
 
@@ -15,34 +13,34 @@ import { ChartPage } from '../chart/chart';
 export class FavoritesPage {
 
   public isRegistered: boolean = null;
-  public filteredFavoriteCryptocurrencies: Cryptocurrency[] = [];
-  public allFavoriteCryptocurrencies: Cryptocurrency[] = [];
+  public filteredFavorites: Cryptocurrency[] = [];
+  public allFavorites: Cryptocurrency[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
       this.navCtrl.push(AuthenticationPage);
     }
 
     this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-      this.allFavoriteCryptocurrencies = data.data;
-      this.filteredFavoriteCryptocurrencies = data.data;
+      this.allFavorites = data.data;
+      this.filteredFavorites = data.data;
     });
   }
 
   public onRefreshFavoritesButtonClicked(): void {
     this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-      this.allFavoriteCryptocurrencies = data.data;
-      this.filteredFavoriteCryptocurrencies = data.data;
+      this.allFavorites = data.data;
+      this.filteredFavorites = data.data;
     });
   }
 
   public onFilterTriggered(event: any): void {
-    this.filteredFavoriteCryptocurrencies = this.allFavoriteCryptocurrencies;
+    this.filteredFavorites = this.allFavorites;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredFavoriteCryptocurrencies = this.filteredFavoriteCryptocurrencies.filter((cryptocurrency: Cryptocurrency) => {
+      this.filteredFavorites = this.filteredFavorites.filter((cryptocurrency: Cryptocurrency) => {
         return (cryptocurrency.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (cryptocurrency.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
@@ -56,14 +54,14 @@ export class FavoritesPage {
     this.registeredUserProvider.deleteFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
       console.warn(data);
 
-      let filteredIndex: number = this.filteredFavoriteCryptocurrencies.indexOf(cryptocurrency);
+      let filteredIndex: number = this.filteredFavorites.indexOf(cryptocurrency);
       if (filteredIndex != -1) {
-        this.filteredFavoriteCryptocurrencies.splice(filteredIndex, 1);
+        this.filteredFavorites.splice(filteredIndex, 1);
       }
 
-      let allIndex: number = this.allFavoriteCryptocurrencies.indexOf(cryptocurrency);
+      let allIndex: number = this.allFavorites.indexOf(cryptocurrency);
       if (allIndex != -1 && allIndex != filteredIndex) {
-        this.allFavoriteCryptocurrencies.splice(allIndex, 1);
+        this.allFavorites.splice(allIndex, 1);
       }
     });
   }

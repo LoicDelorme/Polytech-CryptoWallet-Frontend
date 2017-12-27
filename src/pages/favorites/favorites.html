@@ -17,18 +17,18 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
-    <ion-item *ngFor="let filteredFavoriteCryptocurrency of filteredFavoriteCryptocurrencies">
+    <ion-item *ngFor="let filteredFavorite of filteredFavorites">
       <ion-avatar item-start>
-        <img src="{{ filteredFavoriteCryptocurrency.imageUrl }}" />
+        <img src="{{ filteredFavorite.imageUrl }}" />
       </ion-avatar>
 
-      <h3>{{ filteredFavoriteCryptocurrency.name }} ({{ filteredFavoriteCryptocurrency.symbol }})</h3>
+      <h3>{{ filteredFavorite.name }} ({{ filteredFavorite.symbol }})</h3>
 
-      <button ion-button round *ngIf="isRegistered" (click)="onCryptocurrencyChartButtonClicked(filteredFavoriteCryptocurrency)" item-end>
+      <button ion-button round *ngIf="isRegistered" (click)="onCryptocurrencyChartButtonClicked(filteredFavorite)" item-end>
         <ion-icon name="chart"></ion-icon>
       </button>
 
-      <button ion-button round *ngIf="isRegistered" (click)="onDeleteFavoriteButtonClicked(filteredFavoriteCryptocurrency)" item-end>
+      <button ion-button round *ngIf="isRegistered" (click)="onDeleteFavoriteButtonClicked(filteredFavorite)" item-end>
         <ion-icon name="delete"></ion-icon>
       </button>
     </ion-item>
