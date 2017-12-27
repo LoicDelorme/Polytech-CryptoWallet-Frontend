@@ -15,8 +15,8 @@ import { ChartPage } from '../chart/chart';
 export class FavoritesPage {
 
   public isRegistered: boolean = null;
-  public filteredFavorites: Cryptocurrency[] = [];
-  public allFavorites: Cryptocurrency[] = [];
+  public filteredFavorites: Array<Cryptocurrency> = [];
+  public allFavorites: Array<Cryptocurrency> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
   }
