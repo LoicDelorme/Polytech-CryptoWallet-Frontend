@@ -4,6 +4,34 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <h1>Coming soon...</h1>
+<ion-content padding>
+  <form [formGroup]="authenticationForm" (ngSubmit)="onSubmit(authenticationForm.value)">
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="authenticationForm.controls.email.hasError('required') && authenticationForm.controls.email.touched">
+      <p>Email is required!</p>
+    </ion-item>
+    <ion-item *ngIf="authenticationForm.controls.email.hasError('maxlength') && authenticationForm.controls.email.touched">
+      <p>Maximum email length is 250!</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="authenticationForm.controls.password.hasError('required') && authenticationForm.controls.password.touched">
+      <p>Password is required!</p>
+    </ion-item>
+    <ion-item *ngIf="authenticationForm.controls.password.hasError('maxlength') && authenticationForm.controls.password.touched">
+      <p>Maximum password length is 250!</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!authenticationForm.valid" type="submit" icon-left>
+      <ion-icon name="log-in"></ion-icon> Sign in
+    </button>
+  </form>
 </ion-content>
