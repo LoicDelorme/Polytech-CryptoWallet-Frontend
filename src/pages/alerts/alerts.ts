@@ -2,8 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Alert } from '../../model/alert';
+
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+
 import { AuthenticationPage } from '../authentication/authentication';
+import { OverviewAlertPage } from '../overview-alert/overview-alert';
+import { InsertAlertPage } from '../insert-alert/insert-alert';
+import { UpdateAlertPage } from '../update-alert/update-alert';
 
 @Component({
   selector: 'page-alerts',
@@ -16,11 +21,16 @@ export class AlertsPage {
   public allAlerts: Array<Alert> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
+  }
+
+  public ionViewWillEnter(): void {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
-      this.navCtrl.setRoot(AuthenticationPage);
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AlertsPage });
     }
+  }
 
+  public ionViewDidEnter(): void {
     this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allAlerts = data.data;
       this.filteredAlerts = data.data;
@@ -28,7 +38,7 @@ export class AlertsPage {
   }
 
   public onInsertAlertButtonClicked(): void {
-    console.warn("Insert alert button has been clicked");
+    this.navCtrl.push(InsertAlertPage);
   }
 
   public onRefreshAlertsButtonClicked(): void {
@@ -50,11 +60,11 @@ export class AlertsPage {
   }
 
   public onAlertOverviewButtonClicked(alert: Alert): void {
-    console.warn("Alert overview button has been clicked for the following alert: " + alert.id);
+    this.navCtrl.push(OverviewAlertPage, { alert: alert });
   }
 
   public onUpdateAlertButtonClicked(alert: Alert): void {
-    console.warn("Update alert button has been clicked for the following alert: " + alert.id);
+    this.navCtrl.push(UpdateAlertPage, { alert: alert });
   }
 
   public onDeleteAlertButtonClicked(alert: Alert): void {
