@@ -2,8 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Wallet } from '../../model/wallet';
+
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+
 import { AuthenticationPage } from '../authentication/authentication';
+import { OverviewWalletPage } from '../overview-wallet/overview-wallet';
+import { InsertWalletPage } from '../insert-wallet/insert-wallet';
+import { UpdateWalletPage } from '../update-wallet/update-wallet';
 
 @Component({
   selector: 'page-wallets',
@@ -16,11 +21,16 @@ export class WalletsPage {
   public allWallets: Array<Wallet> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
+  }
+
+  public ionViewWillEnter(): void {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
-      this.navCtrl.setRoot(AuthenticationPage);
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: WalletsPage });
     }
+  }
 
+  public ionViewDidEnter(): void {
     this.registeredUserProvider.allWallets(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allWallets = data.data;
       this.filteredWallets = data.data;
@@ -28,7 +38,7 @@ export class WalletsPage {
   }
 
   public onInsertWalletButtonClicked(): void {
-    console.warn("Insert wallet button has been clicked");
+    this.navCtrl.push(InsertWalletPage);
   }
 
   public onRefreshWalletsButtonClicked(): void {
@@ -50,11 +60,11 @@ export class WalletsPage {
   }
 
   public onWalletOverviewButtonClicked(wallet: Wallet): void {
-    console.warn("Wallet overview button has been clicked for the following wallet: " + wallet.name);
+    this.navCtrl.push(OverviewWalletPage, { wallet: wallet });
   }
 
   public onUpdateWalletButtonClicked(wallet: Wallet): void {
-    console.warn("Update wallet button has been clicked for the following wallet: " + wallet.name);
+    this.navCtrl.push(UpdateWalletPage, { wallet: wallet });
   }
 
   public onDeleteWalletButtonClicked(wallet: Wallet): void {
