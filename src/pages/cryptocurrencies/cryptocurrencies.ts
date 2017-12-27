@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
+
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
+
+import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-cryptocurrency';
+import { UpdateCryptocurrencyPage } from '../update-cryptocurrency/update-cryptocurrency';
 import { ChartPage } from '../chart/chart';
 
 @Component({
@@ -18,9 +22,15 @@ export class CryptocurrenciesPage {
   public filteredCryptocurrencies: Array<Cryptocurrency> = [];
   public allCryptocurrencies: Array<Cryptocurrency> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {    
+  }
+
+  public ionViewWillEnter(): void {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     this.isAdministrator = (window.localStorage.getItem("user.administrator") === "true");
+  }
+
+  public ionViewDidEnter(): void {
     this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
       this.allCryptocurrencies = data.data;
       this.filteredCryptocurrencies = data.data;
@@ -28,7 +38,7 @@ export class CryptocurrenciesPage {
   }
 
   public onInsertCryptocurrencyButtonClicked(): void {
-    console.warn("Insert cryptocurrency button has been clicked");
+    this.navCtrl.push(InsertCryptocurrencyPage);
   }
 
   public onRefreshCryptocurrenciesButtonClicked(): void {
@@ -56,19 +66,11 @@ export class CryptocurrenciesPage {
   public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
     this.registeredUserProvider.insertFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
       console.warn(data);
-
-      let toast = this.toastCtrl.create({
-        message: cryptocurrency.name + " was added to your favorites!",
-        duration: 2000,
-        position: "top"
-      });
-  
-      toast.present(toast);
     });
   }
 
   public onUpdateCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
-    console.warn("Update cryptocurrency button has been clicked for the following cryptocurrency: " + cryptocurrency.symbol);
+    this.navCtrl.push(UpdateCryptocurrencyPage, { cryptocurrency: cryptocurrency });
   }
 
   public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
