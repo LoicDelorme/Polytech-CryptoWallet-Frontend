@@ -18,7 +18,7 @@ export class WalletsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
-      this.navCtrl.push(AuthenticationPage);
+      this.navCtrl.setRoot(AuthenticationPage);
     }
 
     this.registeredUserProvider.allWallets(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
