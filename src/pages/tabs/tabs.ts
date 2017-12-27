@@ -25,11 +25,11 @@ export class TabsPage {
     window.localStorage.setItem("user.id", "1");
     window.localStorage.setItem("user.lastname", "DELORME");
     window.localStorage.setItem("user.firstname", "Loïc");
-    window.localStorage.setItem("user.email", "loic.delorme@etu.univ-lyon1.fr");
+    window.localStorage.setItem("user.email", "loic.delorme@test.fr");
     window.localStorage.setItem("user.password", "loic.delorme");
     window.localStorage.setItem("user.enabled", "true");
-    window.localStorage.setItem("user.administrator", "false");
-    window.localStorage.setItem("user.token.value", "bdaabbb7-7477-4aef-8854-de0aff42b4ec");
+    window.localStorage.setItem("user.administrator", "true");
+    window.localStorage.setItem("user.token.value", "dd99fa8c-4abe-47e3-944a-f6cbc51914a4");
     /* TO REMOVE */
   }
 }
