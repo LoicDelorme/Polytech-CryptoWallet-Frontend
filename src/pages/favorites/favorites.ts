@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
+
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+
 import { AuthenticationPage } from '../authentication/authentication';
 import { ChartPage } from '../chart/chart';
 
@@ -17,11 +19,16 @@ export class FavoritesPage {
   public allFavorites: Cryptocurrency[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
+  }
+
+  public ionViewWillEnter(): void {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
-      this.navCtrl.setRoot(AuthenticationPage);
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: FavoritesPage });
     }
+  }
 
+  public ionViewDidEnter(): void {
     this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allFavorites = data.data;
       this.filteredFavorites = data.data;
