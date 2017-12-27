@@ -2,12 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Alert } from '../../model/alert';
-import { AlertType } from '../../model/alerttype';
-import { Cryptocurrency } from '../../model/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttype/alerttype';
-import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
-
 import { AuthenticationPage } from '../authentication/authentication';
 
 @Component({
@@ -17,26 +12,18 @@ import { AuthenticationPage } from '../authentication/authentication';
 export class AlertsPage {
 
   public isRegistered: boolean = null;
-  public filteredAlerts: Alert[] = [];
-  public allAlerts: Alert[] = [];
-  public allAlertTypes: AlertType[] = [];
-  public allCryptocurrencies: Cryptocurrency[] = [];
+  public filteredAlerts: Array<Alert> = [];
+  public allAlerts: Array<Alert> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredAlertTypeProvider: RegisteredAlertTypeProvider, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
       this.navCtrl.push(AuthenticationPage);
     }
 
-    this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
-      this.allCryptocurrencies = data.data;
-      this.registeredAlertTypeProvider.allAlertTypes(window.localStorage.getItem("user.token.value")).subscribe(data => {
-        this.allAlertTypes = data.data;
-        this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-          this.allAlerts = data.data;
-          this.filteredAlerts = data.data;
-        });
-      });
+    this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+      this.allAlerts = data.data;
+      this.filteredAlerts = data.data;
     });
   }
 
@@ -45,15 +32,9 @@ export class AlertsPage {
   }
 
   public onRefreshAlertsButtonClicked(): void {
-    this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
-      this.allCryptocurrencies = data.data;
-      this.registeredAlertTypeProvider.allAlertTypes(window.localStorage.getItem("user.token.value")).subscribe(data => {
-        this.allAlertTypes = data.data;
-        this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-          this.allAlerts = data.data;
-          this.filteredAlerts = data.data;
-        });
-      });
+    this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+      this.allAlerts = data.data;
+      this.filteredAlerts = data.data;
     });
   }
 
@@ -63,7 +44,7 @@ export class AlertsPage {
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
       this.filteredAlerts = this.filteredAlerts.filter((alert: Alert) => {
-        return (this.allCryptocurrencies[alert.cryptocurrencyId].name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (this.allCryptocurrencies[alert.cryptocurrencyId].symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+        return alert.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
     }
   }
