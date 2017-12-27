@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Update wallet</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="walletForm" (ngSubmit)="onSubmit(walletForm.value)">
+    <ion-item>
+      <ion-label floating>ID</ion-label>
+      <ion-input type="number" value="{{ wallet.id }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input formControlName="name" type="text" value="{{ wallet.name }}"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="walletForm.controls.name.hasError('required') && walletForm.controls.name.touched">
+      <p>Name is required!</p>
+    </ion-item>
+
+    <ion-item *ngIf="walletForm.controls.name.hasError('maxlength') && walletForm.controls.name.touched">
+      <p>Maximum name length is 250!</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Creation date</ion-label>
+      <ion-input type="text" value="{{ wallet.creationDate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last update</ion-label>
+      <ion-input type="text" value="{{ wallet.lastUpdate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <button ion-button block [disabled]="!walletForm.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>
