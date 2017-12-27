@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
-import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-authentication',
@@ -33,7 +32,7 @@ export class AuthenticationPage {
         window.localStorage.setItem("user.token.value", data.data.value);
         window.localStorage.setItem("user.token.endDate", JSON.stringify(data.data.endDate));
 
-        this.navCtrl.parent.select(0);
+        this.navCtrl.setRoot(this.navParams.get("onSuccessRedirect"));
       });
     }
   }

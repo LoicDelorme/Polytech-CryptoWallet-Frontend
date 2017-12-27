@@ -14,6 +14,7 @@
     <ion-item *ngIf="authenticationForm.controls.email.hasError('required') && authenticationForm.controls.email.touched">
       <p>Email is required!</p>
     </ion-item>
+
     <ion-item *ngIf="authenticationForm.controls.email.hasError('maxlength') && authenticationForm.controls.email.touched">
       <p>Maximum email length is 250!</p>
     </ion-item>
@@ -26,6 +27,7 @@
     <ion-item *ngIf="authenticationForm.controls.password.hasError('required') && authenticationForm.controls.password.touched">
       <p>Password is required!</p>
     </ion-item>
+
     <ion-item *ngIf="authenticationForm.controls.password.hasError('maxlength') && authenticationForm.controls.password.touched">
       <p>Maximum password length is 250!</p>
     </ion-item>
