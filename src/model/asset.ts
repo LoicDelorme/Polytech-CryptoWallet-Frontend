@@ -7,10 +7,6 @@ export class Asset {
   public amount: number;
   public purchasePrice: number;
 
-  constructor(walletId: number, cryptocurrency: Cryptocurrency, amount: number, purchasePrice: number) {
-    this.walletId = walletId;
-    this.cryptocurrency = cryptocurrency;
-    this.amount = amount;
-    this.purchasePrice = purchasePrice;
+  constructor() {
   }
 }

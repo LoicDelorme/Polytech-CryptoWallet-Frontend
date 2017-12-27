@@ -6,11 +6,6 @@ export class Log {
   public lastUpdate: Date;
   public userId: number;
 
-  constructor(id: number, ipAddress: string, creationDate: Date, lastUpdate: Date, userId: number) {
-    this.id = id;
-    this.ipAddress = ipAddress;
-    this.creationDate = creationDate;
-    this.lastUpdate = lastUpdate;
-    this.userId = userId;
+  constructor() {
   }
 }

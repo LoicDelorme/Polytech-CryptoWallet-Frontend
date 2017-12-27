@@ -7,12 +7,6 @@ export class Setting {
   public lastUpdate: Date;
   public userId: number;
 
-  constructor(id: number, name: string, theme: string, creationDate: Date, lastUpdate: Date, userId: number) {
-    this.id = id;
-    this.name = name;
-    this.theme = theme;
-    this.creationDate = creationDate;
-    this.lastUpdate = lastUpdate;
-    this.userId = userId;
+  constructor() {
   }
 }

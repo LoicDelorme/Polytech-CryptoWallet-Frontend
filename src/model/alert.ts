@@ -14,16 +14,6 @@ export class Alert {
   public cryptocurrency: Cryptocurrency;
   public type: AlertType;
 
-  constructor(id: number, name: string, threshold: number, oneShot: boolean, active: boolean, creationDate: Date, lastUpdate: Date, userId: number, cryptocurrency: Cryptocurrency, type: AlertType) {
-    this.id = id;
-    this.name = name;
-    this.threshold = threshold;
-    this.oneShot = oneShot;
-    this.active = active;
-    this.creationDate = creationDate;
-    this.lastUpdate = lastUpdate;
-    this.userId = userId;
-    this.cryptocurrency = cryptocurrency;
-    this.type = type;
+  constructor() {
   }
 }
