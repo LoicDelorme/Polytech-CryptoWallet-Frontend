@@ -1,7 +1,17 @@
 <ion-header>
+  <ion-buttons start>
+    <button ion-button icon-only (click)="onUpdateWalletButtonClicked()">
+      <ion-icon name="update"></ion-icon>
+    </button>
+  </ion-buttons>
   <ion-navbar>
     <ion-title>Overview</ion-title>
   </ion-navbar>
+  <ion-buttons end>
+    <button ion-button icon-only (click)="onDeleteWalletButtonClicked()">
+      <ion-icon name="delete"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-header>
 
 <ion-content padding>
@@ -14,6 +24,11 @@
     <ion-item>
       <ion-label floating>Name</ion-label>
       <ion-input type="text" value="{{ wallet.name }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Assets</ion-label>
+      <ion-input type="text" value="SOON..." readonly="true"></ion-input>
     </ion-item>
 
     <ion-item>
