@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Update alert type</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="alertTypeFormGroup" (ngSubmit)="onSubmit(alertTypeFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input formControlName="name" type="text" [(ngModel)]="alertTypeForm.name"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="alertTypeFormGroup.controls.name.hasError('required') && alertTypeFormGroup.controls.name.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="alertTypeFormGroup.controls.name.hasError('maxlength') && alertTypeFormGroup.controls.name.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!alertTypeFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>
