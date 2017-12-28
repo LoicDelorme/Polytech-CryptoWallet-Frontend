@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Overview</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-item>
+      <ion-label floating>ID</ion-label>
+      <ion-input type="number" value="{{ setting.id }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" value="{{ setting.name }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Theme</ion-label>
+      <ion-input type="text" value="{{ setting.theme }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Creation date</ion-label>
+      <ion-input type="text" value="{{ setting.creationDate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last update</ion-label>
+      <ion-input type="text" value="{{ setting.lastUpdate }}" readonly="true"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

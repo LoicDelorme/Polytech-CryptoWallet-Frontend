@@ -18,6 +18,9 @@ import { AuthenticationPage } from '../pages/authentication/authentication';
 import { OverviewWalletPage } from '../pages/overview-wallet/overview-wallet';
 import { InsertWalletPage } from '../pages/insert-wallet/insert-wallet';
 import { UpdateWalletPage } from '../pages/update-wallet/update-wallet';
+import { OverviewSettingPage } from '../pages/overview-setting/overview-setting';
+import { InsertSettingPage } from '../pages/insert-setting/insert-setting';
+import { UpdateSettingPage } from '../pages/update-setting/update-setting';
 
 import { AdministratorAlertProvider } from '../providers/administrator/alert/alert';
 import { AdministratorAlertTypeProvider } from '../providers/administrator/alerttype/alerttype';
@@ -47,7 +50,10 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     AuthenticationPage,
     OverviewWalletPage,
     InsertWalletPage,
-    UpdateWalletPage
+    UpdateWalletPage,
+    OverviewSettingPage,
+    InsertSettingPage,
+    UpdateSettingPage
   ],
   imports: [
     BrowserModule,
@@ -69,7 +75,10 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     AuthenticationPage,
     OverviewWalletPage,
     InsertWalletPage,
-    UpdateWalletPage
+    UpdateWalletPage,
+    OverviewSettingPage,
+    InsertSettingPage,
+    UpdateSettingPage
   ],
   providers: [
     StatusBar,
