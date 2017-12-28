@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Favorite } from '../../../model/favorite';
+import { FavoriteForm } from '../../../forms/favoriteform';
 import { User } from '../../../model/user';
 import { Cryptocurrency } from '../../../model/cryptocurrency';
-import { Response } from '../../../model/response';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorFavoriteProvider {
@@ -36,8 +37,8 @@ export class AdministratorFavoriteProvider {
     return this.http.get<Response<Array<Favorite>>>(AdministratorFavoriteProvider.getFavoritesByCryptocurrencyPath.replace("TOKEN", token).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()));
   }
 
-  public insertFavorite(token: string, user: User, cryptocurrency: Cryptocurrency): Observable<Response<Favorite>> {
-    return this.http.post<Response<Favorite>>(AdministratorFavoriteProvider.insertFavoritePath.replace("TOKEN", token).replace("USER_ID", user.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), null);
+  public insertFavorite(token: string, user: User, cryptocurrency: Cryptocurrency, favoriteForm: FavoriteForm): Observable<Response<Favorite>> {
+    return this.http.post<Response<Favorite>>(AdministratorFavoriteProvider.insertFavoritePath.replace("TOKEN", token).replace("USER_ID", user.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), favoriteForm);
   }
 
   public deleteFavorite(token: string, user: User, cryptocurrency: Cryptocurrency): Observable<Response<Favorite>> {

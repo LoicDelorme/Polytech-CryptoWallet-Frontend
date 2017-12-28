@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Alert } from '../../../model/alert';
-import { Response } from '../../../model/response';
+import { AlertForm } from '../../../forms/alertform';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorAlertProvider {
@@ -25,12 +26,12 @@ export class AdministratorAlertProvider {
     return this.http.get<Response<Alert>>(AdministratorAlertProvider.getAlertPath.replace("TOKEN", token).replace("ALERT_ID", alertId.toString()));
   }
 
-  public insertAlert(token: string, alert: Alert): Observable<Response<Alert>> {
-    return this.http.post<Response<Alert>>(AdministratorAlertProvider.insertAlertPath.replace("TOKEN", token), alert);
+  public insertAlert(token: string, alertForm: AlertForm): Observable<Response<Alert>> {
+    return this.http.post<Response<Alert>>(AdministratorAlertProvider.insertAlertPath.replace("TOKEN", token), alertForm);
   }
 
-  public updateAlert(token: string, alert: Alert): Observable<Response<Alert>> {
-    return this.http.put<Response<Alert>>(AdministratorAlertProvider.updateAlertPath.replace("TOKEN", token).replace("ALERT_ID", alert.id.toString()), alert);
+  public updateAlert(token: string, alertForm: AlertForm): Observable<Response<Alert>> {
+    return this.http.put<Response<Alert>>(AdministratorAlertProvider.updateAlertPath.replace("TOKEN", token).replace("ALERT_ID", alertForm.id.toString()), alertForm);
   }
 
   public deleteAlert(token: string, alert: Alert): Observable<Response<Alert>> {

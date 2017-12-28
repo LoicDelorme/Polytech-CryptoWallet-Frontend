@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { AlertType } from '../../../model/alerttype';
-import { Response } from '../../../model/response';
+import { AlertTypeForm } from '../../../forms/alerttypeform';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorAlertTypeProvider {
@@ -25,12 +26,12 @@ export class AdministratorAlertTypeProvider {
     return this.http.get<Response<AlertType>>(AdministratorAlertTypeProvider.getAlertTypePath.replace("TOKEN", token).replace("ALERT_TYPE_ID", alertTypeId.toString()));
   }
 
-  public insertAlertType(token: string, alertType: AlertType): Observable<Response<AlertType>> {
-    return this.http.post<Response<AlertType>>(AdministratorAlertTypeProvider.insertAlertTypePath.replace("TOKEN", token), alertType);
+  public insertAlertType(token: string, alertTypeForm: AlertTypeForm): Observable<Response<AlertType>> {
+    return this.http.post<Response<AlertType>>(AdministratorAlertTypeProvider.insertAlertTypePath.replace("TOKEN", token), alertTypeForm);
   }
 
-  public updateAlertType(token: string, alertType: AlertType): Observable<Response<AlertType>> {
-    return this.http.put<Response<AlertType>>(AdministratorAlertTypeProvider.updateAlertTypePath.replace("TOKEN", token).replace("ALERT_TYPE_ID", alertType.id.toString()), alertType);
+  public updateAlertType(token: string, alertTypeForm: AlertTypeForm): Observable<Response<AlertType>> {
+    return this.http.put<Response<AlertType>>(AdministratorAlertTypeProvider.updateAlertTypePath.replace("TOKEN", token).replace("ALERT_TYPE_ID", alertTypeForm.id.toString()), alertTypeForm);
   }
 
   public deleteAlertType(token: string, alertType: AlertType): Observable<Response<AlertType>> {

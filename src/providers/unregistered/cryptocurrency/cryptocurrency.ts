@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Cryptocurrency } from '../../../model/cryptocurrency';
-import { Response } from '../../../model/response';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class UnregisteredCryptocurrencyProvider {

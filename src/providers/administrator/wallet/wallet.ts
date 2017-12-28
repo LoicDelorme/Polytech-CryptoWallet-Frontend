@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Wallet } from '../../../model/wallet';
-import { Response } from '../../../model/response';
+import { WalletForm } from '../../../forms/walletform';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorWalletProvider {
@@ -25,12 +26,12 @@ export class AdministratorWalletProvider {
     return this.http.get<Response<Wallet>>(AdministratorWalletProvider.getWalletPath.replace("TOKEN", token).replace("WALLET_ID", walletId.toString()));
   }
 
-  public insertWallet(token: string, wallet: Wallet): Observable<Response<Wallet>> {
-    return this.http.post<Response<Wallet>>(AdministratorWalletProvider.insertWalletPath.replace("TOKEN", token), wallet);
+  public insertWallet(token: string, walletForm: WalletForm): Observable<Response<Wallet>> {
+    return this.http.post<Response<Wallet>>(AdministratorWalletProvider.insertWalletPath.replace("TOKEN", token), walletForm);
   }
 
-  public updateWallet(token: string, wallet: Wallet): Observable<Response<Wallet>> {
-    return this.http.put<Response<Wallet>>(AdministratorWalletProvider.updateWalletPath.replace("TOKEN", token).replace("WALLET_ID", wallet.id.toString()), wallet);
+  public updateWallet(token: string, walletForm: WalletForm): Observable<Response<Wallet>> {
+    return this.http.put<Response<Wallet>>(AdministratorWalletProvider.updateWalletPath.replace("TOKEN", token).replace("WALLET_ID", walletForm.id.toString()), walletForm);
   }
 
   public deleteWallet(token: string, wallet: Wallet): Observable<Response<Wallet>> {

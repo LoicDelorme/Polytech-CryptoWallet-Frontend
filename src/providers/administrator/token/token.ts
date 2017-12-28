@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Token } from '../../../model/token';
-import { Response } from '../../../model/response';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorTokenProvider {

@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../../model/user';
-import { Response } from '../../../model/response';
+import { UserForm } from '../../../forms/userform';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorUserProvider {
@@ -25,12 +26,12 @@ export class AdministratorUserProvider {
     return this.http.get<Response<User>>(AdministratorUserProvider.getUserPath.replace("TOKEN", token).replace("USER_ID", userId.toString()));
   }
 
-  public insertUser(token: string, user: User): Observable<Response<User>> {
-    return this.http.post<Response<User>>(AdministratorUserProvider.insertUserPath.replace("TOKEN", token), user);
+  public insertUser(token: string, userForm: UserForm): Observable<Response<User>> {
+    return this.http.post<Response<User>>(AdministratorUserProvider.insertUserPath.replace("TOKEN", token), userForm);
   }
 
-  public updateUser(token: string, user: User): Observable<Response<User>> {
-    return this.http.put<Response<User>>(AdministratorUserProvider.updateUserPath.replace("TOKEN", token).replace("USER_ID", user.id.toString()), user);
+  public updateUser(token: string, userForm: UserForm): Observable<Response<User>> {
+    return this.http.put<Response<User>>(AdministratorUserProvider.updateUserPath.replace("TOKEN", token).replace("USER_ID", userForm.id.toString()), userForm);
   }
 
   public deleteUser(token: string, user: User): Observable<Response<User>> {

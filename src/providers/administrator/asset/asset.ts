@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Asset } from '../../../model/asset';
+import { AssetForm } from '../../../forms/assetform';
 import { Wallet } from '../../../model/wallet';
 import { Cryptocurrency } from '../../../model/cryptocurrency';
-import { Response } from '../../../model/response';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorAssetProvider {
@@ -37,12 +38,12 @@ export class AdministratorAssetProvider {
     return this.http.get<Response<Array<Asset>>>(AdministratorAssetProvider.getAssetsByCryptocurrencyPath.replace("TOKEN", token).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()));
   }
 
-  public insertAsset(token: string, wallet: Wallet, cryptocurrency: Cryptocurrency, asset: Asset): Observable<Response<Asset>> {
-    return this.http.post<Response<Asset>>(AdministratorAssetProvider.insertAssetPath.replace("TOKEN", token).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), asset);
+  public insertAsset(token: string, wallet: Wallet, cryptocurrency: Cryptocurrency, assetForm: Asset): Observable<Response<Asset>> {
+    return this.http.post<Response<Asset>>(AdministratorAssetProvider.insertAssetPath.replace("TOKEN", token).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), assetForm);
   }
 
-  public updateAsset(token: string, wallet: Wallet, cryptocurrency: Cryptocurrency, asset: Asset): Observable<Response<Asset>> {
-    return this.http.put<Response<Asset>>(AdministratorAssetProvider.updateAssetPath.replace("TOKEN", token).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), asset);
+  public updateAsset(token: string, wallet: Wallet, cryptocurrency: Cryptocurrency, assetForm: AssetForm): Observable<Response<Asset>> {
+    return this.http.put<Response<Asset>>(AdministratorAssetProvider.updateAssetPath.replace("TOKEN", token).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), assetForm);
   }
 
   public deleteAsset(token: string, wallet: Wallet, cryptocurrency: Cryptocurrency): Observable<Response<Asset>> {

@@ -11,7 +11,13 @@ import { Alert } from '../../../model/alert';
 import { Setting } from '../../../model/setting';
 import { Log } from '../../../model/log';
 import { Asset } from '../../../model/asset';
-import { Response } from '../../../model/response';
+import { UserForm } from '../../../forms/userform';
+import { FavoriteForm } from '../../../forms/favoriteform';
+import { WalletForm } from '../../../forms/walletform';
+import { AlertForm } from '../../../forms/alertform';
+import { SettingForm } from '../../../forms/settingform';
+import { AssetForm } from '../../../forms/assetform';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class RegisteredUserProvider {
@@ -62,8 +68,8 @@ export class RegisteredUserProvider {
     return this.http.get<Response<User>>(RegisteredUserProvider.getUserPath.replace("TOKEN", token).replace("USER_ID", userId.toString()));
   }
 
-  public updateUser(token: string, user: User): Observable<Response<User>> {
-    return this.http.put<Response<User>>(RegisteredUserProvider.updateUserPath.replace("TOKEN", token).replace("USER_ID", user.id.toString()), user);
+  public updateUser(token: string, userForm: UserForm): Observable<Response<User>> {
+    return this.http.put<Response<User>>(RegisteredUserProvider.updateUserPath.replace("TOKEN", token).replace("USER_ID", userForm.id.toString()), userForm);
   }
 
   public deleteUser(token: string, user: User): Observable<Response<User>> {
@@ -74,8 +80,8 @@ export class RegisteredUserProvider {
     return this.http.get<Response<Array<Cryptocurrency>>>(RegisteredUserProvider.allFavoritesPath.replace("TOKEN", token).replace("USER_ID", userId.toString()));
   }
 
-  public insertFavorite(token: string, userId: number, cryptocurrency: Cryptocurrency): Observable<Response<Favorite>> {
-    return this.http.post<Response<Favorite>>(RegisteredUserProvider.insertFavoritePath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), null);
+  public insertFavorite(token: string, userId: number, cryptocurrency: Cryptocurrency, favoriteForm: FavoriteForm): Observable<Response<Favorite>> {
+    return this.http.post<Response<Favorite>>(RegisteredUserProvider.insertFavoritePath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), favoriteForm);
   }
 
   public deleteFavorite(token: string, userId: number, cryptocurrency: Cryptocurrency): Observable<Response<Favorite>> {
@@ -90,12 +96,12 @@ export class RegisteredUserProvider {
     return this.http.get<Response<Wallet>>(RegisteredUserProvider.getWalletPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", walletId.toString()));
   }
 
-  public insertWallet(token: string, userId: number, wallet: Wallet): Observable<Response<Wallet>> {
-    return this.http.post<Response<Wallet>>(RegisteredUserProvider.insertWalletPath.replace("TOKEN", token).replace("USER_ID", userId.toString()), wallet);
+  public insertWallet(token: string, userId: number, walletForm: WalletForm): Observable<Response<Wallet>> {
+    return this.http.post<Response<Wallet>>(RegisteredUserProvider.insertWalletPath.replace("TOKEN", token).replace("USER_ID", userId.toString()), walletForm);
   }
 
-  public updateWallet(token: string, userId: number, wallet: Wallet): Observable<Response<Wallet>> {
-    return this.http.put<Response<Wallet>>(RegisteredUserProvider.updateWalletPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()), wallet);
+  public updateWallet(token: string, userId: number, walletForm: WalletForm): Observable<Response<Wallet>> {
+    return this.http.put<Response<Wallet>>(RegisteredUserProvider.updateWalletPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", walletForm.id.toString()), walletForm);
   }
 
   public deleteWallet(token: string, userId: number, wallet: Wallet): Observable<Response<Wallet>> {
@@ -110,12 +116,12 @@ export class RegisteredUserProvider {
     return this.http.get<Response<Alert>>(RegisteredUserProvider.getAlertPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("ALERT_ID", alertId.toString()));
   }
 
-  public insertAlert(token: string, userId: number, alert: Alert): Observable<Response<Alert>> {
-    return this.http.post<Response<Alert>>(RegisteredUserProvider.insertAlertPath.replace("TOKEN", token).replace("USER_ID", userId.toString()), alert);
+  public insertAlert(token: string, userId: number, alertForm: AlertForm): Observable<Response<Alert>> {
+    return this.http.post<Response<Alert>>(RegisteredUserProvider.insertAlertPath.replace("TOKEN", token).replace("USER_ID", userId.toString()), alertForm);
   }
 
-  public updateAlert(token: string, userId: number, alert: Alert): Observable<Response<Alert>> {
-    return this.http.put<Response<Alert>>(RegisteredUserProvider.updateAlertPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("ALERT_ID", alert.id.toString()), alert);
+  public updateAlert(token: string, userId: number, alertForm: AlertForm): Observable<Response<Alert>> {
+    return this.http.put<Response<Alert>>(RegisteredUserProvider.updateAlertPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("ALERT_ID", alertForm.id.toString()), alertForm);
   }
 
   public deleteAlert(token: string, userId: number, alert: Alert): Observable<Response<Alert>> {
@@ -130,12 +136,12 @@ export class RegisteredUserProvider {
     return this.http.get<Response<Setting>>(RegisteredUserProvider.getSettingPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("SETTING_ID", settingId.toString()));
   }
 
-  public insertSetting(token: string, userId: number, setting: Setting): Observable<Response<Setting>> {
-    return this.http.post<Response<Setting>>(RegisteredUserProvider.insertSettingPath.replace("TOKEN", token).replace("USER_ID", userId.toString()), setting);
+  public insertSetting(token: string, userId: number, settingForm: SettingForm): Observable<Response<Setting>> {
+    return this.http.post<Response<Setting>>(RegisteredUserProvider.insertSettingPath.replace("TOKEN", token).replace("USER_ID", userId.toString()), settingForm);
   }
 
-  public updateSetting(token: string, userId: number, setting: Setting): Observable<Response<Setting>> {
-    return this.http.put<Response<Setting>>(RegisteredUserProvider.updateSettingPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("SETTING_ID", setting.id.toString()), setting);
+  public updateSetting(token: string, userId: number, settingForm: SettingForm): Observable<Response<Setting>> {
+    return this.http.put<Response<Setting>>(RegisteredUserProvider.updateSettingPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("SETTING_ID", settingForm.id.toString()), settingForm);
   }
 
   public deleteSetting(token: string, userId: number, setting: Setting): Observable<Response<Setting>> {
@@ -170,12 +176,12 @@ export class RegisteredUserProvider {
     return this.http.get<Response<Asset>>(RegisteredUserProvider.getAssetPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()));
   }
 
-  public insertAsset(token: string, userId: number, wallet: Wallet, cryptocurrency: Cryptocurrency, asset: Asset): Observable<Response<Asset>> {
-    return this.http.post<Response<Asset>>(RegisteredUserProvider.insertAssetPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), asset);
+  public insertAsset(token: string, userId: number, wallet: Wallet, cryptocurrency: Cryptocurrency, assetForm: AssetForm): Observable<Response<Asset>> {
+    return this.http.post<Response<Asset>>(RegisteredUserProvider.insertAssetPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), assetForm);
   }
 
-  public updateAsset(token: string, userId: number, wallet: Wallet, cryptocurrency: Cryptocurrency, asset: Asset): Observable<Response<Asset>> {
-    return this.http.put<Response<Asset>>(RegisteredUserProvider.updateAssetPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), asset);
+  public updateAsset(token: string, userId: number, wallet: Wallet, cryptocurrency: Cryptocurrency, assetForm: AssetForm): Observable<Response<Asset>> {
+    return this.http.put<Response<Asset>>(RegisteredUserProvider.updateAssetPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), assetForm);
   }
 
   public deleteAsset(token: string, userId: number, wallet: Wallet, cryptocurrency: Cryptocurrency): Observable<Response<Asset>> {

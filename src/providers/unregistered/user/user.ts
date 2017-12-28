@@ -4,7 +4,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../../model/user';
 import { Token } from '../../../model/token';
-import { Response } from '../../../model/response';
+import { UserForm } from '../../../forms/userform';
+import { AuthenticationForm } from '../../../forms/authenticationform';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class UnregisteredUserProvider {
@@ -15,11 +17,11 @@ export class UnregisteredUserProvider {
   constructor(private http: HttpClient) {
   }
 
-  public subscribe(user: User): Observable<Response<User>> {
-    return this.http.post<Response<User>>(UnregisteredUserProvider.subscribePath, user);
+  public subscribe(userForm: UserForm): Observable<Response<User>> {
+    return this.http.post<Response<User>>(UnregisteredUserProvider.subscribePath, userForm);
   }
 
-  public authenticate(email: string, password: string): Observable<Response<Token>> {
-    return this.http.post<Response<Token>>(UnregisteredUserProvider.authenticatePath, { "email" : email, "password" : password});
+  public authenticate(authenticationForm: AuthenticationForm): Observable<Response<Token>> {
+    return this.http.post<Response<Token>>(UnregisteredUserProvider.authenticatePath, authenticationForm);
   }
 }

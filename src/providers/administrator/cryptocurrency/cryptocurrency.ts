@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Cryptocurrency } from '../../../model/cryptocurrency';
-import { Response } from '../../../model/response';
+import { CryptocurrencyForm } from '../../../forms/cryptocurrencyform';
+import { Response } from '../../../responses/response';
 
 @Injectable()
 export class AdministratorCryptocurrencyProvider {
@@ -25,12 +26,12 @@ export class AdministratorCryptocurrencyProvider {
     return this.http.get<Response<Cryptocurrency>>(AdministratorCryptocurrencyProvider.getCryptocurrencyPath.replace("TOKEN", token).replace("CRYPTOCURRENCY_ID", cryptocurrencyId.toString()));
   }
 
-  public insertCryptocurrency(token: string, cryptocurrency: Cryptocurrency): Observable<Response<Cryptocurrency>> {
-    return this.http.post<Response<Cryptocurrency>>(AdministratorCryptocurrencyProvider.insertCryptocurrencyPath.replace("TOKEN", token), cryptocurrency);
+  public insertCryptocurrency(token: string, cryptocurrencyForm: CryptocurrencyForm): Observable<Response<Cryptocurrency>> {
+    return this.http.post<Response<Cryptocurrency>>(AdministratorCryptocurrencyProvider.insertCryptocurrencyPath.replace("TOKEN", token), cryptocurrencyForm);
   }
 
-  public updateCryptocurrency(token: string, cryptocurrency: Cryptocurrency): Observable<Response<Cryptocurrency>> {
-    return this.http.put<Response<Cryptocurrency>>(AdministratorCryptocurrencyProvider.updateCryptocurrencyPath.replace("TOKEN", token).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()), cryptocurrency);
+  public updateCryptocurrency(token: string, cryptocurrencyForm: CryptocurrencyForm): Observable<Response<Cryptocurrency>> {
+    return this.http.put<Response<Cryptocurrency>>(AdministratorCryptocurrencyProvider.updateCryptocurrencyPath.replace("TOKEN", token).replace("CRYPTOCURRENCY_ID", cryptocurrencyForm.id.toString()), cryptocurrencyForm);
   }
 
   public deleteCryptocurrency(token: string, cryptocurrency: Cryptocurrency): Observable<Response<Cryptocurrency>> {
