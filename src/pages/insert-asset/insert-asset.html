@@ -31,6 +31,13 @@
       </ion-select>
     </ion-item>
 
+    <ion-item>
+      <ion-label floating>Wallet</ion-label>
+      <ion-select formControlName="wallet" [(ngModel)]="wallet">
+        <ion-option *ngFor="let wallet of allWallets" value="{{ wallet }}">{{ wallet.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
     <button ion-button block [disabled]="!assetFormGroup.valid" type="submit" icon-left>
       <ion-icon name="submit"></ion-icon> Submit
     </button>
