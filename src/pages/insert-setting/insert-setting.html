@@ -5,34 +5,34 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="settingForm" (ngSubmit)="onSubmit(settingForm.value)">
+  <form [formGroup]="settingFormGroup" (ngSubmit)="onSubmit(settingFormGroup.value)">
     <ion-item>
       <ion-label floating>Name</ion-label>
-      <ion-input formControlName="name" type="text"></ion-input>
+      <ion-input formControlName="name" type="text" [(ngModel)]="settingForm.name"></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="settingForm.controls.name.hasError('required') && settingForm.controls.name.touched">
-      <p>Name is required!</p>
+    <ion-item *ngIf="settingFormGroup.controls.name.hasError('required') && settingFormGroup.controls.name.touched">
+      <p>The field is required</p>
     </ion-item>
 
-    <ion-item *ngIf="settingForm.controls.name.hasError('maxlength') && settingForm.controls.name.touched">
-      <p>Maximum name length is 250!</p>
+    <ion-item *ngIf="settingFormGroup.controls.name.hasError('maxlength') && settingFormGroup.controls.name.touched">
+      <p>The maximum length is 250</p>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Theme</ion-label>
-      <ion-input formControlName="theme" type="text"></ion-input>
+      <ion-input formControlName="theme" type="text" [(ngModel)]="settingForm.theme"></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="settingForm.controls.theme.hasError('required') && settingForm.controls.theme.touched">
-      <p>Theme is required!</p>
+    <ion-item *ngIf="settingFormGroup.controls.theme.hasError('required') && settingFormGroup.controls.theme.touched">
+      <p>The field is required</p>
     </ion-item>
 
-    <ion-item *ngIf="settingForm.controls.theme.hasError('maxlength') && settingForm.controls.theme.touched">
-      <p>Maximum theme length is 250!</p>
+    <ion-item *ngIf="settingFormGroup.controls.theme.hasError('maxlength') && settingFormGroup.controls.theme.touched">
+      <p>The maximum length is 250</p>
     </ion-item>
 
-    <button ion-button block [disabled]="!settingForm.valid" type="submit" icon-left>
+    <button ion-button block [disabled]="!settingFormGroup.valid" type="submit" icon-left>
       <ion-icon name="submit"></ion-icon> Submit
     </button>
   </form>
