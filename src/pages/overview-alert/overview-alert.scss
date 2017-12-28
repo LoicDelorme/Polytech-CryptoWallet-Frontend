@@ -1,0 +1,17 @@
+page-overview-alert {
+    .ion-ios-update,
+    .ion-ios-update-outline,
+    .ion-md-update {
+        content: url(../../assets/imgs/black/update.svg);
+        width: 22px;
+        height: 22px;
+    }
+
+    .ion-ios-delete,
+    .ion-ios-delete-outline,
+    .ion-md-delete {
+        content: url(../../assets/imgs/black/delete.svg);
+        width: 22px;
+        height: 22px;
+    }
+}
