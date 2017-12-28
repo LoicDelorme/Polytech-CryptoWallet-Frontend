@@ -1,7 +1,17 @@
 <ion-header>
+  <ion-buttons start>
+    <button ion-button icon-only (click)="onUpdateSettingButtonClicked()">
+      <ion-icon name="update"></ion-icon>
+    </button>
+  </ion-buttons>
   <ion-navbar>
     <ion-title>Overview</ion-title>
   </ion-navbar>
+  <ion-buttons end>
+    <button ion-button icon-only (click)="onDeleteSettingButtonClicked()">
+      <ion-icon name="delete"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-header>
 
 <ion-content padding>
