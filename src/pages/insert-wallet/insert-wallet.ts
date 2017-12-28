@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Wallet } from '../../model/wallet';
 import { WalletForm } from '../../forms/walletform';
 
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
