@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { AuthenticationForm } from '../../forms/authenticationform';
+
 import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
 
 @Component({
@@ -10,18 +12,20 @@ import { UnregisteredUserProvider } from '../../providers/unregistered/user/user
 })
 export class AuthenticationPage {
 
-  public authenticationForm: FormGroup;
+  public authenticationForm: AuthenticationForm;
+  public authenticationFormGroup: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public unregisteredUserProvider: UnregisteredUserProvider) {
-    this.authenticationForm = formBuilder.group({
+    this.authenticationForm = new AuthenticationForm();
+    this.authenticationFormGroup = formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(250)])],
       password: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 
   public onSubmit(value: any): void {
-    if (this.authenticationForm.valid) {
-      this.unregisteredUserProvider.authenticate(value.email, value.password).subscribe(data => {
+    if (this.authenticationFormGroup.valid) {
+      this.unregisteredUserProvider.authenticate(this.authenticationForm).subscribe(data => {
         console.warn(data);
 
         window.localStorage.setItem("user", JSON.stringify(data.success));

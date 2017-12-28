@@ -5,34 +5,34 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="authenticationForm" (ngSubmit)="onSubmit(authenticationForm.value)">
+  <form [formGroup]="authenticationFormGroup" (ngSubmit)="onSubmit(authenticationFormGroup.value)">
     <ion-item>
       <ion-label floating>Email</ion-label>
-      <ion-input formControlName="email" type="email"></ion-input>
+      <ion-input formControlName="email" type="email" [(ngModel)]="authenticationForm.email"></ion-input>
+    </ion-item>
+  
+    <ion-item *ngIf="alertFormGroup.controls.email.hasError('required') && alertFormGroup.controls.email.touched">
+      <p>The field is required</p>
     </ion-item>
 
-    <ion-item *ngIf="authenticationForm.controls.email.hasError('required') && authenticationForm.controls.email.touched">
-      <p>Email is required!</p>
-    </ion-item>
-
-    <ion-item *ngIf="authenticationForm.controls.email.hasError('maxlength') && authenticationForm.controls.email.touched">
-      <p>Maximum email length is 250!</p>
+    <ion-item *ngIf="alertFormGroup.controls.email.hasError('maxlength') && alertFormGroup.controls.email.touched">
+      <p>The maximum length is 250</p>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Password</ion-label>
-      <ion-input formControlName="password" type="password"></ion-input>
+      <ion-input formControlName="password" type="password" [(ngModel)]="authenticationForm.password"></ion-input>
+    </ion-item>
+  
+    <ion-item *ngIf="alertFormGroup.controls.password.hasError('required') && alertFormGroup.controls.password.touched">
+      <p>The field is required</p>
     </ion-item>
 
-    <ion-item *ngIf="authenticationForm.controls.password.hasError('required') && authenticationForm.controls.password.touched">
-      <p>Password is required!</p>
+    <ion-item *ngIf="alertFormGroup.controls.password.hasError('maxlength') && alertFormGroup.controls.password.touched">
+      <p>The maximum length is 250</p>
     </ion-item>
 
-    <ion-item *ngIf="authenticationForm.controls.password.hasError('maxlength') && authenticationForm.controls.password.touched">
-      <p>Maximum password length is 250!</p>
-    </ion-item>
-
-    <button ion-button block [disabled]="!authenticationForm.valid" type="submit" icon-left>
+    <button ion-button block [disabled]="!authenticationFormGroup.valid" type="submit" icon-left>
       <ion-icon name="log-in"></ion-icon> Sign in
     </button>
   </form>
