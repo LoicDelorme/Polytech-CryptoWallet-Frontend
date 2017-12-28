@@ -18,7 +18,7 @@ export class UpdateCryptocurrencyPage {
   public cryptocurrencyForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
-    this.cryptocurrency = this.navParams.get("cryprocurrency");
+    this.cryptocurrency = this.navParams.get("cryptocurrency");
     this.cryptocurrencyForm = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],

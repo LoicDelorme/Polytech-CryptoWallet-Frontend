@@ -18,6 +18,7 @@ export class UpdateSettingPage {
   public settingForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider) {
+    this.setting = this.navParams.get("setting");
     this.settingForm = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       theme: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]

@@ -76,6 +76,16 @@ export class CryptocurrenciesPage {
   public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
     this.administratorCryptocurrencyProvider.deleteCryptocurrency(window.localStorage.getItem("user.token.value"), cryptocurrency).subscribe(data => {
       console.warn(data);
+
+      let filteredIndex: number = this.filteredCryptocurrencies.indexOf(cryptocurrency);
+      if (filteredIndex != -1) {
+        this.filteredCryptocurrencies.splice(filteredIndex, 1);
+      }
+
+      let allIndex: number = this.allCryptocurrencies.indexOf(cryptocurrency);
+      if (allIndex != -1 && allIndex != filteredIndex) {
+        this.allCryptocurrencies.splice(allIndex, 1);
+      }
     });
   }
 }
