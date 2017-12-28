@@ -8,7 +8,7 @@
   <form [formGroup]="settingForm" (ngSubmit)="onSubmit(settingForm.value)">
     <ion-item>
       <ion-label floating>Name</ion-label>
-      <ion-input formControlName="name" type="text"></ion-input>
+      <ion-input formControlName="name" type="text" value="{{ setting.name }}"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="settingForm.controls.name.hasError('required') && settingForm.controls.name.touched">
@@ -21,7 +21,7 @@
 
     <ion-item>
       <ion-label floating>Theme</ion-label>
-      <ion-input formControlName="theme" type="text"></ion-input>
+      <ion-input formControlName="theme" type="text" value="{{ setting.theme }}"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="settingForm.controls.theme.hasError('required') && settingForm.controls.theme.touched">
