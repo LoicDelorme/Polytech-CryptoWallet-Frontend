@@ -28,10 +28,6 @@
       <p>The field is required</p>
     </ion-item>
 
-    <ion-item *ngIf="alertFormGroup.controls.threshold.hasError('maxlength') && alertFormGroup.controls.threshold.touched">
-      <p>The maximum length is 250</p>
-    </ion-item>
-
     <ion-item>
       <ion-label>One shot</ion-label>
       <ion-toggle formControlName="oneShot" checked="false" [(ngModel)]="alertForm.oneShot"></ion-toggle>
