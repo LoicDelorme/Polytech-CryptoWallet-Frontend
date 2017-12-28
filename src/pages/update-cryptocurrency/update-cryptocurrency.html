@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Update cryptocurrency</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="cryptocurrencyForm" (ngSubmit)="onSubmit(cryptocurrencyForm.value)">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input formControlName="name" type="text" value="{{ cryptocurrency.name }}"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.name.hasError('required') && cryptocurrencyForm.controls.name.touched">
+      <p>Name is required!</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.name.hasError('maxlength') && cryptocurrencyForm.controls.name.touched">
+      <p>Maximum name length is 250!</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Symbol</ion-label>
+      <ion-input formControlName="symbol" type="text" value="{{ cryptocurrency.symbol }}"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.symbol.hasError('required') && cryptocurrencyForm.controls.symbol.touched">
+      <p>Symbol is required!</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.symbol.hasError('maxlength') && cryptocurrencyForm.controls.symbol.touched">
+      <p>Maximum symbol length is 250!</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Image URL</ion-label>
+      <ion-input formControlName="imageUrl" type="text" value="{{ cryptocurrency.imageUrl }}"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.imageUrl.hasError('required') && cryptocurrencyForm.controls.imageUrl.touched">
+      <p>Image URL is required!</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.imageUrl.hasError('maxlength') && cryptocurrencyForm.controls.imageUrl.touched">
+      <p>Maximum imageUrl length is 250!</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Base URL</ion-label>
+      <ion-input formControlName="baseUrl" type="text" value="{{ cryptocurrency.baseUrl }}"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.baseUrl.hasError('required') && cryptocurrencyForm.controls.baseUrl.touched">
+      <p>Base URL is required!</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.baseUrl.hasError('maxlength') && cryptocurrencyForm.controls.baseUrl.touched">
+      <p>Maximum baseUrl length is 250!</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Resource URL</ion-label>
+      <ion-input formControlName="resourceUrl" type="text" value="{{ cryptocurrency.resourceUrl }}"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.resourceUrl.hasError('required') && cryptocurrencyForm.controls.resourceUrl.touched">
+      <p>Resource URL is required!</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyForm.controls.resourceUrl.hasError('maxlength') && cryptocurrencyForm.controls.resourceUrl.touched">
+      <p>Maximum resourceUrl length is 250!</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!cryptocurrencyForm.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Overview</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-item>
+      <ion-label floating>ID</ion-label>
+      <ion-input type="number" value="{{ cryptocurrency.id }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" value="{{ cryptocurrency.name }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Symbol</ion-label>
+      <ion-input type="text" value="{{ cryptocurrency.symbol }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Image URL</ion-label>
+      <ion-input type="text" value="{{ cryptocurrency.imageUrl }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Base URL</ion-label>
+      <ion-input type="text" value="{{ cryptocurrency.baseUrl }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Resource URL</ion-label>
+      <ion-input type="text" value="{{ cryptocurrency.resourceUrl }}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Creation date</ion-label>
+      <ion-input type="text" value="{{ cryptocurrency.creationDate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last update</ion-label>
+      <ion-input type="text" value="{{ cryptocurrency.lastUpdate }}" readonly="true"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

@@ -21,6 +21,9 @@ import { UpdateWalletPage } from '../pages/update-wallet/update-wallet';
 import { OverviewSettingPage } from '../pages/overview-setting/overview-setting';
 import { InsertSettingPage } from '../pages/insert-setting/insert-setting';
 import { UpdateSettingPage } from '../pages/update-setting/update-setting';
+import { OverviewCryptocurrencyPage } from '../pages/overview-cryptocurrency/overview-cryptocurrency';
+import { InsertCryptocurrencyPage } from '../pages/insert-cryptocurrency/insert-cryptocurrency';
+import { UpdateCryptocurrencyPage } from '../pages/update-cryptocurrency/update-cryptocurrency';
 
 import { AdministratorAlertProvider } from '../providers/administrator/alert/alert';
 import { AdministratorAlertTypeProvider } from '../providers/administrator/alerttype/alerttype';
@@ -53,7 +56,10 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     UpdateWalletPage,
     OverviewSettingPage,
     InsertSettingPage,
-    UpdateSettingPage
+    UpdateSettingPage,
+    OverviewCryptocurrencyPage,
+    InsertCryptocurrencyPage,
+    UpdateCryptocurrencyPage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +84,10 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     UpdateWalletPage,
     OverviewSettingPage,
     InsertSettingPage,
-    UpdateSettingPage
+    UpdateSettingPage,
+    OverviewCryptocurrencyPage,
+    InsertCryptocurrencyPage,
+    UpdateCryptocurrencyPage
   ],
   providers: [
     StatusBar,
