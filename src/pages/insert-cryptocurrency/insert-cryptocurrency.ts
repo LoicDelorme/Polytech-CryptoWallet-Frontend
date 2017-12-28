@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../model/cryptocurrency';
+import { CryptocurrencyForm } from '../../forms/cryptocurrencyform';
 
 import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
 
@@ -14,10 +14,12 @@ import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
 })
 export class InsertCryptocurrencyPage {
 
-  public cryptocurrencyForm: FormGroup;
+  public cryptocurrencyForm: CryptocurrencyForm;
+  public cryptocurrencyFormGroup: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
-    this.cryptocurrencyForm = formBuilder.group({
+    this.cryptocurrencyForm = new CryptocurrencyForm();
+    this.cryptocurrencyFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
@@ -27,15 +29,8 @@ export class InsertCryptocurrencyPage {
   }
 
   public onSubmit(value: any): void {
-    if (this.cryptocurrencyForm.valid) {
-      let cryptocurrency: Cryptocurrency = new Cryptocurrency();
-      cryptocurrency.name = value.name;
-      cryptocurrency.symbol = value.symbol;
-      cryptocurrency.imageUrl = value.imageUrl;
-      cryptocurrency.baseUrl = value.baseUrl;
-      cryptocurrency.resourceUrl = value.resourceUrl;
-
-      this.administratorCryptocurrencyProvider.insertCryptocurrency(window.localStorage.getItem("user.token.value"), cryptocurrency).subscribe(data => {
+    if (this.cryptocurrencyFormGroup.valid) {
+      this.administratorCryptocurrencyProvider.insertCryptocurrency(window.localStorage.getItem("user.token.value"), this.cryptocurrencyForm).subscribe(data => {
         console.warn(data);
 
         this.navCtrl.setRoot(CryptocurrenciesPage);
