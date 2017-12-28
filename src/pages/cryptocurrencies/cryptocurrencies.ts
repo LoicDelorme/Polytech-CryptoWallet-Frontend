@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
+import { FavoriteForm } from '../../forms/favoriteform';
 
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
@@ -64,7 +65,7 @@ export class CryptocurrenciesPage {
   }
 
   public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
-    this.registeredUserProvider.insertFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
+    this.registeredUserProvider.insertFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency, new FavoriteForm()).subscribe(data => {
       console.warn(data);
     });
   }

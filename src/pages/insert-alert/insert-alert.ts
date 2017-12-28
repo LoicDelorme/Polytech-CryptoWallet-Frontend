@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Alert } from '../../model/alert';
 import { Cryptocurrency } from '../../model/cryptocurrency';
 import { AlertType } from '../../model/alerttype';
 import { AlertForm } from '../../forms/alertform';

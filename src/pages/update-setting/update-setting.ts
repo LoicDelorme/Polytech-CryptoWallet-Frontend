@@ -8,7 +8,6 @@ import { SettingForm } from '../../forms/settingform';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 
 import { SettingsPage } from '../settings/settings';
-import { LAZY_LOADED_TOKEN } from 'ionic-angular/util/module-loader';
 
 @Component({
   selector: 'page-update-setting',
