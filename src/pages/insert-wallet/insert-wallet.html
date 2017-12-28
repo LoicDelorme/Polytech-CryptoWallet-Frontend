@@ -5,21 +5,21 @@
 </ion-header>
 
 <ion-content padding>
-  <form [formGroup]="walletForm" (ngSubmit)="onSubmit(walletForm.value)">
+  <form [formGroup]="walletFormGroup" (ngSubmit)="onSubmit(walletFormGroup.value)">
     <ion-item>
       <ion-label floating>Name</ion-label>
-      <ion-input formControlName="name" type="text"></ion-input>
+      <ion-input formControlName="name" type="text" [(ngModel)]="walletForm.name"></ion-input>
     </ion-item>
 
-    <ion-item *ngIf="walletForm.controls.name.hasError('required') && walletForm.controls.name.touched">
-      <p>Name is required!</p>
+    <ion-item *ngIf="walletFormGroup.controls.name.hasError('required') && walletFormGroup.controls.name.touched">
+      <p>The field is required</p>
     </ion-item>
 
-    <ion-item *ngIf="walletForm.controls.name.hasError('maxlength') && walletForm.controls.name.touched">
-      <p>Maximum name length is 250!</p>
+    <ion-item *ngIf="walletFormGroup.controls.name.hasError('maxlength') && walletFormGroup.controls.name.touched">
+      <p>The maximum length is 250</p>
     </ion-item>
 
-    <button ion-button block [disabled]="!walletForm.valid" type="submit" icon-left>
+    <button ion-button block [disabled]="!walletFormGroup.valid" type="submit" icon-left>
       <ion-icon name="submit"></ion-icon> Submit
     </button>
   </form>
