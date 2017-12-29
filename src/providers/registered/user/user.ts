@@ -185,6 +185,6 @@ export class RegisteredUserProvider {
   }
 
   public deleteAsset(token: string, userId: number, wallet: Wallet, cryptocurrency: Cryptocurrency): Observable<Response<Asset>> {
-    return this.http.delete<Response<Asset>>(RegisteredUserProvider.deleteAssetPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()));
+    return this.http.delete<Response<Asset>>(RegisteredUserProvider.deleteAssetPath.replace("TOKEN", token).replace("USER_ID", userId.toString()).replace("WALLET_ID", wallet.id.toString()).replace("CRYPTOCURRENCY_ID", cryptocurrency.id.toString()));
   }
 }
