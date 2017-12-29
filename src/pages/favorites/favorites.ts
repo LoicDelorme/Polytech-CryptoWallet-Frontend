@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
 
@@ -18,7 +18,7 @@ export class FavoritesPage {
   public filteredFavorites: Array<Cryptocurrency> = [];
   public allFavorites: Array<Cryptocurrency> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider) {
   }
 
   public ionViewWillEnter(): void {
@@ -56,18 +56,38 @@ export class FavoritesPage {
   }
 
   public onDeleteFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
-    this.registeredUserProvider.deleteFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
-      console.warn(data);
-
-      let filteredIndex: number = this.filteredFavorites.indexOf(cryptocurrency);
-      if (filteredIndex != -1) {
-        this.filteredFavorites.splice(filteredIndex, 1);
-      }
-
-      let allIndex: number = this.allFavorites.indexOf(cryptocurrency);
-      if (allIndex != -1 && allIndex != filteredIndex) {
-        this.allFavorites.splice(allIndex, 1);
-      }
+    let confirmationAlert = this.alertCtrl.create({
+      title: 'Are you sure?',
+      message: 'Do you really want to delete this favorite?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Ok',
+          role: null,
+          handler: () => {
+            this.registeredUserProvider.deleteFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
+              console.warn(data);
+        
+              let filteredIndex: number = this.filteredFavorites.indexOf(cryptocurrency);
+              if (filteredIndex != -1) {
+                this.filteredFavorites.splice(filteredIndex, 1);
+              }
+        
+              let allIndex: number = this.allFavorites.indexOf(cryptocurrency);
+              if (allIndex != -1 && allIndex != filteredIndex) {
+                this.allFavorites.splice(allIndex, 1);
+              }
+            });
+          }
+        }
+      ]
     });
+
+    confirmationAlert.present();
   }
 }
