@@ -1,16 +1,10 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons start>
-      <button ion-button icon-only (click)="onUpdateUserButtonClicked()">
-        <ion-icon name="update"></ion-icon>
-      </button>
-    </ion-buttons>
-
     <ion-title>Overview</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="onDeleteUserButtonClicked()">
-        <ion-icon name="delete"></ion-icon>
+      <button ion-button icon-only (click)="onUpdateUserButtonClicked()">
+        <ion-icon name="update"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -67,5 +61,9 @@
       <ion-label floating>Last activity</ion-label>
       <ion-input type="text" value="{{ user.lastActivity }}" readonly="true"></ion-input>
     </ion-item>
+
+    <button ion-button block (click)="onDeleteUserButtonClicked()" icon-left>
+      <ion-icon name="delete"></ion-icon> Delete your account
+    </button>
   </form>
 </ion-content>
