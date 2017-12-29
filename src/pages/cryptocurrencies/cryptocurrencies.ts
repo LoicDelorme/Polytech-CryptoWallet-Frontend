@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
+import { FavoriteForm } from '../../forms/favoriteform';
 
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
 
+import { ChartPage } from '../chart/chart';
 import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
 import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-cryptocurrency';
 
@@ -60,6 +62,16 @@ export class CryptocurrenciesPage {
 
   public onOverviewCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
     this.navCtrl.push(OverviewCryptocurrencyPage, { cryptocurrency: cryptocurrency });
+  }
+
+  public onCryptocurrencyChartButtonClicked(cryptocurrency: Cryptocurrency): void {
+    this.navCtrl.push(ChartPage, { cryptocurrency: cryptocurrency });
+  }
+
+  public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
+    this.registeredUserProvider.insertFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency, new FavoriteForm()).subscribe(data => {
+      console.warn(data);
+    });
   }
 
   public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
