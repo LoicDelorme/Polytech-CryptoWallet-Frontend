@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { AlertForm } from '../../forms/alertform';
 import { Cryptocurrency } from '../../model/cryptocurrency';
 import { AlertType } from '../../model/alerttype';
-import { AlertForm } from '../../forms/alertform';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttype/alerttype';
+import { RegisteredUserProvider } from '../../providers/registered/user/user';
 
 import { AlertsPage } from '../alerts/alerts';
 
@@ -24,6 +24,8 @@ export class InsertAlertPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public registeredAlertTypeProvider: RegisteredAlertTypeProvider) {
     this.alertForm = new AlertForm();
+    this.alertForm.userId = parseInt(window.localStorage.getItem("user.id"));
+
     this.alertFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       threshold: ['', Validators.compose([Validators.required])],
@@ -45,7 +47,6 @@ export class InsertAlertPage {
 
   public onSubmit(value: any): void {
     if (this.alertFormGroup.valid) {
-      this.alertForm.userId = parseInt(window.localStorage.getItem("user.id"));
       this.registeredUserProvider.insertAlert(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), this.alertForm).subscribe(data => {
         console.warn(data);
 

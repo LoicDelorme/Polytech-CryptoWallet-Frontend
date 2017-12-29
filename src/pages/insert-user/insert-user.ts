@@ -6,7 +6,7 @@ import { UserForm } from '../../forms/userform';
 
 import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
 
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { SettingsPage } from '../settings/settings';
 
 @Component({
   selector: 'page-insert-user',
@@ -32,7 +32,7 @@ export class InsertUserPage {
       this.unregisteredUserProvider.subscribe(this.userForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(CryptocurrenciesPage);
+        this.navCtrl.setRoot(SettingsPage);
       });
     }
   }

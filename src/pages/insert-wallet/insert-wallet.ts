@@ -19,6 +19,8 @@ export class InsertWalletPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider) {
     this.walletForm = new WalletForm();
+    this.walletForm.userId = parseInt(window.localStorage.getItem("user.id"));
+
     this.walletFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
@@ -26,7 +28,6 @@ export class InsertWalletPage {
 
   public onSubmit(value: any): void {
     if (this.walletFormGroup.valid) {
-      this.walletForm.userId = parseInt(window.localStorage.getItem("user.id"));
       this.registeredUserProvider.insertWallet(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), this.walletForm).subscribe(data => {
         console.warn(data);
 
