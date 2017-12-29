@@ -10,8 +10,11 @@ import { MyApp } from './app.component';
 import { CryptocurrenciesPage } from '../pages/cryptocurrencies/cryptocurrencies';
 import { FavoritesPage } from '../pages/favorites/favorites';
 import { WalletsPage } from '../pages/wallets/wallets';
+import { AssetsPage } from '../pages/assets/assets';
 import { AlertsPage } from '../pages/alerts/alerts';
 import { SettingsPage } from '../pages/settings/settings';
+import { TokensPage } from '../pages/tokens/tokens';
+import { LogsPage } from '../pages/logs/logs';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { ChartPage } from '../pages/chart/chart';
@@ -25,7 +28,6 @@ import { OverviewAlertTypePage } from '../pages/overview-alerttype/overview-aler
 import { InsertAlertTypePage } from '../pages/insert-alerttype/insert-alerttype';
 import { UpdateAlertTypePage } from '../pages/update-alerttype/update-alerttype';
 
-import { OverviewAssetPage } from '../pages/overview-asset/overview-asset';
 import { InsertAssetPage } from '../pages/insert-asset/insert-asset';
 import { UpdateAssetPage } from '../pages/update-asset/update-asset';
 
@@ -72,8 +74,11 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     CryptocurrenciesPage,
     FavoritesPage,
     WalletsPage,
+    AssetsPage,
     AlertsPage,
     SettingsPage,
+    TokensPage,
+    LogsPage,
     TabsPage,
     ChartPage,
     AuthenticationPage,
@@ -83,7 +88,6 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     OverviewAlertTypePage,
     InsertAlertTypePage,
     UpdateAlertTypePage,
-    OverviewAssetPage,
     InsertAssetPage,
     UpdateAssetPage,
     OverviewCryptocurrencyPage,
@@ -114,8 +118,11 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     CryptocurrenciesPage,
     FavoritesPage,
     WalletsPage,
+    AssetsPage,
     AlertsPage,
     SettingsPage,
+    TokensPage,
+    LogsPage,
     TabsPage,
     ChartPage,
     AuthenticationPage,
@@ -125,7 +132,6 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     OverviewAlertTypePage,
     InsertAlertTypePage,
     UpdateAlertTypePage,
-    OverviewAssetPage,
     InsertAssetPage,
     UpdateAssetPage,
     OverviewCryptocurrencyPage,
