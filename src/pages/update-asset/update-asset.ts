@@ -26,17 +26,6 @@ export class UpdateAssetPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider) {
     let asset: Asset = this.navParams.get("asset");
 
-    this.registeredUserProvider.getWallet(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), asset.walletId).subscribe(data => {
-      console.warn(data);
-
-      this.wallet = data.data;
-    });
-    this.unregisteredCryptocurrencyProvider.getCryptocurrency(asset.cryptocurrency.id).subscribe(data => {
-      console.warn(data);
-
-      this.cryptocurrency = data.data;
-    });
-
     this.assetForm = new AssetForm();
     this.assetForm.amount = asset.amount;
     this.assetForm.purchasePrice = asset.purchasePrice;
@@ -44,6 +33,22 @@ export class UpdateAssetPage {
     this.assetFormGroup = formBuilder.group({
       amount: ['', Validators.compose([Validators.required])],
       purchasePrice: ['', Validators.compose([Validators.required])]
+    });
+  }
+
+  public ionViewDidEnter(): void {
+    let asset: Asset = this.navParams.get("asset");
+
+    this.registeredUserProvider.getWallet(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), asset.walletId).subscribe(data => {
+      console.warn(data);
+
+      this.wallet = data.data;
+    });
+
+    this.unregisteredCryptocurrencyProvider.getCryptocurrency(asset.cryptocurrency.id).subscribe(data => {
+      console.warn(data);
+
+      this.cryptocurrency = data.data;
     });
   }
 

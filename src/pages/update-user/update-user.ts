@@ -7,7 +7,7 @@ import { UserForm } from '../../forms/userform';
 
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { SettingsPage } from '../settings/settings';
 
 @Component({
   selector: 'page-update-user',
@@ -43,7 +43,7 @@ export class UpdateUserPage {
       this.registeredUserProvider.updateUser(localStorage.getItem("user.token.value"),this.userForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(CryptocurrenciesPage);
+        this.navCtrl.setRoot(SettingsPage);
       });
     }
   }
