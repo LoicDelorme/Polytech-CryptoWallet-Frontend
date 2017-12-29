@@ -27,7 +27,7 @@ export class UpdateWalletPage {
     this.walletForm.userId = wallet.userId;
 
     this.walletFormGroup = formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+      name: [wallet.name, Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 

@@ -40,14 +40,14 @@
 
     <ion-item>
       <ion-label floating>Cryptocurrency</ion-label>
-      <ion-select formControlName="cryptocurrencyId" [(ngModel)]="alertForm.cryptocurrencyId" (ngModelChange)="updateAlertName()">
+      <ion-select formControlName="cryptocurrencyId" [(ngModel)]="alertForm.cryptocurrencyId" (ngModelChange)="updateName()">
         <ion-option *ngFor="let favorite of allFavorites" value="{{ favorite.id }}">{{ favorite.name }}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Type</ion-label>
-      <ion-select formControlName="typeId" [(ngModel)]="alertForm.typeId" (ngModelChange)="updateAlertName()">
+      <ion-select formControlName="typeId" [(ngModel)]="alertForm.typeId" (ngModelChange)="updateName()">
         <ion-option *ngFor="let type of allTypes" value="{{ type.id }}">{{ type.name }}</ion-option>
       </ion-select>
     </ion-item>

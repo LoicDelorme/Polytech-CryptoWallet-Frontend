@@ -28,8 +28,8 @@ export class UpdateSettingPage {
     this.settingForm.userId = setting.userId;
 
     this.settingFormGroup = formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      theme: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+      name: [setting.name, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      theme: [setting.userId, Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 

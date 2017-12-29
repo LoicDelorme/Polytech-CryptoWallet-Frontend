@@ -30,11 +30,11 @@ export class UpdateCryptocurrencyPage {
     this.cryptocurrencyForm.resourceUrl = cryptocurrency.resourceUrl;
 
     this.cryptocurrencyFormGroup = formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      baseUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      resourceUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+      name: [cryptocurrency.name, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      symbol: [cryptocurrency.symbol, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      imageUrl: [cryptocurrency.imageUrl, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      baseUrl: [cryptocurrency.baseUrl, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      resourceUrl: [cryptocurrency.resourceUrl, Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 

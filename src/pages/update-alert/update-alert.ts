@@ -37,21 +37,24 @@ export class UpdateAlertPage {
     this.alertForm.typeId = alert.type.id;
 
     this.alertFormGroup = formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      threshold: ['', Validators.compose([Validators.required])],
-      oneShot: [false],
-      active: [false],
-      cryptocurrencyId: ['', Validators.compose([Validators.required])],
-      typeId: ['', Validators.compose([Validators.required])]
+      name: [alert.name, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      threshold: [alert.threshold, Validators.compose([Validators.required])],
+      oneShot: [alert.oneShot],
+      active: [alert.active],
+      cryptocurrencyId: [alert.cryptocurrency.id, Validators.compose([Validators.required])],
+      typeId: [alert.type.id, Validators.compose([Validators.required])]
     });
   }
 
   public ionViewDidEnter(): void {
     this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allFavorites = data.data;
+      this.updateAlertName();
     });
+
     this.registeredAlertTypeProvider.allAlertTypes(window.localStorage.getItem("user.token.value")).subscribe(data => {
       this.allTypes = data.data;
+      this.updateAlertName();
     });
   }
 
@@ -65,11 +68,11 @@ export class UpdateAlertPage {
     }
   }
 
-  public updateAlertName(): void {
-    let favorite: Cryptocurrency = this.allFavorites[this.alertForm.cryptocurrencyId - 1];
-    let alertType: AlertType = this.allTypes[this.alertForm.typeId - 1];
+  public updateName(): void {
+    let favorite: Cryptocurrency = this.allFavorites.find(favorite => { return favorite.id === this.alertForm.cryptocurrencyId; });
+    let type: AlertType = this.allTypes.find(type => { return type.id === this.alertForm.typeId; });
     let threshold: number = this.alertForm.threshold;
 
-    this.alertForm.name = (favorite ? favorite.name : "\"Cryptocurrency\"") + " " + (alertType ? alertType.name : "\"Type\"") + " " + (threshold ? threshold : "\"Threshold\"");
+    this.alertForm.name = (favorite ? favorite.name : "\"Cryptocurrency\"") + " " + (type ? type.name : "\"Type\"") + " " + (threshold ? threshold : "\"Threshold\"");
   }
 }

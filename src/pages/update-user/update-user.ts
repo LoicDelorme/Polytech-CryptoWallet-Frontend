@@ -31,10 +31,10 @@ export class UpdateUserPage {
     this.userForm.administrator = user.administrator;
 
     this.userFormGroup = formBuilder.group({
-      lastname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      firstname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      email: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      password: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+      lastname: [user.lastname, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      firstname: [user.firstname, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      email: [user.email, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      password: [user.password, Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 

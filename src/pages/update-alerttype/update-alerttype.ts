@@ -26,7 +26,7 @@ export class UpdateAlertTypePage {
     this.alertTypeForm.name = alertType.name;
 
     this.alertTypeFormGroup = formBuilder.group({
-      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+      name: [alertType.name, Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 

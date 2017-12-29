@@ -34,8 +34,8 @@ export class UpdateAssetPage {
     this.assetForm.purchasePrice = asset.purchasePrice;
 
     this.assetFormGroup = formBuilder.group({
-      amount: ['', Validators.compose([Validators.required])],
-      purchasePrice: ['', Validators.compose([Validators.required])]
+      amount: [asset.amount, Validators.compose([Validators.required])],
+      purchasePrice: [asset.purchasePrice, Validators.compose([Validators.required])]
     });
   }
 
