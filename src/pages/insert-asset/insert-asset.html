@@ -27,14 +27,7 @@
     <ion-item>
       <ion-label floating>Cryptocurrency</ion-label>
       <ion-select formControlName="cryptocurrency" [(ngModel)]="cryptocurrency">
-        <ion-option *ngFor="let favorite of allFavorites" value="{{ favorite }}">{{ favorite.name }}</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Wallet</ion-label>
-      <ion-select formControlName="wallet" [(ngModel)]="wallet">
-        <ion-option *ngFor="let wallet of allWallets" value="{{ wallet }}">{{ wallet.name }}</ion-option>
+        <ion-option *ngFor="let favorite of allFavorites" [value]="favorite">{{ favorite.name }}</ion-option>
       </ion-select>
     </ion-item>
 

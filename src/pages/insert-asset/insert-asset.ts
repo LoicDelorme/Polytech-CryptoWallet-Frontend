@@ -19,26 +19,23 @@ export class InsertAssetPage {
   public cryptocurrency: Cryptocurrency;
   public wallet: Wallet;
   public allFavorites: Array<Cryptocurrency> = [];
-  public allWallets: Array<Wallet> = [];
   public assetForm: AssetForm;
   public assetFormGroup: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider) {
+    this.wallet = this.navParams.get("wallet");
+
     this.assetForm = new AssetForm();
     this.assetFormGroup = formBuilder.group({
       amount: ['', Validators.compose([Validators.required])],
       purchasePrice: ['', Validators.compose([Validators.required])],
-      cryptocurrency: ['', Validators.compose([Validators.required])],
-      wallet: ['', Validators.compose([Validators.required])]
+      cryptocurrency: ['', Validators.compose([Validators.required])]
     });
   }
 
   public ionViewDidEnter(): void {
     this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
       this.allFavorites = data.data;
-    });
-    this.registeredUserProvider.allWallets(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-      this.allWallets = data.data;
     });
   }
 
