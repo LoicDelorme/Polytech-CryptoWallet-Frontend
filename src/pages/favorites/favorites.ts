@@ -25,7 +25,11 @@ export class FavoritesPage {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
       this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: FavoritesPage });
-    } else {
+    }
+  }
+
+  public ionViewDidEnter(): void {
+    if (this.isRegistered) {
       this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
         this.allFavorites = data.data;
         this.filteredFavorites = data.data;
@@ -72,7 +76,7 @@ export class FavoritesPage {
           handler: () => {
             this.registeredUserProvider.deleteFavorite(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), cryptocurrency).subscribe(data => {
               console.warn(data);
-        
+
               let filteredIndex: number = this.filteredFavorites.indexOf(cryptocurrency);
               if (filteredIndex != -1) {
                 this.filteredFavorites.splice(filteredIndex, 1);

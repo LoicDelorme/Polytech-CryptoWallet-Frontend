@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../model/cryptocurrency';
 
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
+import { RegisteredUserProvider } from '../../providers/registered/user/user';
+import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
 
 import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
 import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-cryptocurrency';
@@ -14,10 +16,17 @@ import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-crypto
 })
 export class CryptocurrenciesPage {
 
+  public isAdministrator: boolean = null;
+  public isRegistered: boolean = null;
   public filteredCryptocurrencies: Array<Cryptocurrency> = [];
   public allCryptocurrencies: Array<Cryptocurrency> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider) {    
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
+  }
+
+  public ionViewWillEnter(): void {
+    this.isAdministrator = (window.localStorage.getItem("user.administrator") === "true");
+    this.isRegistered = (window.localStorage.getItem("user") === "true");
   }
 
   public ionViewDidEnter(): void {
@@ -51,5 +60,41 @@ export class CryptocurrenciesPage {
 
   public onOverviewCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
     this.navCtrl.push(OverviewCryptocurrencyPage, { cryptocurrency: cryptocurrency });
+  }
+
+  public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
+    let confirmationAlert = this.alertCtrl.create({
+      title: 'Are you sure?',
+      message: 'Do you really want to delete this cryptocurrency?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Ok',
+          role: null,
+          handler: () => {
+            this.administratorCryptocurrencyProvider.deleteCryptocurrency(window.localStorage.getItem("user.token.value"), cryptocurrency).subscribe(data => {
+              console.warn(data);
+
+              let filteredIndex: number = this.filteredCryptocurrencies.indexOf(cryptocurrency);
+              if (filteredIndex != -1) {
+                this.filteredCryptocurrencies.splice(filteredIndex, 1);
+              }
+        
+              let allIndex: number = this.allCryptocurrencies.indexOf(cryptocurrency);
+              if (allIndex != -1 && allIndex != filteredIndex) {
+                this.allCryptocurrencies.splice(allIndex, 1);
+              }
+            });
+          }
+        }
+      ]
+    });
+
+    confirmationAlert.present();
   }
 }

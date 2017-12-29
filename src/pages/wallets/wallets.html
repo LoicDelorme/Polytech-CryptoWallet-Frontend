@@ -20,12 +20,20 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
-    <button ion-item *ngFor="let filteredWallet of filteredWallets" (click)="onOverviewWalletButtonClicked(filteredWallet)">
-      <ion-avatar item-start>
-        <ion-icon name="wallet_"></ion-icon>
-      </ion-avatar>
-
-      <h3>{{ filteredWallet.name }}</h3>
-    </button>
+    <ion-item-sliding *ngFor="let filteredWallet of filteredWallets">
+      <button ion-item (click)="onOverviewWalletButtonClicked(filteredWallet)">
+        <ion-avatar item-start>
+            <ion-icon name="wallet_"></ion-icon>
+        </ion-avatar>
+  
+        <h3>{{ filteredWallet.name }}</h3>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="onDeleteWalletButtonClicked(filteredWallet)" icon-start>
+          <ion-icon name="delete"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

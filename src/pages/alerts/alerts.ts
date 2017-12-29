@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { Alert } from '../../model/alert';
 
@@ -19,14 +19,18 @@ export class AlertsPage {
   public filteredAlerts: Array<Alert> = [];
   public allAlerts: Array<Alert> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider) {
   }
 
   public ionViewWillEnter(): void {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
       this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AlertsPage });
-    } else {
+    }
+  }
+
+  public ionViewDidEnter(): void {
+    if (this.isRegistered) {
       this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
         this.allAlerts = data.data;
         this.filteredAlerts = data.data;
@@ -58,5 +62,41 @@ export class AlertsPage {
 
   public onOverviewAlertButtonClicked(alert: Alert): void {
     this.navCtrl.push(OverviewAlertPage, { alert: alert });
+  }
+
+  public onDeleteAlertButtonClicked(alert: Alert): void {
+    let confirmationAlert = this.alertCtrl.create({
+      title: 'Are you sure?',
+      message: 'Do you really want to delete this alert?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Ok',
+          role: null,
+          handler: () => {
+            this.registeredUserProvider.deleteAlert(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), alert).subscribe(data => {
+              console.warn(data);
+
+              let filteredIndex: number = this.filteredAlerts.indexOf(alert);
+              if (filteredIndex != -1) {
+                this.filteredAlerts.splice(filteredIndex, 1);
+              }
+        
+              let allIndex: number = this.allAlerts.indexOf(alert);
+              if (allIndex != -1 && allIndex != filteredIndex) {
+                this.allAlerts.splice(allIndex, 1);
+              }
+            });
+          }
+        }
+      ]
+    });
+
+    confirmationAlert.present();
   }
 }

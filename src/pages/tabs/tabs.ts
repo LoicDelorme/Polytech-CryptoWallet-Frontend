@@ -20,7 +20,6 @@ export class TabsPage {
   settingsRoot:any = SettingsPage;
 
   constructor(public navCtrl: NavController) {
-    // TO REMOVE
-    window.localStorage.clear();
+    window.localStorage.clear(); // TO REMOVE
   }
 }

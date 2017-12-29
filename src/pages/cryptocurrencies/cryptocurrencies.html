@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button icon-only (click)="onInsertCryptocurrencyButtonClicked()">
+      <button ion-button icon-only *ngIf="isAdministrator" (click)="onInsertCryptocurrencyButtonClicked()">
         <ion-icon name="insert"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,7 +20,7 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
-    <button ion-item *ngFor="let filteredCryptocurrency of filteredCryptocurrencies" (click)="onOverviewCryptocurrencyButtonClicked(filteredCryptocurrency)" icon-start>
+    <button ion-item *ngIf="!isAdministrator" *ngFor="let filteredCryptocurrency of filteredCryptocurrencies" (click)="onOverviewCryptocurrencyButtonClicked(filteredCryptocurrency)" icon-start>
       <ion-avatar item-start>
         <img src="{{ filteredCryptocurrency.imageUrl }}" />
       </ion-avatar>
@@ -28,5 +28,22 @@
       <h3>{{ filteredCryptocurrency.name }}</h3>
       <p>{{ filteredCryptocurrency.symbol }}</p>
     </button>
+
+    <ion-item-sliding *ngIf="isAdministrator" *ngFor="let filteredCryptocurrency of filteredCryptocurrencies">
+      <button ion-item (click)="onOverviewCryptocurrencyButtonClicked(filteredCryptocurrency)">
+        <ion-avatar item-start>
+          <img src="{{ filteredCryptocurrency.imageUrl }}" />
+        </ion-avatar>
+  
+        <h3>{{ filteredCryptocurrency.name }}</h3>
+        <p>{{ filteredCryptocurrency.symbol }}</p>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="onDeleteCryptocurrencyButtonClicked(filteredCryptocurrency)" icon-start>
+          <ion-icon name="delete"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
