@@ -6,7 +6,7 @@ import { Cryptocurrency } from '../../model/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 
 import { AuthenticationPage } from '../authentication/authentication';
-import { ChartPage } from '../chart/chart';
+import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
 
 @Component({
   selector: 'page-favorites',
@@ -25,14 +25,12 @@ export class FavoritesPage {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
       this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: FavoritesPage });
+    } else {
+      this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+        this.allFavorites = data.data;
+        this.filteredFavorites = data.data;
+      });
     }
-  }
-
-  public ionViewDidEnter(): void {
-    this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-      this.allFavorites = data.data;
-      this.filteredFavorites = data.data;
-    });
   }
 
   public onRefreshFavoritesButtonClicked(): void {
@@ -53,8 +51,8 @@ export class FavoritesPage {
     }
   }
 
-  public onCryptocurrencyChartButtonClicked(cryptocurrency: Cryptocurrency): void {
-    this.navCtrl.push(ChartPage, { cryptocurrency: cryptocurrency });
+  public onOverviewCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
+    this.navCtrl.push(OverviewCryptocurrencyPage, { cryptocurrency: cryptocurrency });
   }
 
   public onDeleteFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {

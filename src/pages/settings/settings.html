@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button icon-only *ngIf="isRegistered" (click)="onInsertSettingButtonClicked()">
+      <button ion-button icon-only (click)="onInsertSettingButtonClicked()">
         <ion-icon name="insert"></ion-icon>
       </button>
     </ion-buttons>
@@ -9,7 +9,7 @@
     <ion-title>My settings</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only *ngIf="isRegistered" (click)="onRefreshSettingsButtonClicked()">
+      <button ion-button icon-only (click)="onRefreshSettingsButtonClicked()">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -20,24 +20,12 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
-    <ion-item *ngFor="let filteredSetting of filteredSettings">
+    <button ion-item *ngFor="let filteredSetting of filteredSettings" (click)="onOverviewSettingButtonClicked(filteredSetting)">
       <ion-avatar item-start>
         <ion-icon name="setting_"></ion-icon>
       </ion-avatar>
 
       <h3>{{ filteredSetting.name }}</h3>
-
-      <button ion-button round *ngIf="isRegistered" (click)="onSettingOverviewButtonClicked(filteredSetting)" item-end>
-        <ion-icon name="overview"></ion-icon>
-      </button>
-
-      <button ion-button round *ngIf="isRegistered" (click)="onUpdateSettingButtonClicked(filteredSetting)" item-end>
-        <ion-icon name="update"></ion-icon>
-      </button>
-
-      <button ion-button round *ngIf="isRegistered" (click)="onDeleteSettingButtonClicked(filteredSetting)" item-end>
-        <ion-icon name="delete"></ion-icon>
-      </button>
-    </ion-item>
+    </button>
   </ion-list>
 </ion-content>

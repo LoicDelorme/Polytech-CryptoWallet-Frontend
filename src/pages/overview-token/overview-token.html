@@ -1,12 +1,13 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Overview</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onDeleteTokenButtonClicked()">
+        <ion-icon name="delete"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-  <ion-buttons end>
-    <button ion-button icon-only (click)="onDeleteTokenButtonClicked()">
-      <ion-icon name="delete"></ion-icon>
-    </button>
-  </ion-buttons>
 </ion-header>
 
 <ion-content padding>

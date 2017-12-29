@@ -1,12 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons start>
-    </ion-buttons>
-
     <ion-title>My favorites</ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only *ngIf="isRegistered" (click)="onRefreshFavoritesButtonClicked()">
+      <button ion-button icon-only (click)="onRefreshFavoritesButtonClicked()">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -17,21 +14,21 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
-    <ion-item *ngFor="let filteredFavorite of filteredFavorites">
-      <ion-avatar item-start>
-        <img src="{{ filteredFavorite.imageUrl }}" />
-      </ion-avatar>
-
-      <h3>{{ filteredFavorite.name }}</h3>
-      <p>{{ filteredFavorite.symbol }}</p>
-
-      <button ion-button round *ngIf="isRegistered" (click)="onCryptocurrencyChartButtonClicked(filteredFavorite)" item-end>
-        <ion-icon name="chart"></ion-icon>
+    <ion-item-sliding *ngFor="let filteredFavorite of filteredFavorites">
+      <button ion-item (click)="onOverviewCryptocurrencyButtonClicked(filteredFavorite)">
+        <ion-avatar item-start>
+          <img src="{{ filteredFavorite.imageUrl }}" />
+        </ion-avatar>
+  
+        <h3>{{ filteredFavorite.name }}</h3>
+        <p>{{ filteredFavorite.symbol }}</p>
       </button>
-
-      <button ion-button round *ngIf="isRegistered" (click)="onDeleteFavoriteButtonClicked(filteredFavorite)" item-end>
-        <ion-icon name="delete"></ion-icon>
-      </button>
-    </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="onDeleteFavoriteButtonClicked(filteredFavorite)" icon-start>
+          <ion-icon name="delete"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

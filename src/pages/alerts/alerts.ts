@@ -8,7 +8,6 @@ import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { AuthenticationPage } from '../authentication/authentication';
 import { OverviewAlertPage } from '../overview-alert/overview-alert';
 import { InsertAlertPage } from '../insert-alert/insert-alert';
-import { UpdateAlertPage } from '../update-alert/update-alert';
 
 @Component({
   selector: 'page-alerts',
@@ -27,14 +26,12 @@ export class AlertsPage {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
       this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AlertsPage });
+    } else {
+      this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+        this.allAlerts = data.data;
+        this.filteredAlerts = data.data;
+      });
     }
-  }
-
-  public ionViewDidEnter(): void {
-    this.registeredUserProvider.allAlerts(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-      this.allAlerts = data.data;
-      this.filteredAlerts = data.data;
-    });
   }
 
   public onInsertAlertButtonClicked(): void {
@@ -59,27 +56,7 @@ export class AlertsPage {
     }
   }
 
-  public onAlertOverviewButtonClicked(alert: Alert): void {
+  public onOverviewAlertButtonClicked(alert: Alert): void {
     this.navCtrl.push(OverviewAlertPage, { alert: alert });
-  }
-
-  public onUpdateAlertButtonClicked(alert: Alert): void {
-    this.navCtrl.push(UpdateAlertPage, { alert: alert });
-  }
-
-  public onDeleteAlertButtonClicked(alert: Alert): void {
-    this.registeredUserProvider.deleteAlert(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), alert).subscribe(data => {
-      console.warn(data);
-
-      let filteredIndex: number = this.filteredAlerts.indexOf(alert);
-      if (filteredIndex != -1) {
-        this.filteredAlerts.splice(filteredIndex, 1);
-      }
-
-      let allIndex: number = this.allAlerts.indexOf(alert);
-      if (allIndex != -1 && allIndex != filteredIndex) {
-        this.allAlerts.splice(allIndex, 1);
-      }
-    });
   }
 }

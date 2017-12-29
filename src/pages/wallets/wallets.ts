@@ -8,7 +8,6 @@ import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { AuthenticationPage } from '../authentication/authentication';
 import { OverviewWalletPage } from '../overview-wallet/overview-wallet';
 import { InsertWalletPage } from '../insert-wallet/insert-wallet';
-import { UpdateWalletPage } from '../update-wallet/update-wallet';
 
 @Component({
   selector: 'page-wallets',
@@ -27,14 +26,12 @@ export class WalletsPage {
     this.isRegistered = (window.localStorage.getItem("user") === "true");
     if (!this.isRegistered) {
       this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: WalletsPage });
+    } else {
+      this.registeredUserProvider.allWallets(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+        this.allWallets = data.data;
+        this.filteredWallets = data.data;
+      });
     }
-  }
-
-  public ionViewDidEnter(): void {
-    this.registeredUserProvider.allWallets(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-      this.allWallets = data.data;
-      this.filteredWallets = data.data;
-    });
   }
 
   public onInsertWalletButtonClicked(): void {
@@ -59,27 +56,7 @@ export class WalletsPage {
     }
   }
 
-  public onWalletOverviewButtonClicked(wallet: Wallet): void {
+  public onOverviewWalletButtonClicked(wallet: Wallet): void {
     this.navCtrl.push(OverviewWalletPage, { wallet: wallet });
-  }
-
-  public onUpdateWalletButtonClicked(wallet: Wallet): void {
-    this.navCtrl.push(UpdateWalletPage, { wallet: wallet });
-  }
-
-  public onDeleteWalletButtonClicked(wallet: Wallet): void {
-    this.registeredUserProvider.deleteWallet(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), wallet).subscribe(data => {
-      console.warn(data);
-
-      let filteredIndex: number = this.filteredWallets.indexOf(wallet);
-      if (filteredIndex != -1) {
-        this.filteredWallets.splice(filteredIndex, 1);
-      }
-
-      let allIndex: number = this.allWallets.indexOf(wallet);
-      if (allIndex != -1 && allIndex != filteredIndex) {
-        this.allWallets.splice(allIndex, 1);
-      }
-    });
   }
 }
