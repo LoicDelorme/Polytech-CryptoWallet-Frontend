@@ -54,4 +54,12 @@ export class InsertAlertPage {
       });
     }
   }
+
+  public updateAlertName(): void {
+    let favorite: Cryptocurrency = this.allFavorites[this.alertForm.cryptocurrencyId - 1];
+    let alertType: AlertType = this.allTypes[this.alertForm.typeId - 1];
+    let threshold: number = this.alertForm.threshold;
+
+    this.alertForm.name = (favorite ? favorite.name : "\"Cryptocurrency\"") + " " + (alertType ? alertType.name : "\"Type\"") + " " + (threshold ? threshold : "\"Threshold\"");
+  }
 }
