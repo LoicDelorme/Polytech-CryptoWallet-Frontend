@@ -23,8 +23,10 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Assets</ion-label>
-      <ion-input type="text" value="SOON..." readonly="true"></ion-input>
+      <p class="ion-label-assets">Assets</p>
+      <button class="ion-input-assets" ion-button (click)="onOverviewAssetsButtonClicked()" icon-start clear>
+        <ion-icon name="assets"></ion-icon>
+      </button>
     </ion-item>
 
     <ion-item>
