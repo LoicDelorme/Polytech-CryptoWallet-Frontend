@@ -6,9 +6,9 @@ import { User } from '../../entities/user';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { UserUpdatePage } from '../user-update/user-update';
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-user-overview',
@@ -24,7 +24,7 @@ export class UserOverviewPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: CryptocurrenciesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
     }
   }
 
@@ -51,7 +51,7 @@ export class UserOverviewPage {
 
               this.localInformationProvider.clearAllInformation();
 
-              this.navCtrl.setRoot(CryptocurrenciesPage);
+              this.navCtrl.setRoot(HomePage);
             });
           }
         }

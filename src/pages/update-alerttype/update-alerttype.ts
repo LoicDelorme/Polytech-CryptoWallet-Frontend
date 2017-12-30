@@ -8,7 +8,7 @@ import { AlertTypeForm } from '../../forms/alerttypeform';
 import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype/alerttype';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllAlertTypesPage } from '../all-alerttypes/all-alerttypes';
 
 @Component({
@@ -34,7 +34,7 @@ export class UpdateAlertTypePage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
     }
   }
 

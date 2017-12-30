@@ -10,7 +10,7 @@ import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttyp
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllAlertsPage } from '../all-alerts/all-alerts';
 
 @Component({
@@ -40,7 +40,7 @@ export class InsertAlertPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
     }
   }
 

@@ -5,7 +5,7 @@ import { AlertType } from '../../entities/alerttype';
 
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { UpdateAlertTypePage } from '../update-alerttype/update-alerttype';
 import { AllAlertTypesPage } from '../all-alerttypes/all-alerttypes';
 
@@ -23,7 +23,7 @@ export class OverviewAlertTypePage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
     }
   }
 

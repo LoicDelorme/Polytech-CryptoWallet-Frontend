@@ -7,7 +7,7 @@ import { CryptocurrencyForm } from '../../forms/cryptocurrencyform';
 import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllCryptocurrenciesPage } from '../all-cryptocurrencies/all-cryptocurrencies';
 
 @Component({
@@ -33,7 +33,7 @@ export class InsertCryptocurrencyPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
     }
   }
 

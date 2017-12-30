@@ -6,10 +6,10 @@ import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
 import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-cryptocurrency';
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-all-cryptocurrencies',
@@ -25,7 +25,7 @@ export class AllCryptocurrenciesPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: CryptocurrenciesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
     }
   }
 

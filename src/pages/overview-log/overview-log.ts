@@ -5,7 +5,7 @@ import { Log } from '../../entities/log';
 
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllLogsPage } from '../all-logs/all-logs';
 
 @Component({
@@ -22,7 +22,7 @@ export class OverviewLogPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllLogsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllLogsPage });
     }
   }
 }

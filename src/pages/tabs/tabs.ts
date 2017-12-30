@@ -6,6 +6,7 @@ import { AllFavoritesPage } from '../all-favorites/all-favorites';
 import { AllWalletsPage } from '../all-wallets/all-wallets';
 import { AllAlertsPage } from '../all-alerts/all-alerts';
 import { AllSettingsPage } from '../all-settings/all-settings';
+
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
 @Component({

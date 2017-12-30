@@ -8,7 +8,7 @@ import { UserForm } from '../../forms/userform';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-user-update',
@@ -44,7 +44,7 @@ export class UserUpdatePage {
       this.registeredUserProvider.updateUser(this.localInformationProvider.getUserTokenValue(), this.userForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(CryptocurrenciesPage);
+        this.navCtrl.setRoot(HomePage);
       });
     }
   }

@@ -6,8 +6,8 @@ import { UserForm } from '../../forms/userform';
 
 import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
 
-import { AuthenticationPage } from '../authentication/authentication';
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-user-subscription',
@@ -34,7 +34,7 @@ export class UserSubscriptionPage {
       this.unregisteredUserProvider.subscribe(this.userSubscriptionForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: CryptocurrenciesPage });
+        this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
       });
     }
   }

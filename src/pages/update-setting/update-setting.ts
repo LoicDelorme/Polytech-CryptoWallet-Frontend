@@ -8,7 +8,7 @@ import { SettingForm } from '../../forms/settingform';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllSettingsPage } from '../all-settings/all-settings';
 
 @Component({
@@ -39,7 +39,7 @@ export class UpdateSettingPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllSettingsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllSettingsPage });
     }
   }
 

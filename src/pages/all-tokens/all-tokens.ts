@@ -6,7 +6,7 @@ import { Token } from '../../entities/token';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewTokenPage } from '../overview-token/overview-token';
 
 @Component({
@@ -23,7 +23,7 @@ export class AllTokensPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllTokensPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllTokensPage });
     }
   }
 

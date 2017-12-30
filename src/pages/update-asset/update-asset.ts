@@ -11,7 +11,7 @@ import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllWalletsPage } from '../all-wallets/all-wallets';
 
 @Component({
@@ -44,7 +44,7 @@ export class UpdateAssetPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
     }
   }
 

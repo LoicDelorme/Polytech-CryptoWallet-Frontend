@@ -6,7 +6,7 @@ import { Setting } from '../../entities/setting';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewSettingPage } from '../overview-setting/overview-setting';
 import { InsertSettingPage } from '../insert-setting/insert-setting';
 
@@ -24,7 +24,7 @@ export class AllSettingsPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllSettingsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllSettingsPage });
     }
   }
 

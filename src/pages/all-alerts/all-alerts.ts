@@ -6,7 +6,7 @@ import { Alert } from '../../entities/alert';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewAlertPage } from '../overview-alert/overview-alert';
 import { InsertAlertPage } from '../insert-alert/insert-alert';
 
@@ -24,7 +24,7 @@ export class AllAlertsPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
     }
   }
 

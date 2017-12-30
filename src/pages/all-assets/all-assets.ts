@@ -7,7 +7,7 @@ import { Asset } from '../../entities/asset';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { InsertAssetPage } from '../insert-asset/insert-asset';
 import { UpdateAssetPage } from '../update-asset/update-asset';
 import { AllWalletsPage } from '../all-wallets/all-wallets';
@@ -28,7 +28,7 @@ export class AllAssetsPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
     }
   }
 

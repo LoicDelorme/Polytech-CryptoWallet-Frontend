@@ -6,10 +6,10 @@ import { AlertType } from '../../entities/alerttype';
 import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype/alerttype';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewAlertTypePage } from '../overview-alerttype/overview-alerttype';
 import { InsertAlertTypePage } from '../insert-alerttype/insert-alerttype';
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-all-alerttypes',
@@ -25,7 +25,7 @@ export class AllAlertTypesPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: CryptocurrenciesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
     }
   }
 

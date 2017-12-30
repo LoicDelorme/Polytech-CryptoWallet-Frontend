@@ -6,7 +6,7 @@ import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AuthenticationPage } from '../authentication/authentication';
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
 import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-cryptocurrency';
 
@@ -24,7 +24,7 @@ export class AllFavoritesPage {
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllFavoritesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllFavoritesPage });
     }
   }
 
