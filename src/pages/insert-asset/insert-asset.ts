@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Wallet } from '../../model/wallet';
-import { Cryptocurrency } from '../../model/cryptocurrency';
+import { Wallet } from '../../entities/wallet';
+import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { AssetForm } from '../../forms/assetform';
 
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { WalletsPage } from '../wallets/wallets';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllWalletsPage } from '../all-wallets/all-wallets';
 
 @Component({
   selector: 'page-insert-asset',
@@ -22,10 +24,10 @@ export class InsertAssetPage {
   public assetForm: AssetForm;
   public assetFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
     this.wallet = this.navParams.get("wallet");
-
     this.assetForm = new AssetForm();
+
     this.assetFormGroup = formBuilder.group({
       amount: ['', Validators.compose([Validators.required])],
       purchasePrice: ['', Validators.compose([Validators.required])],
@@ -33,18 +35,28 @@ export class InsertAssetPage {
     });
   }
 
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+    }
+  }
+
   public ionViewDidEnter(): void {
-    this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
-      this.allFavorites = data.data;
-    });
+    if (this.localInformationProvider.isUserRegistered()) {
+      this.registeredUserProvider.allFavorites(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
+        console.warn(data);
+
+        this.allFavorites = data.data;
+      });
+    }
   }
 
   public onSubmit(value: any): void {
     if (this.assetFormGroup.valid) {
-      this.registeredUserProvider.insertAsset(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), this.wallet, this.cryptocurrency, this.assetForm).subscribe(data => {
+      this.registeredUserProvider.insertAsset(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(WalletsPage);
+        this.navCtrl.setRoot(AllWalletsPage);
       });
     }
   }

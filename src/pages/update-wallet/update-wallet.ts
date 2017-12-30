@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Wallet } from '../../model/wallet';
+import { Wallet } from '../../entities/wallet';
 import { WalletForm } from '../../forms/walletform';
 
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { WalletsPage } from '../wallets/wallets';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllWalletsPage } from '../all-wallets/all-wallets';
 
 @Component({
   selector: 'page-update-wallet',
@@ -18,7 +20,7 @@ export class UpdateWalletPage {
   public walletForm: WalletForm;
   public walletFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
     let wallet: Wallet = this.navParams.get("wallet");
 
     this.walletForm = new WalletForm();
@@ -31,12 +33,18 @@ export class UpdateWalletPage {
     });
   }
 
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+    }
+  }
+
   public onSubmit(value: any): void {
     if (this.walletFormGroup.valid) {
-      this.registeredUserProvider.updateWallet(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), this.walletForm).subscribe(data => {
+      this.registeredUserProvider.updateWallet(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.walletForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(WalletsPage);
+        this.navCtrl.setRoot(AllWalletsPage);
       });
     }
   }

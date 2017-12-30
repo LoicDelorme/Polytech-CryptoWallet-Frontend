@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Favorite } from '../../../model/favorite';
+import { Favorite } from '../../../entities/favorite';
 import { FavoriteForm } from '../../../forms/favoriteform';
-import { User } from '../../../model/user';
-import { Cryptocurrency } from '../../../model/cryptocurrency';
+import { User } from '../../../entities/user';
+import { Cryptocurrency } from '../../../entities/cryptocurrency';
 import { Response } from '../../../responses/response';
 
 @Injectable()

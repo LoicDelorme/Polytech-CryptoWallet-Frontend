@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { User } from '../../../model/user';
-import { Token } from '../../../model/token';
+import { User } from '../../../entities/user';
+import { Token } from '../../../entities/token';
 import { UserForm } from '../../../forms/userform';
 import { AuthenticationForm } from '../../../forms/authenticationform';
 import { Response } from '../../../responses/response';

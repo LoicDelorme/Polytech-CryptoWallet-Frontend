@@ -5,8 +5,10 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AlertTypeForm } from '../../forms/alerttypeform';
 
 import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype/alerttype';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { SettingsPage } from '../settings/settings';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllSettingsPage } from '../all-settings/all-settings';
 
 @Component({
   selector: 'page-insert-alerttype',
@@ -17,19 +19,26 @@ export class InsertAlertTypePage {
   public alertTypeForm: AlertTypeForm;
   public alertTypeFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorAlertTypeProvider: AdministratorAlertTypeProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorAlertTypeProvider: AdministratorAlertTypeProvider, public localInformationProvider: LocalInformationProvider) {
     this.alertTypeForm = new AlertTypeForm();
+
     this.alertTypeFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllSettingsPage });
+    }
+  }
+
   public onSubmit(value: any): void {
     if (this.alertTypeFormGroup.valid) {
-      this.administratorAlertTypeProvider.insertAlertType(window.localStorage.getItem("user.token.value"), this.alertTypeForm).subscribe(data => {
+      this.administratorAlertTypeProvider.insertAlertType(this.localInformationProvider.getUserTokenValue(), this.alertTypeForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(SettingsPage);
+        this.navCtrl.setRoot(AllSettingsPage);
       });
     }
   }

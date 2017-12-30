@@ -5,8 +5,10 @@ import { NavController, NavParams } from 'ionic-angular';
 import { SettingForm } from '../../forms/settingform';
 
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { SettingsPage } from '../settings/settings';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllSettingsPage } from '../all-settings/all-settings';
 
 @Component({
   selector: 'page-insert-setting',
@@ -17,22 +19,29 @@ export class InsertSettingPage {
   public settingForm: SettingForm;
   public settingFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
     this.settingForm = new SettingForm();
-    this.settingForm.userId = parseInt(window.localStorage.getItem("user.id"));
+    this.settingForm.userId = this.localInformationProvider.getUserId();
 
     this.settingFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      theme: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+      theme: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      chartPeriod: ['', Validators.compose([Validators.required, /*Validators.pattern("")*/, Validators.maxLength(3)])]
     });
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllSettingsPage });
+    }
   }
 
   public onSubmit(value: any): void {
     if (this.settingFormGroup.valid) {
-      this.registeredUserProvider.insertSetting(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), this.settingForm).subscribe(data => {
+      this.registeredUserProvider.insertSetting(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.settingForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(SettingsPage);
+        this.navCtrl.setRoot(AllSettingsPage);
       });
     }
   }

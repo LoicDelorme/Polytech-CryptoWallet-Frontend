@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Alert } from '../../model/alert';
+import { Alert } from '../../entities/alert';
 
+import { LocalInformationProvider } from '../../providers/local/information/information';
+
+import { AuthenticationPage } from '../authentication/authentication';
 import { UpdateAlertPage } from '../update-alert/update-alert';
+import { AllAlertsPage } from '../all-alerts/all-alerts';
 
 @Component({
   selector: 'page-overview-alert',
@@ -13,8 +17,14 @@ export class OverviewAlertPage {
 
   public alert: Alert;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
     this.alert = this.navParams.get("alert");
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+    }
   }
 
   public onUpdateAlertButtonClicked(): void {

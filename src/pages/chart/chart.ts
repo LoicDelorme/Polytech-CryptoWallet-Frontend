@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../model/cryptocurrency';
+import { Cryptocurrency } from '../../entities/cryptocurrency';
 
 @Component({
   selector: 'page-chart',

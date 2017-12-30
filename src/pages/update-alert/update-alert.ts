@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Alert } from '../../model/alert';
-import { Cryptocurrency } from '../../model/cryptocurrency';
-import { AlertType } from '../../model/alerttype';
+import { Alert } from '../../entities/alert';
+import { Cryptocurrency } from '../../entities/cryptocurrency';
+import { AlertType } from '../../entities/alerttype';
 import { AlertForm } from '../../forms/alertform';
 
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttype/alerttype';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { AlertsPage } from '../alerts/alerts';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllAlertsPage } from '../all-alerts/all-alerts';
 
 @Component({
   selector: 'page-update-alert',
@@ -23,7 +25,7 @@ export class UpdateAlertPage {
   public alertForm: AlertForm;
   public alertFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public registeredAlertTypeProvider: RegisteredAlertTypeProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public registeredAlertTypeProvider: RegisteredAlertTypeProvider, public localInformationProvider: LocalInformationProvider) {
     let alert: Alert = this.navParams.get("alert");
 
     this.alertForm = new AlertForm();
@@ -46,24 +48,34 @@ export class UpdateAlertPage {
     });
   }
 
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+    }
+  }
+
   public ionViewDidEnter(): void {
-    this.registeredUserProvider.allFavorites(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id"))).subscribe(data => {
+    this.registeredUserProvider.allFavorites(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
+      console.warn(data);
+
       this.allFavorites = data.data;
-      this.updateAlertName();
+      this.updateName();
     });
 
-    this.registeredAlertTypeProvider.allAlertTypes(window.localStorage.getItem("user.token.value")).subscribe(data => {
+    this.registeredAlertTypeProvider.allAlertTypes(this.localInformationProvider.getUserTokenValue()).subscribe(data => {
+      console.warn(data);
+
       this.allTypes = data.data;
-      this.updateAlertName();
+      this.updateName();
     });
   }
 
   public onSubmit(value: any): void {
     if (this.alertFormGroup.valid) {
-      this.registeredUserProvider.updateAlert(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), this.alertForm).subscribe(data => {
+      this.registeredUserProvider.updateAlert(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.alertForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AlertsPage);
+        this.navCtrl.setRoot(AllAlertsPage);
       });
     }
   }

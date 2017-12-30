@@ -32,6 +32,23 @@
       <p>The maximum length is 250</p>
     </ion-item>
 
+    <ion-item>
+      <ion-label floating>Chart period</ion-label>
+      <ion-input formControlName="chartPeriod" type="text" [(ngModel)]="settingForm.chartPeriod"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="settingFormGroup.controls.chartPeriod.hasError('required') && settingFormGroup.controls.chartPeriod.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="settingFormGroup.controls.chartPeriod.hasError('pattern') && settingFormGroup.controls.chartPeriod.touched">
+      <p>The pattern should be like this: '3M'</p>
+    </ion-item>
+
+    <ion-item *ngIf="settingFormGroup.controls.chartPeriod.hasError('maxlength') && settingFormGroup.controls.chartPeriod.touched">
+      <p>The maximum length is 3</p>
+    </ion-item>
+
     <button ion-button block [disabled]="!settingFormGroup.valid" type="submit" icon-left>
       <ion-icon name="submit"></ion-icon> Submit
     </button>

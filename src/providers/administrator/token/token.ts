@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Token } from '../../../model/token';
+import { Token } from '../../../entities/token';
 import { Response } from '../../../responses/response';
 
 @Injectable()

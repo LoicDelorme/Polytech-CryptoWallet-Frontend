@@ -2,15 +2,17 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Wallet } from '../../model/wallet';
-import { Cryptocurrency } from '../../model/cryptocurrency';
-import { Asset } from '../../model/asset';
+import { Wallet } from '../../entities/wallet';
+import { Cryptocurrency } from '../../entities/cryptocurrency';
+import { Asset } from '../../entities/asset';
 import { AssetForm } from '../../forms/assetform';
 
 import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { WalletsPage } from '../wallets/wallets';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllWalletsPage } from '../all-wallets/all-wallets';
 
 @Component({
   selector: 'page-update-asset',
@@ -23,11 +25,12 @@ export class UpdateAssetPage {
   public assetForm: AssetForm;
   public assetFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
     let asset: Asset = this.navParams.get("asset");
+    let wallet: Wallet = this.navParams.get("wallet");
 
-    this.cryptocurrency = this.navParams.get("asset").cryptocurrency;
-    this.wallet = this.navParams.get("wallet");
+    this.cryptocurrency = asset.cryptocurrency;
+    this.wallet = wallet;
 
     this.assetForm = new AssetForm();
     this.assetForm.amount = asset.amount;
@@ -39,12 +42,18 @@ export class UpdateAssetPage {
     });
   }
 
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+    }
+  }
+
   public onSubmit(value: any): void {
     if (this.assetFormGroup.valid) {
-      this.registeredUserProvider.updateAsset(window.localStorage.getItem("user.token.value"), parseInt(window.localStorage.getItem("user.id")), this.wallet, this.cryptocurrency, this.assetForm).subscribe(data => {
+      this.registeredUserProvider.updateAsset(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(WalletsPage);
+        this.navCtrl.setRoot(AllWalletsPage);
       });
     }
   }

@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { AlertType } from '../../model/alerttype';
+import { AlertType } from '../../entities/alerttype';
 import { AlertTypeForm } from '../../forms/alerttypeform';
 
 import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype/alerttype';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { SettingsPage } from '../settings/settings';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllAlertTypesPage } from '../all-alerttypes/all-alerttypes';
 
 @Component({
   selector: 'page-update-alerttype',
@@ -18,7 +20,7 @@ export class UpdateAlertTypePage {
   public alertTypeForm: AlertTypeForm;
   public alertTypeFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorAlertTypeProvider: AdministratorAlertTypeProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorAlertTypeProvider: AdministratorAlertTypeProvider, public localInformationProvider: LocalInformationProvider) {
     let alertType: AlertType = this.navParams.get("alertType");
 
     this.alertTypeForm = new AlertTypeForm();
@@ -30,12 +32,18 @@ export class UpdateAlertTypePage {
     });
   }
 
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
+    }
+  }
+
   public onSubmit(value: any): void {
     if (this.alertTypeFormGroup.valid) {
-      this.administratorAlertTypeProvider.updateAlertType(window.localStorage.getItem("user.token.value"), this.alertTypeForm).subscribe(data => {
+      this.administratorAlertTypeProvider.updateAlertType(this.localInformationProvider.getUserTokenValue(), this.alertTypeForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(SettingsPage);
+        this.navCtrl.setRoot(AllAlertTypesPage);
       });
     }
   }

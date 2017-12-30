@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../model/cryptocurrency';
+import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { CryptocurrencyForm } from '../../forms/cryptocurrencyform';
 
 import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
+import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { CryptocurrenciesPage } from '../cryptocurrencies/cryptocurrencies';
+import { AuthenticationPage } from '../authentication/authentication';
+import { AllCryptocurrenciesPage } from '../all-cryptocurrencies/all-cryptocurrencies';
 
 @Component({
   selector: 'page-update-cryptocurrency',
@@ -18,7 +20,7 @@ export class UpdateCryptocurrencyPage {
   public cryptocurrencyForm: CryptocurrencyForm;
   public cryptocurrencyFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, public localInformationProvider: LocalInformationProvider) {
     let cryptocurrency: Cryptocurrency = this.navParams.get("cryptocurrency");
 
     this.cryptocurrencyForm = new CryptocurrencyForm();
@@ -38,12 +40,18 @@ export class UpdateCryptocurrencyPage {
     });
   }
 
+  public ionViewWillEnter(): void {
+    if (!this.localInformationProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(AuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
+    }
+  }
+
   public onSubmit(value: any): void {
     if (this.cryptocurrencyFormGroup.valid) {
-      this.administratorCryptocurrencyProvider.updateCryptocurrency(window.localStorage.getItem("user.token.value"), this.cryptocurrencyForm).subscribe(data => {
+      this.administratorCryptocurrencyProvider.updateCryptocurrency(this.localInformationProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(CryptocurrenciesPage);
+        this.navCtrl.setRoot(AllCryptocurrenciesPage);
       });
     }
   }

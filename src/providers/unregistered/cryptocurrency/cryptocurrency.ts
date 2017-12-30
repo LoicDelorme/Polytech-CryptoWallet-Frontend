@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Cryptocurrency } from '../../../model/cryptocurrency';
+import { Cryptocurrency } from '../../../entities/cryptocurrency';
 import { Response } from '../../../responses/response';
 
 @Injectable()

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Setting } from '../../../model/setting';
+import { Setting } from '../../../entities/setting';
 import { SettingForm } from '../../../forms/settingform';
 import { Response } from '../../../responses/response';
 

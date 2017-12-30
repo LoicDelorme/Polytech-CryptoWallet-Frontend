@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Wallet } from '../../../model/wallet';
+import { Wallet } from '../../../entities/wallet';
 import { WalletForm } from '../../../forms/walletform';
 import { Response } from '../../../responses/response';
 

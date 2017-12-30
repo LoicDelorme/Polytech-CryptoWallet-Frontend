@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { Alert } from '../../../model/alert';
+import { Alert } from '../../../entities/alert';
 import { AlertForm } from '../../../forms/alertform';
 import { Response } from '../../../responses/response';
 

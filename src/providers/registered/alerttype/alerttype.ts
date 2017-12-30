@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AlertType } from '../../../model/alerttype';
+import { AlertType } from '../../../entities/alerttype';
 import { Response } from '../../../responses/response';
 
 @Injectable()
