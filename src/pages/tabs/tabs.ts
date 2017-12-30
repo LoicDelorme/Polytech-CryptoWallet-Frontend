@@ -15,7 +15,7 @@ import { LocalInformationProvider } from '../../providers/local/information/info
 })
 export class TabsPage {
 
-  cryptocurrenciesRoot:any = HomePage;
+  homeRoot:any = HomePage;
   favoritesRoot:any = AllFavoritesPage;
   walletsRoot:any = AllWalletsPage;
   alertsRoot:any = AllAlertsPage;
