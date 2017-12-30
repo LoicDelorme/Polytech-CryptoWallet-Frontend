@@ -21,7 +21,7 @@
 
     <ion-item>
       <ion-label floating>Threshold</ion-label>
-      <ion-input formControlName="threshold" type="number" [(ngModel)]="alertForm.threshold" (ngModelChange)="updateAlertName()"></ion-input>
+      <ion-input formControlName="threshold" type="number" [(ngModel)]="alertForm.threshold" (ngModelChange)="updateName()"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="alertFormGroup.controls.threshold.hasError('required') && alertFormGroup.controls.threshold.touched">

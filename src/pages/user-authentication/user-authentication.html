@@ -8,7 +8,7 @@
   <form [formGroup]="userAuthenticationFormGroup" (ngSubmit)="onSubmit(userAuthenticationFormGroup.value)">
     <ion-item>
       <ion-label floating>Email</ion-label>
-      <ion-input formControlName="email" type="email" [(ngModel)]="authenticationForm.email"></ion-input>
+      <ion-input formControlName="email" type="email" [(ngModel)]="userAuthenticationForm.email"></ion-input>
     </ion-item>
   
     <ion-item *ngIf="userAuthenticationFormGroup.controls.email.hasError('required') && userAuthenticationFormGroup.controls.email.touched">
@@ -21,7 +21,7 @@
 
     <ion-item>
       <ion-label floating>Password</ion-label>
-      <ion-input formControlName="password" type="password" [(ngModel)]="authenticationForm.password"></ion-input>
+      <ion-input formControlName="password" type="password" [(ngModel)]="userAuthenticationForm.password"></ion-input>
     </ion-item>
   
     <ion-item *ngIf="userAuthenticationFormGroup.controls.password.hasError('required') && userAuthenticationFormGroup.controls.password.touched">

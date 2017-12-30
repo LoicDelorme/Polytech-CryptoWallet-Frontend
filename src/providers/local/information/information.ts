@@ -80,7 +80,7 @@ export class LocalInformationProvider {
   }
 
   public isUserRegistered(): boolean {
-    return this.getStringValue(LocalInformationProvider.userKey) === undefined;
+    return this.getStringValue(LocalInformationProvider.userKey) === "true";
   }
 
   public isUserAdministrator(): boolean {

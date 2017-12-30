@@ -8,7 +8,7 @@
   <form [formGroup]="userSubscriptionFormGroup" (ngSubmit)="onSubmit(userSubscriptionFormGroup.value)">
     <ion-item>
       <ion-label floating>Lastname</ion-label>
-      <ion-input formControlName="lastname" type="text" [(ngModel)]="userForm.lastname"></ion-input>
+      <ion-input formControlName="lastname" type="text" [(ngModel)]="userSubscriptionForm.lastname"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="userSubscriptionFormGroup.controls.lastname.hasError('required') && userSubscriptionFormGroup.controls.lastname.touched">
@@ -21,7 +21,7 @@
 
     <ion-item>
       <ion-label floating>Firstname</ion-label>
-      <ion-input formControlName="firstname" type="text" [(ngModel)]="userForm.firstname"></ion-input>
+      <ion-input formControlName="firstname" type="text" [(ngModel)]="userSubscriptionForm.firstname"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="userSubscriptionFormGroup.controls.firstname.hasError('required') && userSubscriptionFormGroup.controls.firstname.touched">
@@ -34,7 +34,7 @@
 
     <ion-item>
       <ion-label floating>Email</ion-label>
-      <ion-input formControlName="email" type="text" [(ngModel)]="userForm.email"></ion-input>
+      <ion-input formControlName="email" type="text" [(ngModel)]="userSubscriptionForm.email"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="userSubscriptionFormGroup.controls.email.hasError('required') && userSubscriptionFormGroup.controls.email.touched">
@@ -47,7 +47,7 @@
 
     <ion-item>
       <ion-label floating>Password</ion-label>
-      <ion-input formControlName="password" type="password" [(ngModel)]="userForm.password"></ion-input>
+      <ion-input formControlName="password" type="password" [(ngModel)]="userSubscriptionForm.password"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="userSubscriptionFormGroup.controls.password.hasError('required') && userSubscriptionFormGroup.controls.password.touched">
