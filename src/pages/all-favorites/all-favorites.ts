@@ -8,7 +8,6 @@ import { LocalInformationProvider } from '../../providers/local/information/info
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
-import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-cryptocurrency';
 
 @Component({
   selector: 'page-all-favorites',

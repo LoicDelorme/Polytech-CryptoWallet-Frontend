@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Token } from '../../entities/token';
 import { AuthenticationForm } from '../../forms/authenticationform';
 
 import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
