@@ -8,7 +8,7 @@ import { UserForm } from '../../forms/userform';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { HomePage } from '../home/home';
+import { SettingsPage } from '../settings/settings';
 
 @Component({
   selector: 'page-user-update',
@@ -44,7 +44,10 @@ export class UserUpdatePage {
       this.registeredUserProvider.updateUser(this.localInformationProvider.getUserTokenValue(), this.userForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(HomePage);
+        this.localInformationProvider.saveUserInformation(data.data);
+
+        this.navCtrl.getPrevious().data.user = data.data;
+        this.navCtrl.pop();
       });
     }
   }
