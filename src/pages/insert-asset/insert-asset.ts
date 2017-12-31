@@ -29,9 +29,9 @@ export class InsertAssetPage {
     this.assetForm = new AssetForm();
 
     this.assetFormGroup = formBuilder.group({
+      cryptocurrency: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
-      purchasePrice: ['', Validators.compose([Validators.required])],
-      cryptocurrency: ['', Validators.compose([Validators.required])]
+      purchasePrice: ['', Validators.compose([Validators.required])]
     });
   }
 
@@ -56,7 +56,7 @@ export class InsertAssetPage {
       this.registeredUserProvider.insertAsset(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllWalletsPage);
+        this.navCtrl.pop();
       });
     }
   }

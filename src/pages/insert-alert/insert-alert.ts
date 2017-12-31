@@ -30,11 +30,11 @@ export class InsertAlertPage {
 
     this.alertFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      cryptocurrencyId: ['', Validators.compose([Validators.required])],
+      typeId: ['', Validators.compose([Validators.required])],
       threshold: ['', Validators.compose([Validators.required])],
       oneShot: [false],
-      active: [false],
-      cryptocurrencyId: ['', Validators.compose([Validators.required])],
-      typeId: ['', Validators.compose([Validators.required])]
+      active: [false]
     });
   }
 
@@ -71,8 +71,8 @@ export class InsertAlertPage {
   }
 
   public updateName(): void {
-    let favorite: Cryptocurrency = this.allFavorites.find(favorite => { return favorite.id === this.alertForm.cryptocurrencyId; });
-    let type: AlertType = this.allTypes.find(type => { return type.id === this.alertForm.typeId; });
+    let favorite: Cryptocurrency = this.allFavorites.find(favorite => { return favorite.id == this.alertForm.cryptocurrencyId; });
+    let type: AlertType = this.allTypes.find(type => { return type.id == this.alertForm.typeId; });
     let threshold: number = this.alertForm.threshold;
 
     this.alertForm.name = (favorite ? favorite.name : "\"Cryptocurrency\"") + " " + (type ? type.name : "\"Type\"") + " " + (threshold ? threshold : "\"Threshold\"");

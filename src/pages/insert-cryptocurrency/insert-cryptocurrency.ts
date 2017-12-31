@@ -42,7 +42,7 @@ export class InsertCryptocurrencyPage {
       this.administratorCryptocurrencyProvider.insertCryptocurrency(this.localInformationProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllCryptocurrenciesPage);
+        this.navCtrl.pop();
       });
     }
   }

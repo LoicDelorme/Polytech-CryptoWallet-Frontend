@@ -39,7 +39,7 @@ export class InsertWalletPage {
       this.registeredUserProvider.insertWallet(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.walletForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllWalletsPage);
+        this.navCtrl.pop();
       });
     }
   }

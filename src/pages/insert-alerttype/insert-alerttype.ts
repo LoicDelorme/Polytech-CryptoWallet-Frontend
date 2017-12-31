@@ -38,7 +38,7 @@ export class InsertAlertTypePage {
       this.administratorAlertTypeProvider.insertAlertType(this.localInformationProvider.getUserTokenValue(), this.alertTypeForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllSettingsPage);
+        this.navCtrl.pop();
       });
     }
   }

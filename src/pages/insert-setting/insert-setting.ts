@@ -41,7 +41,7 @@ export class InsertSettingPage {
       this.registeredUserProvider.insertSetting(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.settingForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllSettingsPage);
+        this.navCtrl.pop();
       });
     }
   }
