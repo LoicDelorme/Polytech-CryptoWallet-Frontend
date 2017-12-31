@@ -8,8 +8,6 @@ import { UserForm } from '../../forms/userform';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
-import { SettingsPage } from '../settings/settings';
-
 @Component({
   selector: 'page-user-update',
   templateUrl: 'user-update.html',
