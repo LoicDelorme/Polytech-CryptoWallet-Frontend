@@ -40,11 +40,11 @@ export class UpdateAlertPage {
 
     this.alertFormGroup = formBuilder.group({
       name: [alert.name, Validators.compose([Validators.required, Validators.maxLength(250)])],
+      cryptocurrencyId: [alert.cryptocurrency.id, Validators.compose([Validators.required])],
+      typeId: [alert.type.id, Validators.compose([Validators.required])],
       threshold: [alert.threshold, Validators.compose([Validators.required])],
       oneShot: [alert.oneShot],
-      active: [alert.active],
-      cryptocurrencyId: [alert.cryptocurrency.id, Validators.compose([Validators.required])],
-      typeId: [alert.type.id, Validators.compose([Validators.required])]
+      active: [alert.active]
     });
   }
 
@@ -75,14 +75,15 @@ export class UpdateAlertPage {
       this.registeredUserProvider.updateAlert(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.alertForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllAlertsPage);
+        this.navCtrl.getPrevious().data.alert = data.data;
+        this.navCtrl.pop();
       });
     }
   }
 
   public updateName(): void {
-    let favorite: Cryptocurrency = this.allFavorites.find(favorite => { return favorite.id === this.alertForm.cryptocurrencyId; });
-    let type: AlertType = this.allTypes.find(type => { return type.id === this.alertForm.typeId; });
+    let favorite: Cryptocurrency = this.allFavorites.find(favorite => { return favorite.id == this.alertForm.cryptocurrencyId; });
+    let type: AlertType = this.allTypes.find(type => { return type.id == this.alertForm.typeId; });
     let threshold: number = this.alertForm.threshold;
 
     this.alertForm.name = (favorite ? favorite.name : "\"Cryptocurrency\"") + " " + (type ? type.name : "\"Type\"") + " " + (threshold ? threshold : "\"Threshold\"");

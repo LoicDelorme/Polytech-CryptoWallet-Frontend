@@ -51,7 +51,8 @@ export class UpdateCryptocurrencyPage {
       this.administratorCryptocurrencyProvider.updateCryptocurrency(this.localInformationProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllCryptocurrenciesPage);
+        this.navCtrl.getPrevious().data.cryptocurrency = data.data;
+        this.navCtrl.pop();
       });
     }
   }

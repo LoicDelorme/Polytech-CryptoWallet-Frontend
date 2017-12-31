@@ -43,7 +43,8 @@ export class UpdateAlertTypePage {
       this.administratorAlertTypeProvider.updateAlertType(this.localInformationProvider.getUserTokenValue(), this.alertTypeForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllAlertTypesPage);
+        this.navCtrl.getPrevious().data.alertType = data.data;
+        this.navCtrl.pop();
       });
     }
   }

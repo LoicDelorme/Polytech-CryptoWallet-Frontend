@@ -20,6 +20,20 @@
     </ion-item>
 
     <ion-item>
+      <ion-label floating>Cryptocurrency</ion-label>
+      <ion-select formControlName="cryptocurrencyId" [(ngModel)]="alertForm.cryptocurrencyId" (ngModelChange)="updateName()">
+        <ion-option *ngFor="let favorite of allFavorites" value="{{ favorite.id }}">{{ favorite.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Type</ion-label>
+      <ion-select formControlName="typeId" [(ngModel)]="alertForm.typeId" (ngModelChange)="updateName()">
+        <ion-option *ngFor="let type of allTypes" value="{{ type.id }}">{{ type.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <ion-label floating>Threshold</ion-label>
       <ion-input formControlName="threshold" type="number" [(ngModel)]="alertForm.threshold" (ngModelChange)="updateName()"></ion-input>
     </ion-item>
@@ -36,20 +50,6 @@
     <ion-item>
         <ion-label>Active</ion-label>
         <ion-toggle formControlName="active" checked="false" [(ngModel)]="alertForm.active"></ion-toggle>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Cryptocurrency</ion-label>
-      <ion-select formControlName="cryptocurrencyId" [(ngModel)]="alertForm.cryptocurrencyId" (ngModelChange)="updateName()">
-        <ion-option *ngFor="let favorite of allFavorites" value="{{ favorite.id }}">{{ favorite.name }}</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Type</ion-label>
-      <ion-select formControlName="typeId" [(ngModel)]="alertForm.typeId" (ngModelChange)="updateName()">
-        <ion-option *ngFor="let type of allTypes" value="{{ type.id }}">{{ type.name }}</ion-option>
-      </ion-select>
     </ion-item>
 
     <button ion-button block [disabled]="!alertFormGroup.valid" type="submit" icon-left>

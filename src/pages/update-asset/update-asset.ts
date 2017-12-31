@@ -53,7 +53,7 @@ export class UpdateAssetPage {
       this.registeredUserProvider.updateAsset(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllWalletsPage);
+        this.navCtrl.pop();
       });
     }
   }

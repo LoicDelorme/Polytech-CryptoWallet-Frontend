@@ -48,7 +48,8 @@ export class UpdateSettingPage {
       this.registeredUserProvider.updateSetting(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.settingForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllSettingsPage);
+        this.navCtrl.getPrevious().data.setting = data.data;
+        this.navCtrl.pop();
       });
     }
   }

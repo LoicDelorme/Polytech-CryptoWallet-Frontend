@@ -44,7 +44,8 @@ export class UpdateWalletPage {
       this.registeredUserProvider.updateWallet(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.walletForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllWalletsPage);
+        this.navCtrl.getPrevious().data.wallet = data.data;
+        this.navCtrl.pop();
       });
     }
   }
