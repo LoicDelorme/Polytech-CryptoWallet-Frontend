@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <ion-list>
+    <ion-list-header>Settings</ion-list-header>
+
+    <button ion-item (click)="onOverviewSettingsButtonClicked()">
+      <ion-icon name="setting" item-start></ion-icon>
+      <ion-label>My settings</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Security</ion-list-header>
+
+    <button ion-item (click)="onOverviewTokensButtonClicked()">
+      <ion-icon name="token" item-start></ion-icon>
+      <ion-label>My tokens</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewLogsButtonClicked()">
+      <ion-icon name="log" item-start></ion-icon>
+      <ion-label>My logs</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Account</ion-list-header>
+
+    <button ion-item (click)="onOverviewAccountButtonClicked()">
+      <ion-icon name="overview" item-start></ion-icon>
+      <ion-label>Overview</ion-label>
+    </button>
+
+    <button ion-item (click)="onLogOutButtonClicked()">
+      <ion-icon name="log-out" item-start></ion-icon>
+      <ion-label>Log out</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list *ngIf="isAdministrator">
+    <ion-list-header>Administration</ion-list-header>
+
+    <button ion-item (click)="onOverviewCryptocurrenciesButtonClicked()">
+      <ion-icon name="cryptocurrency" item-start></ion-icon>
+      <ion-label>Cryptocurrencies</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewAlertTypesButtonClicked()">
+      <ion-icon name="parameter" item-start></ion-icon>
+      <ion-label>Alert types</ion-label>
+    </button>
+  </ion-list>
+</ion-content>

@@ -19,6 +19,7 @@ import { AllTokensPage } from '../pages/all-tokens/all-tokens';
 import { AllWalletsPage } from '../pages/all-wallets/all-wallets';
 
 import { ChartPage } from '../pages/chart/chart';
+import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
 
 import { InsertAlertPage } from '../pages/insert-alert/insert-alert';
@@ -81,6 +82,7 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     AllTokensPage,
     AllWalletsPage,
     ChartPage,
+    SettingsPage,
     HomePage,
     InsertAlertPage,
     InsertAlertTypePage,
@@ -127,6 +129,7 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     AllTokensPage,
     AllWalletsPage,
     ChartPage,
+    SettingsPage,
     HomePage,
     InsertAlertPage,
     InsertAlertTypePage,
