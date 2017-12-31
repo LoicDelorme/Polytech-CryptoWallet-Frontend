@@ -9,7 +9,6 @@ import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
 import { ChartPage } from '../chart/chart';
-import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
 
 @Component({
   selector: 'page-home',
@@ -58,10 +57,6 @@ export class HomePage {
   }
 
   public onOverviewCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
-    this.navCtrl.push(OverviewCryptocurrencyPage, { cryptocurrency: cryptocurrency });
-  }
-
-  public onCryptocurrencyChartButtonClicked(cryptocurrency: Cryptocurrency): void {
     this.navCtrl.push(ChartPage, { cryptocurrency: cryptocurrency });
   }
 
