@@ -7,6 +7,7 @@ import { Token } from '../../../entities/token';
 export class LocalInformationProvider {
 
   public static readonly userKey: string = "user";
+  public static readonly userUserKey: string = "user.user";
   public static readonly userIdKey: string = "user.id";
   public static readonly userLastnameKey: string = "user.lastname";
   public static readonly userFirstnameKey: string = "user.firstname";
@@ -18,6 +19,7 @@ export class LocalInformationProvider {
   public static readonly userLastUpdateKey: string = "user.lastUpdate";
   public static readonly userLastActivityKey: string = "user.lastActivity";
 
+  public static readonly userTokenKey: string = "user.token";
   public static readonly userTokenIdKey: string = "user.token.id";
   public static readonly userTokenValueKey: string = "user.token.value";
   public static readonly userTokenBeginDateKey: string = "user.token.beginDate";
@@ -28,27 +30,65 @@ export class LocalInformationProvider {
   constructor() {
   }
 
+  private setStringValue(key: string, value: string): void {
+    window.localStorage.setItem(key, value);
+  }
+
+  private setNumberValue(key: string, value: number): void {
+    this.setStringValue(key, "" + value);
+  }
+
+  private setObjectValue(key: string, value: any): void {
+    this.setStringValue(key, JSON.stringify(value));
+  }
+
+  private getStringValue(key: string): string {
+    return window.localStorage.getItem(key);
+  }
+
+  private getIntValue(key: string): number {
+    return parseInt(this.getStringValue(key));
+  }
+
+  private getObjectValue(key: string): any {
+    return JSON.parse(this.getStringValue(key));
+  }
+
+  private removeValue(key: string): void {
+    window.localStorage.removeItem(key);
+  }
+
+  public getUser(): User {
+    return this.getObjectValue(LocalInformationProvider.userKey);
+  }
+
+  public getToken(): Token {
+    return this.getObjectValue(LocalInformationProvider.userTokenKey);
+  }
+
   public saveUserInformation(user: User): void {
-    window.localStorage.setItem(LocalInformationProvider.userKey, "true");
-    window.localStorage.setItem(LocalInformationProvider.userIdKey, JSON.stringify(user.id));
-    window.localStorage.setItem(LocalInformationProvider.userLastnameKey, user.lastname);
-    window.localStorage.setItem(LocalInformationProvider.userFirstnameKey, user.firstname);
-    window.localStorage.setItem(LocalInformationProvider.userEmailKey, user.email);
-    window.localStorage.setItem(LocalInformationProvider.userPasswordKey, user.password);
-    window.localStorage.setItem(LocalInformationProvider.userEnabledKey, JSON.stringify(user.enabled));
-    window.localStorage.setItem(LocalInformationProvider.userAdministratorKey, JSON.stringify(user.administrator));
-    window.localStorage.setItem(LocalInformationProvider.userCreationDateKey, JSON.stringify(user.creationDate));
-    window.localStorage.setItem(LocalInformationProvider.userLastUpdateKey, JSON.stringify(user.lastUpdate));
-    window.localStorage.setItem(LocalInformationProvider.userLastActivityKey, JSON.stringify(user.lastActivity));
+    this.setObjectValue(LocalInformationProvider.userKey, user);
+    this.setStringValue(LocalInformationProvider.userUserKey, "true");
+    this.setNumberValue(LocalInformationProvider.userIdKey, user.id);
+    this.setStringValue(LocalInformationProvider.userLastnameKey, user.lastname);
+    this.setStringValue(LocalInformationProvider.userFirstnameKey, user.firstname);
+    this.setStringValue(LocalInformationProvider.userEmailKey, user.email);
+    this.setStringValue(LocalInformationProvider.userPasswordKey, user.password);
+    this.setObjectValue(LocalInformationProvider.userEnabledKey, user.enabled);
+    this.setObjectValue(LocalInformationProvider.userAdministratorKey, user.administrator);
+    this.setObjectValue(LocalInformationProvider.userCreationDateKey, user.creationDate);
+    this.setObjectValue(LocalInformationProvider.userLastUpdateKey, user.lastUpdate);
+    this.setObjectValue(LocalInformationProvider.userLastActivityKey, user.lastActivity);
   }
 
   public saveTokenInformation(token: Token): void {
-    window.localStorage.setItem(LocalInformationProvider.userTokenIdKey, JSON.stringify(token.id));
-    window.localStorage.setItem(LocalInformationProvider.userTokenValueKey, token.value);
-    window.localStorage.setItem(LocalInformationProvider.userTokenBeginDateKey, JSON.stringify(token.beginDate));
-    window.localStorage.setItem(LocalInformationProvider.userTokenEndDateKey, JSON.stringify(token.endDate));
-    window.localStorage.setItem(LocalInformationProvider.userTokenCreationDateKey, JSON.stringify(token.creationDate));
-    window.localStorage.setItem(LocalInformationProvider.userTokenLastUpdateKey, JSON.stringify(token.lastUpdate));
+    this.setObjectValue(LocalInformationProvider.userTokenKey, token);
+    this.setNumberValue(LocalInformationProvider.userTokenIdKey, token.id);
+    this.setStringValue(LocalInformationProvider.userTokenValueKey, token.value);
+    this.setObjectValue(LocalInformationProvider.userTokenBeginDateKey, token.beginDate);
+    this.setObjectValue(LocalInformationProvider.userTokenEndDateKey, token.endDate);
+    this.setObjectValue(LocalInformationProvider.userTokenCreationDateKey, token.creationDate);
+    this.setObjectValue(LocalInformationProvider.userTokenLastUpdateKey, token.lastUpdate);
   }
 
   public clearAllInformation(): void {
@@ -57,30 +97,32 @@ export class LocalInformationProvider {
   }
 
   public clearUserInformation(): void {
-    window.localStorage.removeItem(LocalInformationProvider.userKey);
-    window.localStorage.removeItem(LocalInformationProvider.userIdKey);
-    window.localStorage.removeItem(LocalInformationProvider.userLastnameKey);
-    window.localStorage.removeItem(LocalInformationProvider.userFirstnameKey);
-    window.localStorage.removeItem(LocalInformationProvider.userEmailKey);
-    window.localStorage.removeItem(LocalInformationProvider.userPasswordKey);
-    window.localStorage.removeItem(LocalInformationProvider.userEnabledKey);
-    window.localStorage.removeItem(LocalInformationProvider.userAdministratorKey);
-    window.localStorage.removeItem(LocalInformationProvider.userCreationDateKey);
-    window.localStorage.removeItem(LocalInformationProvider.userLastUpdateKey);
-    window.localStorage.removeItem(LocalInformationProvider.userLastActivityKey);
+    this.removeValue(LocalInformationProvider.userKey);
+    this.removeValue(LocalInformationProvider.userUserKey);
+    this.removeValue(LocalInformationProvider.userIdKey);
+    this.removeValue(LocalInformationProvider.userLastnameKey);
+    this.removeValue(LocalInformationProvider.userFirstnameKey);
+    this.removeValue(LocalInformationProvider.userEmailKey);
+    this.removeValue(LocalInformationProvider.userPasswordKey);
+    this.removeValue(LocalInformationProvider.userEnabledKey);
+    this.removeValue(LocalInformationProvider.userAdministratorKey);
+    this.removeValue(LocalInformationProvider.userCreationDateKey);
+    this.removeValue(LocalInformationProvider.userLastUpdateKey);
+    this.removeValue(LocalInformationProvider.userLastActivityKey);
   }
 
   public clearTokenInformation(): void {
-    window.localStorage.removeItem(LocalInformationProvider.userTokenIdKey);
-    window.localStorage.removeItem(LocalInformationProvider.userTokenValueKey);
-    window.localStorage.removeItem(LocalInformationProvider.userTokenBeginDateKey);
-    window.localStorage.removeItem(LocalInformationProvider.userTokenEndDateKey);
-    window.localStorage.removeItem(LocalInformationProvider.userTokenCreationDateKey);
-    window.localStorage.removeItem(LocalInformationProvider.userTokenLastUpdateKey);
+    this.removeValue(LocalInformationProvider.userTokenKey);
+    this.removeValue(LocalInformationProvider.userTokenIdKey);
+    this.removeValue(LocalInformationProvider.userTokenValueKey);
+    this.removeValue(LocalInformationProvider.userTokenBeginDateKey);
+    this.removeValue(LocalInformationProvider.userTokenEndDateKey);
+    this.removeValue(LocalInformationProvider.userTokenCreationDateKey);
+    this.removeValue(LocalInformationProvider.userTokenLastUpdateKey);
   }
 
   public isUserRegistered(): boolean {
-    return this.getStringValue(LocalInformationProvider.userKey) === "true";
+    return this.getStringValue(LocalInformationProvider.userUserKey) === "true";
   }
 
   public isUserAdministrator(): boolean {
@@ -93,13 +135,5 @@ export class LocalInformationProvider {
 
   public getUserTokenValue(): string {
     return this.getStringValue(LocalInformationProvider.userTokenValueKey);
-  }
-
-  private getStringValue(key: string): string {
-    return window.localStorage.getItem(key);
-  }
-
-  private getIntValue(key: string): number {
-    return parseInt(window.localStorage.getItem(key));
   }
 }
