@@ -18,6 +18,7 @@ export class OverviewCryptocurrencyPage {
   public cryptocurrency: Cryptocurrency;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
+    this.cryptocurrency = this.navParams.get("cryptocurrency");
   }
 
   public ionViewWillEnter(): void {

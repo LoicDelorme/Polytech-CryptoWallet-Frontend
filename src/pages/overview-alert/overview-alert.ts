@@ -18,6 +18,7 @@ export class OverviewAlertPage {
   public alert: Alert;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
+    this.alert = this.navParams.get("alert");
   }
 
   public ionViewWillEnter(): void {

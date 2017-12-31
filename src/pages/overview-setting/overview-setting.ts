@@ -18,6 +18,7 @@ export class OverviewSettingPage {
   public setting: Setting;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
+    this.setting = this.navParams.get("setting");
   }
 
   public ionViewWillEnter(): void {

@@ -17,6 +17,7 @@ export class OverviewTokenPage {
   public token: Token;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
+    this.token = this.navParams.get("token");
   }
 
   public ionViewWillEnter(): void {

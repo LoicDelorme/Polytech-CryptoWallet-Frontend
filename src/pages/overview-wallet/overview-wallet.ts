@@ -19,6 +19,7 @@ export class OverviewWalletPage {
   public wallet: Wallet;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
+    this.wallet = this.navParams.get("wallet");
   }
 
   public ionViewWillEnter(): void {

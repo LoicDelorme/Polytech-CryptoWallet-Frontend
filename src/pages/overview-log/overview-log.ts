@@ -17,6 +17,7 @@ export class OverviewLogPage {
   public log: Log;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
+    this.log = this.navParams.get("log");
   }
 
   public ionViewWillEnter(): void {
