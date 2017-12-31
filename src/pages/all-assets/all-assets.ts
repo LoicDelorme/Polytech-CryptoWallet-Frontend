@@ -23,12 +23,13 @@ export class AllAssetsPage {
   public allAssets: Array<Asset> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-    this.wallet = this.navParams.get("wallet");
   }
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+    } else {
+      this.wallet = this.navParams.get("wallet");
     }
   }
 

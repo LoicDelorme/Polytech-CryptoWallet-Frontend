@@ -7,7 +7,7 @@ import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
-import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
+import { ChartPage } from '../chart/chart';
 
 @Component({
   selector: 'page-all-favorites',
@@ -59,7 +59,7 @@ export class AllFavoritesPage {
   }
 
   public onOverviewFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
-    this.navCtrl.push(OverviewCryptocurrencyPage, { cryptocurrency: cryptocurrency });
+    this.navCtrl.push(ChartPage, { cryptocurrency: cryptocurrency });
   }
 
   public onDeleteFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
