@@ -19,12 +19,13 @@ export class OverviewWalletPage {
   public wallet: Wallet;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.wallet = this.navParams.get("wallet");
   }
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+    } else {
+      this.wallet = this.navParams.get("wallet");
     }
   }
 

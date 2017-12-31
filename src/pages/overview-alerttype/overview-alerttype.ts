@@ -18,12 +18,13 @@ export class OverviewAlertTypePage {
   public alertType: AlertType;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.alertType = this.navParams.get("alertType");
   }
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserAdministrator()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
+    } else {
+      this.alertType = this.navParams.get("alertType");
     }
   }
 

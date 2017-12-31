@@ -18,12 +18,13 @@ export class OverviewAlertPage {
   public alert: Alert;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.alert = this.navParams.get("alert");
   }
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+    } else {
+      this.alert = this.navParams.get("alert");
     }
   }
 

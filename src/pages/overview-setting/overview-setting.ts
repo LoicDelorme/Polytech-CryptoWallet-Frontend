@@ -18,12 +18,13 @@ export class OverviewSettingPage {
   public setting: Setting;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.setting = this.navParams.get("setting");
   }
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllSettingsPage });
+    } else {
+      this.setting = this.navParams.get("setting");
     }
   }
 

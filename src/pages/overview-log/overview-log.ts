@@ -17,12 +17,13 @@ export class OverviewLogPage {
   public log: Log;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.log = this.navParams.get("log");
   }
 
   public ionViewWillEnter(): void {
     if (!this.localInformationProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllLogsPage });
+    } else {
+      this.log = this.navParams.get("log");
     }
   }
 }
