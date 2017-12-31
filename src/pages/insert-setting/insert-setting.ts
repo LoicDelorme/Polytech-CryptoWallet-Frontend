@@ -26,7 +26,7 @@ export class InsertSettingPage {
     this.settingFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       theme: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      chartPeriod: ['', Validators.compose([Validators.required, /*Validators.pattern("")*/, Validators.maxLength(3)])]
+      chartPeriod: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9]{1,2}[SMHDMY]$"), Validators.maxLength(3)])]
     });
   }
 
