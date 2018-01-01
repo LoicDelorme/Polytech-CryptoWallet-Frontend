@@ -68,6 +68,8 @@ import { RegisteredUserProvider } from '../providers/registered/user/user';
 import { UnregisteredCryptocurrencyProvider } from '../providers/unregistered/cryptocurrency/cryptocurrency';
 import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
 
+import { PriceCoinMarketCapProvider } from '../providers/coinmarketcap/price/price';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -173,7 +175,8 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
     RegisteredAlertTypeProvider,
     RegisteredUserProvider,
     UnregisteredCryptocurrencyProvider,
-    UnregisteredUserProvider
+    UnregisteredUserProvider,
+    PriceCoinMarketCapProvider
   ]
 })
 export class AppModule {

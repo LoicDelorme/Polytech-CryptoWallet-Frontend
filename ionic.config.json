@@ -6,6 +6,10 @@
     {
       "path": "/cryptowallet",
       "proxyUrl": "http://localhost/api/cryptowallet/"
+    },
+    {
+      "path": "/coinmarketcap",
+      "proxyUrl": "https://graphs.coinmarketcap.com/currencies/"
     }
   ],
   "integrations": {
