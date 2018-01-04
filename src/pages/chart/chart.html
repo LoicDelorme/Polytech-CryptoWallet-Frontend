@@ -1,10 +1,43 @@
 <ion-header>
   <ion-navbar>
     <ion-title>{{ cryptocurrency.symbol }} chart</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshChartButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <canvas #usdChart></canvas>
-  <canvas #btcChart></canvas>
+  <canvas #chart></canvas>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-col-buttons">
+        <button ion-button class="ion-col-left-button" full small (click)="onRefreshChart('1d')">1d</button>
+      </ion-col>
+
+      <ion-col class="ion-col-buttons">
+        <button ion-button full small (click)="onRefreshChart('7d')">7d</button>
+      </ion-col>
+
+      <ion-col class="ion-col-buttons">
+        <button ion-button full small (click)="onRefreshChart('1M')">1M</button>
+      </ion-col>
+
+      <ion-col class="ion-col-buttons">
+        <button ion-button full small (click)="onRefreshChart('3M')">3M</button>
+      </ion-col>
+
+      <ion-col class="ion-col-buttons">
+        <button ion-button full small (click)="onRefreshChart('1y')">1y</button>
+      </ion-col>
+
+      <ion-col class="ion-col-buttons">
+        <button ion-button class="ion-col-right-button" full small>all</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
