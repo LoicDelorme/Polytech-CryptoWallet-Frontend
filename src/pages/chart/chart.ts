@@ -18,7 +18,8 @@ export class ChartPage {
   public static readonly buttonValues: Array<string> = ["1D", "7D", "1M", "3M", "1Y", "ALL"];
   public static readonly numberValues: Array<string> = ["1", "7", "1", "3", "1", null];
   public static readonly durationValues: Array<moment.unitOfTime.DurationConstructor> = ["d", "d", "M", "M", "y", null];
-  public static readonly formatValues: Array<string> = ["HH", "DD", "DD", "MMM", "MMM YYYY", "MMM YYYY"];
+  public static readonly formatValues: Array<string> = ["HH", "DD", "DD", "MMM", "MMM YYYY", "[Q]Q YYYY"];
+  public static readonly maxTicksValues: Array<number> = [8, 7, 8, 6, 12, 12];
 
   @ViewChild('usdChart') usdChart;
   @ViewChild('btcChart') btcChart;
@@ -53,19 +54,27 @@ export class ChartPage {
       type: 'line',
       data: {
         labels: [],
-        datasets: [
-          {
-            label: "USD",
-            data: [],
-            type: 'line',
-            pointRadius: 0,
-            fill: false,
-            lineTension: 0,
-            borderWidth: 2
-          }
-        ]
+        datasets: [{
+          label: "USD",
+          data: [],
+          type: 'line',
+          pointRadius: 0,
+          fill: false,
+          lineTension: 0,
+          borderWidth: 2
+        }]
       },
       options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+              maxTicksLimit: 7
+            }
+          }],
+          yAxes: [{
+            display: false
+          }]
+        },
         legend: {
           display: false
         }
@@ -76,8 +85,7 @@ export class ChartPage {
       type: 'line',
       data: {
         labels: [],
-        datasets: [
-          {
+        datasets: [{
             label: "BTC",
             data: [],
             type: 'line',
@@ -85,10 +93,19 @@ export class ChartPage {
             fill: false,
             lineTension: 0,
             borderWidth: 2
-          }
-        ]
+        }]
       },
       options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+                maxTicksLimit: 7
+            }
+          }],
+          yAxes: [{
+            display: false
+          }]
+        },
         legend: {
           display: false
         }
@@ -99,8 +116,7 @@ export class ChartPage {
       type: 'line',
       data: {
         labels: [],
-        datasets: [
-          {
+        datasets: [{
             label: "Market Cap",
             data: [],
             type: 'line',
@@ -108,10 +124,19 @@ export class ChartPage {
             fill: false,
             lineTension: 0,
             borderWidth: 2
-          }
-        ]
+        }]
       },
       options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+                maxTicksLimit: 7
+            }
+          }],
+          yAxes: [{
+            display: false
+          }]
+        },
         legend: {
           display: false
         }
@@ -122,8 +147,7 @@ export class ChartPage {
       type: 'line',
       data: {
         labels: [],
-        datasets: [
-          {
+        datasets: [{
             label: "Volumes",
             data: [],
             type: 'line',
@@ -131,10 +155,19 @@ export class ChartPage {
             fill: false,
             lineTension: 0,
             borderWidth: 2
-          }
-        ]
+        }]
       },
       options: {
+        scales: {
+          xAxes: [{
+            ticks: {
+                maxTicksLimit: 7
+            }
+          }],
+          yAxes: [{
+            display: false
+          }]
+        },
         legend: {
           display: false
         }
@@ -205,7 +238,8 @@ export class ChartPage {
     let offsetValue: number = ChartPage.buttonValues.indexOf(period);
     let numberValue: string = ChartPage.numberValues[offsetValue];
     let durationValue: moment.unitOfTime.DurationConstructor = ChartPage.durationValues[offsetValue];
-    let formatValue: string = ChartPage.formatValues[offsetValue];  
+    let formatValue: string = ChartPage.formatValues[offsetValue];
+    let maxTicksValue: number = ChartPage.maxTicksValues[offsetValue];
     let startDateValue: string = moment().subtract(numberValue, durationValue).format("x");
     let endDateValue: string = moment().format("x");
 
@@ -213,27 +247,27 @@ export class ChartPage {
     observableResponse.subscribe(data => {
       console.warn(data);
 
-      refreshChartCallback(refreshChart, chart, data, formatValue);
+      refreshChartCallback(refreshChart, chart, data, formatValue, maxTicksValue);
     });
   }
 
-  private refreshUsdChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
-    refreshChart(chart, coinMarketCapResponse.price_usd, labelFormat);
+  private refreshUsdChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapResponse.price_usd, labelFormat, maxTicksValue);
   }
 
-  private refreshBtcChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
-    refreshChart(chart, coinMarketCapResponse.price_btc, labelFormat);
+  private refreshBtcChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapResponse.price_btc, labelFormat, maxTicksValue);
   }
 
-  private refreshMarketCapChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
-    refreshChart(chart, coinMarketCapResponse.market_cap_by_available_supply, labelFormat);
+  private refreshMarketCapChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapResponse.market_cap_by_available_supply, labelFormat, maxTicksValue);
   }
 
-  private refreshVolumesChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
-    refreshChart(chart, coinMarketCapResponse.volume_usd, labelFormat);
+  private refreshVolumesChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapResponse.volume_usd, labelFormat, maxTicksValue);
   }
 
-  private refreshChart(chart: Chart, values: Array<Array<number>>, labelFormat: string): void {
+  private refreshChart(chart: Chart, values: Array<Array<number>>, labelFormat: string, maxTicksValue: number): void {
     // Remove existing data
     chart.data.labels = [];
     chart.data.datasets[0].data = [];
@@ -243,6 +277,9 @@ export class ChartPage {
       chart.data.labels.push(moment(values[offset][0]).format(labelFormat));
       chart.data.datasets[0].data.push(values[offset][1]);
     }
+
+    // Update configuration
+    chart.options.scales.xAxes[0].ticks.maxTicksLimit = maxTicksValue;
 
     // Update the chart
     chart.update();
