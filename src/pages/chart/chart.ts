@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
 
@@ -14,18 +15,87 @@ import { PriceCoinMarketCapProvider } from '../../providers/coinmarketcap/price/
 })
 export class ChartPage {
 
-  @ViewChild('chart') chart;
+  public static readonly buttonValues: Array<string> = ["1D", "7D", "1M", "3M", "1Y", "ALL"];
+  public static readonly numberValues: Array<string> = ["1", "7", "1", "3", "1", null];
+  public static readonly durationValues: Array<moment.unitOfTime.DurationConstructor> = ["d", "d", "M", "M", "y", null];
+  public static readonly formatValues: Array<string> = ["HH", "DD", "DD", "MMM", "MMM YYYY", "MMM YYYY"];
+
+  @ViewChild('usdChart') usdChart;
+  @ViewChild('btcChart') btcChart;
+  @ViewChild('marketCapChart') marketCapChart;
+  @ViewChild('volumesChart') volumesChart;
 
   public cryptocurrency: Cryptocurrency;
-  public period: string;
+  public usdPeriod: string;
+  public btcPeriod: string;
+  public marketCapPeriod: string;
+  public volumesPeriod: string;
+  public usdChartButtonDisabled: string;
+  public btcChartButtonDisabled: string;
+  public marketCapChartButtonDisabled: string;
+  public volumesChartButtonDisabled: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public priceCoinMarketCapProvider: PriceCoinMarketCapProvider) {
     this.cryptocurrency = this.navParams.get("cryptocurrency");
-    this.period = "7d";
+
+    this.usdPeriod = ChartPage.buttonValues[1];
+    this.usdChartButtonDisabled = ChartPage.buttonValues[1];
+    this.btcPeriod = ChartPage.buttonValues[1];
+    this.btcChartButtonDisabled = ChartPage.buttonValues[1];
+    this.marketCapPeriod = ChartPage.buttonValues[1];
+    this.marketCapChartButtonDisabled = ChartPage.buttonValues[1];
+    this.volumesPeriod = ChartPage.buttonValues[1];
+    this.volumesChartButtonDisabled = ChartPage.buttonValues[1];
   }
 
   public ionViewDidEnter(): void {
-    this.chart = new Chart(this.chart.nativeElement, {
+    this.usdChart = new Chart(this.usdChart.nativeElement, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "USD",
+            data: [],
+            type: 'line',
+            pointRadius: 0,
+            fill: false,
+            lineTension: 0,
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
+      }
+    });
+
+    this.btcChart = new Chart(this.btcChart.nativeElement, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "BTC",
+            data: [],
+            type: 'line',
+            pointRadius: 0,
+            fill: false,
+            lineTension: 0,
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
+      }
+    });
+
+    this.marketCapChart = new Chart(this.marketCapChart.nativeElement, {
       type: 'line',
       data: {
         labels: [],
@@ -38,27 +108,23 @@ export class ChartPage {
             fill: false,
             lineTension: 0,
             borderWidth: 2
-          },
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
+      }
+    });
+
+    this.volumesChart = new Chart(this.volumesChart.nativeElement, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
           {
-            label: "USD",
-            data: [],
-            type: 'line',
-            pointRadius: 0,
-            fill: false,
-            lineTension: 0,
-            borderWidth: 2
-          },
-          {
-            label: "BTC",
-            data: [],
-            type: 'line',
-            pointRadius: 0,
-            fill: false,
-            lineTension: 0,
-            borderWidth: 2
-          },
-          {
-            label: "Volume",
+            label: "Volumes",
             data: [],
             type: 'line',
             pointRadius: 0,
@@ -67,92 +133,118 @@ export class ChartPage {
             borderWidth: 2
           }
         ]
+      },
+      options: {
+        legend: {
+          display: false
+        }
       }
     });
 
-    this.refreshData();
+    this.refreshUsdData();
+    this.refreshBtcData();
+    this.refreshMarketCapData();
+    this.refreshVolumesData();
   }
 
   public ionViewDidLeave(): void {
-    this.chart.destroy();
+    this.usdChart.destroy();
+    this.btcChart.destroy();
+    this.marketCapChart.destroy();
+    this.volumesChart.destroy();
   }
 
-  public onRefreshChartButtonClicked(): void {
-    this.refreshData();
+  public onRefreshChartsButtonClicked(): void {
+    this.refreshUsdData();
+    this.refreshBtcData();
+    this.refreshMarketCapData();
+    this.refreshVolumesData();
   }
 
-  public onRefreshChart(period: string): void {
-    this.period = period;
-    this.refreshData();
+  public onRefreshUsdChartButtonClicked(usdPeriod: string): void {
+    this.usdPeriod = usdPeriod;
+    this.usdChartButtonDisabled = usdPeriod;
+    this.refreshUsdData();
   }
 
-  public refreshData(): void {
-    let periodNumber: string = this.period.match(/\d+/g).join();
-    let periodUnit: moment.unitOfTime.DurationConstructor = this.convertToDuration(this.period.charAt(this.period.length - 1));
-
-    if (periodUnit != null) {
-      let startDate: string = moment().subtract(periodNumber, periodUnit).format("x");
-      let endDate: string = moment().format("x");
-
-      console.log(endDate);
-
-      this.priceCoinMarketCapProvider.allPricesBetween(this.cryptocurrency, startDate, endDate).subscribe(data => {
-        console.warn(data);
-  
-        this.refreshChart(data);
-      });
-    } else {
-      this.priceCoinMarketCapProvider.allPrices(this.cryptocurrency).subscribe(data => {
-        console.warn(data);
-  
-        this.refreshChart(data);
-      });
-    }
+  public onRefreshBtcChartButtonClicked(btcPeriod: string): void {
+    this.btcPeriod = btcPeriod;
+    this.btcChartButtonDisabled = btcPeriod;
+    this.refreshBtcData();
   }
 
-  public convertToDuration(unit: string): moment.unitOfTime.DurationConstructor {
-    switch (unit) {
-      case "s":
-        return 's';
-      case "m":
-        return 'm';
-      case "h":
-        return 'h';
-      case "d":
-        return 'd';
-      case "M":
-        return 'M';
-      case "y":
-        return 'y';
-      default:
-        return null;
-    }
+  public onRefreshMarketCapChartButtonClicked(marketCapPeriod: string): void {
+    this.marketCapPeriod = marketCapPeriod;
+    this.marketCapChartButtonDisabled = marketCapPeriod;
+    this.refreshMarketCapData();
   }
 
-  public refreshChart(coinMarketCapResponse: CoinMarketCapResponse): void {
+  public onRefreshVolumesChartButtonClicked(volumesPeriod: string): void {
+    this.volumesPeriod = volumesPeriod;
+    this.volumesChartButtonDisabled = volumesPeriod;
+    this.refreshVolumesData();
+  }
+
+  private refreshUsdData(): void {
+    this.refreshData(this.usdChart, this.usdPeriod, this.refreshChart, this.refreshUsdChart);
+  }
+
+  private refreshBtcData(): void {
+    this.refreshData(this.btcChart, this.btcPeriod, this.refreshChart, this.refreshBtcChart);
+  }
+
+  private refreshMarketCapData(): void {
+    this.refreshData(this.marketCapChart, this.marketCapPeriod, this.refreshChart, this.refreshMarketCapChart);
+  }
+
+  private refreshVolumesData(): void {
+    this.refreshData(this.volumesChart, this.volumesPeriod, this.refreshChart, this.refreshVolumesChart);
+  }
+
+  private refreshData(chart: Chart, period: string, refreshChart: Function, refreshChartCallback: Function): void {
+    let offsetValue: number = ChartPage.buttonValues.indexOf(period);
+    let numberValue: string = ChartPage.numberValues[offsetValue];
+    let durationValue: moment.unitOfTime.DurationConstructor = ChartPage.durationValues[offsetValue];
+    let formatValue: string = ChartPage.formatValues[offsetValue];  
+    let startDateValue: string = moment().subtract(numberValue, durationValue).format("x");
+    let endDateValue: string = moment().format("x");
+
+    let observableResponse: Observable<CoinMarketCapResponse> = (numberValue != null && durationValue != null ? this.priceCoinMarketCapProvider.allPricesBetween(this.cryptocurrency, startDateValue, endDateValue) : this.priceCoinMarketCapProvider.allPrices(this.cryptocurrency));
+    observableResponse.subscribe(data => {
+      console.warn(data);
+
+      refreshChartCallback(refreshChart, chart, data, formatValue);
+    });
+  }
+
+  private refreshUsdChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
+    refreshChart(chart, coinMarketCapResponse.price_usd, labelFormat);
+  }
+
+  private refreshBtcChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
+    refreshChart(chart, coinMarketCapResponse.price_btc, labelFormat);
+  }
+
+  private refreshMarketCapChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
+    refreshChart(chart, coinMarketCapResponse.market_cap_by_available_supply, labelFormat);
+  }
+
+  private refreshVolumesChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string): void {
+    refreshChart(chart, coinMarketCapResponse.volume_usd, labelFormat);
+  }
+
+  private refreshChart(chart: Chart, values: Array<Array<number>>, labelFormat: string): void {
     // Remove existing data
-    this.chart.data.labels = [];
-    this.chart.data.datasets[0].data = [];
-    this.chart.data.datasets[1].data = [];
-    this.chart.data.datasets[2].data = [];
-    this.chart.data.datasets[3].data = [];
-
-    // Recover new data
-    let marketCap: Array<Array<number>> = coinMarketCapResponse.market_cap_by_available_supply;
-    let usd: Array<Array<number>> = coinMarketCapResponse.price_usd;
-    let btc: Array<Array<number>> = coinMarketCapResponse.price_btc;
-    let volume: Array<Array<number>> = coinMarketCapResponse.volume_usd;
+    chart.data.labels = [];
+    chart.data.datasets[0].data = [];
 
     // Add new data
-    for (let offset = 0; offset < marketCap.length; offset++) {
-      this.chart.data.labels.push(moment(marketCap[offset][0]).format("MMM YYYY"));
-      this.chart.data.datasets[0].data.push(marketCap[offset][1]);
-      this.chart.data.datasets[1].data.push(usd[offset][1]);
-      this.chart.data.datasets[2].data.push(btc[offset][1]);
-      this.chart.data.datasets[3].data.push(volume[offset][1]);
+    for (let offset = 0; offset < values.length; offset++) {
+      chart.data.labels.push(moment(values[offset][0]).format(labelFormat));
+      chart.data.datasets[0].data.push(values[offset][1]);
     }
 
     // Update the chart
-    this.chart.update();
+    chart.update();
   }
 }

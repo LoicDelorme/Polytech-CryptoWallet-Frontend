@@ -8,8 +8,8 @@ import { CoinMarketCapResponse } from '../../../responses/coinmarketcapresponse'
 @Injectable()
 export class PriceCoinMarketCapProvider {
 
-  public static readonly allPricesPath: string = "coinmarketcap/RESOURCE_URL";
-  public static readonly allPricesBetweenPath: string = "coinmarketcap/RESOURCE_URL/START_DATE/END_DATE";
+  public static readonly allPricesPath: string = "coinmarketcap/RESOURCE_URL/";
+  public static readonly allPricesBetweenPath: string = "coinmarketcap/RESOURCE_URL/START_DATE/END_DATE/";
 
   constructor(private http: HttpClient) {
   }
