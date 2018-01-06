@@ -65,7 +65,7 @@ export class InsertAlertPage {
       this.registeredUserProvider.insertAlert(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.alertForm).subscribe(data => {
         console.warn(data);
 
-        this.navCtrl.setRoot(AllAlertsPage);
+        this.navCtrl.pop();
       });
     }
   }
