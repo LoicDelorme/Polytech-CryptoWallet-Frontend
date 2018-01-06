@@ -7,6 +7,7 @@ import { AuthenticationForm } from '../../forms/authenticationform';
 import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
 import { RegisteredUserProvider } from '../../providers/registered/user/user';
 import { LocalInformationProvider } from '../../providers/local/information/information';
+import { UserSubscriptionPage } from '../user-subscription/user-subscription';
 
 @Component({
   selector: 'page-user-authentication',
@@ -24,6 +25,10 @@ export class UserAuthenticationPage {
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(250)])],
       password: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
+  }
+
+  public onSubscribeButtonClicked(): void {
+    this.navCtrl.push(UserSubscriptionPage, {onSuccessRedirect: this.navParams.get("onSuccessRedirect")});
   }
 
   public onSubmit(value: any): void {
