@@ -19,6 +19,7 @@ export class UserOverviewPage {
   public user: User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
+    this.user = this.navParams.get("user");
   }
 
   public ionViewWillEnter(): void {

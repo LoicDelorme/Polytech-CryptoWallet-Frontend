@@ -22,6 +22,7 @@ export class SettingsPage {
   public isAdministrator: boolean;
  
   constructor(public navCtrl: NavController, public navParams: NavParams, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
+    this.isAdministrator = this.localInformationProvider.isUserAdministrator();
   }
 
   public ionViewWillEnter(): void {
