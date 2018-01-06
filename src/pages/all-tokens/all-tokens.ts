@@ -8,6 +8,7 @@ import { LocalInformationProvider } from '../../providers/local/information/info
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewTokenPage } from '../overview-token/overview-token';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-all-tokens',
@@ -87,6 +88,11 @@ export class AllTokensPage {
               let allIndex: number = this.allTokens.indexOf(token);
               if (allIndex != -1 && allIndex != filteredIndex) {
                 this.allTokens.splice(allIndex, 1);
+              }
+
+              if (this.localInformationProvider.getUserTokenValue() === token.value) {
+                this.localInformationProvider.clearAllInformation();
+                this.navCtrl.setRoot(HomePage);
               }
             });
           }
