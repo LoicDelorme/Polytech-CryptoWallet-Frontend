@@ -76,19 +76,19 @@ export class LocalInformationProvider {
     this.setStringValue(LocalInformationProvider.userPasswordKey, user.password);
     this.setObjectValue(LocalInformationProvider.userEnabledKey, user.enabled);
     this.setObjectValue(LocalInformationProvider.userAdministratorKey, user.administrator);
-    this.setObjectValue(LocalInformationProvider.userCreationDateKey, user.creationDate);
-    this.setObjectValue(LocalInformationProvider.userLastUpdateKey, user.lastUpdate);
-    this.setObjectValue(LocalInformationProvider.userLastActivityKey, user.lastActivity);
+    this.setStringValue(LocalInformationProvider.userCreationDateKey, user.creationDate);
+    this.setStringValue(LocalInformationProvider.userLastUpdateKey, user.lastUpdate);
+    this.setStringValue(LocalInformationProvider.userLastActivityKey, user.lastActivity);
   }
 
   public saveTokenInformation(token: Token): void {
     this.setObjectValue(LocalInformationProvider.userTokenKey, token);
     this.setNumberValue(LocalInformationProvider.userTokenIdKey, token.id);
     this.setStringValue(LocalInformationProvider.userTokenValueKey, token.value);
-    this.setObjectValue(LocalInformationProvider.userTokenBeginDateKey, token.beginDate);
-    this.setObjectValue(LocalInformationProvider.userTokenEndDateKey, token.endDate);
-    this.setObjectValue(LocalInformationProvider.userTokenCreationDateKey, token.creationDate);
-    this.setObjectValue(LocalInformationProvider.userTokenLastUpdateKey, token.lastUpdate);
+    this.setStringValue(LocalInformationProvider.userTokenBeginDateKey, token.beginDate);
+    this.setStringValue(LocalInformationProvider.userTokenEndDateKey, token.endDate);
+    this.setStringValue(LocalInformationProvider.userTokenCreationDateKey, token.creationDate);
+    this.setStringValue(LocalInformationProvider.userTokenLastUpdateKey, token.lastUpdate);
   }
 
   public clearAllInformation(): void {
@@ -135,5 +135,9 @@ export class LocalInformationProvider {
 
   public getUserTokenValue(): string {
     return this.getStringValue(LocalInformationProvider.userTokenValueKey);
+  }
+
+  public getUserTokenEndDate(): string {
+    return this.getStringValue(LocalInformationProvider.userTokenEndDateKey);
   }
 }

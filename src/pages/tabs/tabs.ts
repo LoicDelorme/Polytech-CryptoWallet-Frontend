@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import * as moment from 'moment';
 
 import { HomePage } from '../home/home';
 import { AllFavoritesPage } from '../all-favorites/all-favorites';
@@ -22,5 +23,11 @@ export class TabsPage {
   settingsRoot:any = SettingsPage;
 
   constructor(public navCtrl: NavController, public localInformationProvider: LocalInformationProvider) {
+  }
+
+  public ionViewWillEnter(): void {
+    if (moment().isAfter(moment(this.localInformationProvider.getUserTokenEndDate(), "DD/MM/YYYY HH:mm:ss"))) {
+      this.localInformationProvider.clearAllInformation();
+    }
   }
 }
