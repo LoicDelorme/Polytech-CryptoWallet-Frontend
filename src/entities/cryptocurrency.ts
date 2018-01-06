@@ -6,8 +6,8 @@ export class Cryptocurrency {
   public imageUrl: string;
   public baseUrl: string;
   public resourceUrl: string;
-  public creationDate: Date;
-  public lastUpdate: Date;
+  public creationDate: string;
+  public lastUpdate: string;
 
   constructor() {
   }

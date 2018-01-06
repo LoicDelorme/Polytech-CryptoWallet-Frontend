@@ -14,9 +14,9 @@ export class User {
   public password: string;
   public enabled: boolean;
   public administrator: boolean;
-  public creationDate: Date;
-  public lastUpdate: Date;
-  public lastActivity: Date;
+  public creationDate: string;
+  public lastUpdate: string;
+  public lastActivity: string;
   public favorites: Array<Cryptocurrency>;
   public wallets: Array<Wallet>;
   public alerts: Array<Alert>;

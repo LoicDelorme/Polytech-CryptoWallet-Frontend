@@ -4,8 +4,8 @@ export class Setting {
   public name: string;
   public theme: string;
   public chartPeriod: string;
-  public creationDate: Date;
-  public lastUpdate: Date;
+  public creationDate: string;
+  public lastUpdate: string;
   public userId: number;
 
   constructor() {

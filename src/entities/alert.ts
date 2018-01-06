@@ -8,8 +8,8 @@ export class Alert {
   public threshold: number;
   public oneShot: boolean;
   public active: boolean;
-  public creationDate: Date;
-  public lastUpdate: Date;
+  public creationDate: string;
+  public lastUpdate: string;
   public userId: number;
   public cryptocurrency: Cryptocurrency;
   public type: AlertType;

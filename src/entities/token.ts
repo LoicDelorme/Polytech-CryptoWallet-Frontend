@@ -2,10 +2,10 @@ export class Token {
 
   public id: number;
   public value: string;
-  public beginDate: Date;
-  public endDate: Date;
-  public creationDate: Date;
-  public lastUpdate: Date;
+  public beginDate: string;
+  public endDate: string;
+  public creationDate: string;
+  public lastUpdate: string;
   public userId: number;
 
   constructor() {
