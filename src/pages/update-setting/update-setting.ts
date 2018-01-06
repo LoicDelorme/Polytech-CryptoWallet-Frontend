@@ -17,10 +17,13 @@ import { AllSettingsPage } from '../all-settings/all-settings';
 })
 export class UpdateSettingPage {
 
+  public chartPeriods: Array<string>;
   public settingForm: SettingForm;
   public settingFormGroup: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
+    this.chartPeriods = ["1D", "7D", "1M", "3M", "ALL"];
+
     let setting: Setting = this.navParams.get("setting");
 
     this.settingForm = new SettingForm();
@@ -33,7 +36,7 @@ export class UpdateSettingPage {
     this.settingFormGroup = formBuilder.group({
       name: [setting.name, Validators.compose([Validators.required, Validators.maxLength(250)])],
       theme: [setting.theme, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      chartPeriod: [setting.chartPeriod, Validators.compose([Validators.required, Validators.pattern("^[0-9]{1,2}[SMHDMY]$"), Validators.maxLength(3)])]
+      chartPeriod: [setting.chartPeriod, Validators.compose([Validators.required, Validators.maxLength(3)])]
     });
   }
 

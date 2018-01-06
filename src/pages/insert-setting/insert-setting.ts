@@ -16,17 +16,20 @@ import { AllSettingsPage } from '../all-settings/all-settings';
 })
 export class InsertSettingPage {
 
+  public chartPeriods: Array<string>;
   public settingForm: SettingForm;
   public settingFormGroup: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
+    this.chartPeriods = ["1D", "7D", "1M", "3M", "ALL"];
+
     this.settingForm = new SettingForm();
     this.settingForm.userId = this.localInformationProvider.getUserId();
 
     this.settingFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       theme: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      chartPeriod: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9]{1,2}[SMHDMY]$"), Validators.maxLength(3)])]
+      chartPeriod: ['', Validators.compose([Validators.required, Validators.maxLength(3)])]
     });
   }
 
