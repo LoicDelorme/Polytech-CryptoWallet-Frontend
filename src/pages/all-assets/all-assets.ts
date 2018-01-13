@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Wallet } from '../../entities/wallet';
 import { Asset } from '../../entities/asset';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { InsertAssetPage } from '../insert-asset/insert-asset';
@@ -19,29 +19,49 @@ import { AllWalletsPage } from '../all-wallets/all-wallets';
 export class AllAssetsPage {
 
   public wallet: Wallet;
-  public filteredAssets: Array<Asset> = [];
-  public allAssets: Array<Asset> = [];
+  public filtered: Array<Asset> = [];
+  public all: Array<Asset> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
-    } else {
-      this.wallet = this.navParams.get("wallet");
+      return;
     }
+
+    this.wallet = this.navParams.get("wallet");
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserRegistered()) {
-      this.registeredUserProvider.allAssets(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet).subscribe(data => {
-        console.warn(data);
+    this.refreshData();
+  }
 
-        this.allAssets = data.data;
-        this.filteredAssets = data.data;
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loadingOverlay.present();
+
+    this.registeredUserProvider.allAssets(this.localStorageProvider.getUserTokenValue(), this.wallet).subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      loadingOverlay.dismiss();
+    });
   }
 
   public onInsertAssetButtonClicked(): void {
@@ -49,20 +69,15 @@ export class AllAssetsPage {
   }
 
   public onRefreshAssetsButtonClicked(): void {
-    this.registeredUserProvider.allAssets(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet).subscribe(data => {
-      console.warn(data);
-
-      this.allAssets = data.data;
-      this.filteredAssets = data.data;
-    });
+    this.refreshData();
   }
 
   public onFilterTriggered(event: any): void {
-    this.filteredAssets = this.allAssets;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredAssets = this.filteredAssets.filter((asset: Asset) => {
+      this.filtered = this.all.filter((asset: Asset) => {
         return (asset.cryptocurrency.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (asset.cryptocurrency.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
@@ -73,7 +88,7 @@ export class AllAssetsPage {
   }
 
   public onDeleteAssetButtonClicked(asset: Asset): void {
-    let confirmationAlert = this.alertCtrl.create({
+    let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this asset?',
       buttons: [
@@ -86,24 +101,32 @@ export class AllAssetsPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteAsset(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet, asset.cryptocurrency).subscribe(data => {
-              console.warn(data);
+            this.registeredUserProvider.deleteAsset(this.localStorageProvider.getUserTokenValue(), this.wallet, asset.cryptocurrency).subscribe(result => {
+              let toastOverlay = this.toastCtrl.create({
+                message: result.message,
+                duration: 3000,
+                position: 'top'
+              });
 
-              let filteredIndex: number = this.filteredAssets.indexOf(asset);
-              if (filteredIndex != -1) {
-                this.filteredAssets.splice(filteredIndex, 1);
-              }
-        
-              let allIndex: number = this.allAssets.indexOf(asset);
-              if (allIndex != -1 && allIndex != filteredIndex) {
-                this.allAssets.splice(allIndex, 1);
-              }
+              toastOverlay.present();
+
+              this.refreshData();
+            }, error => {
+              console.error(error);
+
+              let toastOverlay = this.toastCtrl.create({
+                message: 'An error occured...',
+                duration: 3000,
+                position: 'top'
+              });
+
+              toastOverlay.present();
             });
           }
         }
       ]
     });
 
-    confirmationAlert.present();
+    confirmationAlertOverlay.present();
   }
 }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Wallet } from '../../entities/wallet';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewWalletPage } from '../overview-wallet/overview-wallet';
@@ -16,48 +16,63 @@ import { InsertWalletPage } from '../insert-wallet/insert-wallet';
 })
 export class AllWalletsPage {
 
-  public filteredWallets: Array<Wallet> = [];
-  public allWallets: Array<Wallet> = [];
+  public filtered: Array<Wallet> = [];
+  public all: Array<Wallet> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+      return;
     }
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserRegistered()) {
-      this.registeredUserProvider.allWallets(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-        console.warn(data);
-
-        this.allWallets = data.data;
-        this.filteredWallets = data.data;
-      });
-    }
+    this.refreshData();
   }
 
   public onInsertWalletButtonClicked(): void {
     this.navCtrl.push(InsertWalletPage);
   }
 
-  public onRefreshWalletsButtonClicked(): void {
-    this.registeredUserProvider.allWallets(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-      console.warn(data);
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
 
-      this.allWallets = data.data;
-      this.filteredWallets = data.data;
+    loadingOverlay.present();
+
+    this.registeredUserProvider.allWallets(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+
+      loadingOverlay.dismiss();
     });
   }
 
+  public onRefreshWalletsButtonClicked(): void {
+    this.refreshData();
+  }
+
   public onFilterTriggered(event: any): void {
-    this.filteredWallets = this.allWallets;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredWallets = this.filteredWallets.filter((wallet: Wallet) => {
+      this.filtered = this.all.filter((wallet: Wallet) => {
         return wallet.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
     }
@@ -68,7 +83,7 @@ export class AllWalletsPage {
   }
 
   public onDeleteWalletButtonClicked(wallet: Wallet): void {
-    let confirmationAlert = this.alertCtrl.create({
+    let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this wallet?',
       buttons: [
@@ -81,24 +96,32 @@ export class AllWalletsPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteWallet(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), wallet).subscribe(data => {
-              console.warn(data);
+            this.registeredUserProvider.deleteWallet(this.localStorageProvider.getUserTokenValue(), wallet).subscribe(result => {
+              let toastOverlay = this.toastCtrl.create({
+                message: result.message,
+                duration: 3000,
+                position: 'top'
+              });
 
-              let filteredIndex: number = this.filteredWallets.indexOf(wallet);
-              if (filteredIndex != -1) {
-                this.filteredWallets.splice(filteredIndex, 1);
-              }
-        
-              let allIndex: number = this.allWallets.indexOf(wallet);
-              if (allIndex != -1 && allIndex != filteredIndex) {
-                this.allWallets.splice(allIndex, 1);
-              }
+              toastOverlay.present();
+
+              this.refreshData();
+            }, error => {
+              console.error(error);
+
+              let toastOverlay = this.toastCtrl.create({
+                message: 'An error occured...',
+                duration: 3000,
+                position: 'top'
+              });
+
+              toastOverlay.present();
             });
           }
         }
       ]
     });
 
-    confirmationAlert.present();
+    confirmationAlertOverlay.present();
   }
 }

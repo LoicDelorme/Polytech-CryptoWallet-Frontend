@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+
       <button ion-button icon-only (click)="onInsertAlertButtonClicked()">
         <ion-icon name="insert"></ion-icon>
       </button>
@@ -20,16 +24,16 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
-    <ion-item-sliding *ngFor="let filteredAlert of filteredAlerts">
-      <button ion-item (click)="onOverviewAlertButtonClicked(filteredAlert)">
+    <ion-item-sliding *ngFor="let alert of filtered">
+      <button ion-item (click)="onOverviewAlertButtonClicked(alert)">
         <ion-avatar item-start>
-          <img src="{{ filteredAlert.cryptocurrency.imageUrl }}" />
+          <img src="{{ alert.cryptocurrency.imageUrl }}" />
         </ion-avatar>
   
-        <h3>{{ filteredAlert.name }}</h3>
+        <h3>{{ alert.name }}</h3>
       </button>
       <ion-item-options side="right">
-        <button ion-button color="danger" (click)="onDeleteAlertButtonClicked(filteredAlert)" icon-start>
+        <button ion-button color="danger" (click)="onDeleteAlertButtonClicked(alert)" icon-start>
           <ion-icon name="delete"></ion-icon>
           Delete
         </button>

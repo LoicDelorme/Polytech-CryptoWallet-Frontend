@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Alert } from '../../entities/alert';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewAlertPage } from '../overview-alert/overview-alert';
@@ -16,27 +16,47 @@ import { InsertAlertPage } from '../insert-alert/insert-alert';
 })
 export class AllAlertsPage {
 
-  public filteredAlerts: Array<Alert> = [];
-  public allAlerts: Array<Alert> = [];
+  public filtered: Array<Alert> = [];
+  public all: Array<Alert> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+      return;
     }
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserRegistered()) {
-      this.registeredUserProvider.allAlerts(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-        console.warn(data);
+    this.refreshData();
+  }
 
-        this.allAlerts = data.data;
-        this.filteredAlerts = data.data;
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loadingOverlay.present();
+
+    this.registeredUserProvider.allAlerts(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      loadingOverlay.dismiss();
+    });
   }
 
   public onInsertAlertButtonClicked(): void {
@@ -44,20 +64,15 @@ export class AllAlertsPage {
   }
 
   public onRefreshAlertsButtonClicked(): void {
-    this.registeredUserProvider.allAlerts(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-      console.warn(data);
-
-      this.allAlerts = data.data;
-      this.filteredAlerts = data.data;
-    });
+    this.refreshData();
   }
 
   public onFilterTriggered(event: any): void {
-    this.filteredAlerts = this.allAlerts;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredAlerts = this.filteredAlerts.filter((alert: Alert) => {
+      this.filtered = this.all.filter((alert: Alert) => {
         return alert.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
     }
@@ -68,7 +83,7 @@ export class AllAlertsPage {
   }
 
   public onDeleteAlertButtonClicked(alert: Alert): void {
-    let confirmationAlert = this.alertCtrl.create({
+    let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this alert?',
       buttons: [
@@ -81,24 +96,32 @@ export class AllAlertsPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteAlert(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), alert).subscribe(data => {
-              console.warn(data);
+            this.registeredUserProvider.deleteAlert(this.localStorageProvider.getUserTokenValue(), alert).subscribe(result => {
+              let toastOverlay = this.toastCtrl.create({
+                message: result.message,
+                duration: 3000,
+                position: 'top'
+              });
 
-              let filteredIndex: number = this.filteredAlerts.indexOf(alert);
-              if (filteredIndex != -1) {
-                this.filteredAlerts.splice(filteredIndex, 1);
-              }
-        
-              let allIndex: number = this.allAlerts.indexOf(alert);
-              if (allIndex != -1 && allIndex != filteredIndex) {
-                this.allAlerts.splice(allIndex, 1);
-              }
+              toastOverlay.present();
+
+              this.refreshData();
+            }, error => {
+              console.error(error);
+
+              let toastOverlay = this.toastCtrl.create({
+                message: 'An error occured...',
+                duration: 3000,
+                position: 'top'
+              });
+
+              toastOverlay.present();
             });
           }
         }
       ]
     });
 
-    confirmationAlert.present();
+    confirmationAlertOverlay.present();
   }
 }

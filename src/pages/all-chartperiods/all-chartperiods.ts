@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../entities/favorite';
+import { ChartPeriod } from '../../entities/chartperiod';
 
-import { RegisteredUserProvider } from '../../providers/registered/user';
+import { AdministratorChartPeriodProvider } from '../../providers/administrator/chartperiod';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
-import { ChartPage } from '../chart/chart';
+import { OverviewChartPeriodPage } from '../overview-chartperiod/overview-chartperiod';
+import { InsertChartPeriodPage } from '../insert-chartperiod/insert-chartperiod';
 
 @Component({
-  selector: 'page-all-favorites',
-  templateUrl: 'all-favorites.html',
+  selector: 'page-all-chartperiods',
+  templateUrl: 'all-chartperiods.html',
 })
-export class AllFavoritesPage {
+export class AllChartPeriodsPage {
 
-  public filtered: Array<Cryptocurrency> = [];
-  public all: Array<Cryptocurrency> = [];
+  public filtered: Array<ChartPeriod> = [];
+  public all: Array<ChartPeriod> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorChartPeriodProvider: AdministratorChartPeriodProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localStorageProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllFavoritesPage });
+    if (!this.localStorageProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllChartPeriodsPage });
       return;
     }
   }
@@ -38,7 +39,7 @@ export class AllFavoritesPage {
 
     loadingOverlay.present();
 
-    this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+    this.administratorChartPeriodProvider.allChartPeriods(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
       this.all = result.data;
       this.filtered = result.data;
 
@@ -58,7 +59,11 @@ export class AllFavoritesPage {
     });
   }
 
-  public onRefreshFavoritesButtonClicked(): void {
+  public onInsertChartPeriodButtonClicked(): void {
+    this.navCtrl.push(InsertChartPeriodPage);
+  }
+
+  public onRefreshChartPeriodsButtonClicked(): void {
     this.refreshData();
   }
 
@@ -67,20 +72,20 @@ export class AllFavoritesPage {
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filtered = this.all.filter((favorite: Cryptocurrency) => {
-        return (favorite.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (favorite.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+      this.filtered = this.all.filter((chartPeriod: ChartPeriod) => {
+        return chartPeriod.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
     }
   }
 
-  public onOverviewFavoriteButtonClicked(favorite: Cryptocurrency): void {
-    this.navCtrl.push(ChartPage, { cryptocurrency: favorite });
+  public onOverviewChartPeriodButtonClicked(chartPeriod: ChartPeriod): void {
+    this.navCtrl.push(OverviewChartPeriodPage, { chartPeriod: chartPeriod });
   }
 
-  public onDeleteFavoriteButtonClicked(favorite: Cryptocurrency): void {
+  public onDeleteChartPeriodButtonClicked(chartPeriod: ChartPeriod): void {
     let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
-      message: 'Do you really want to delete this favorite?',
+      message: 'Do you really want to delete this chart period?',
       buttons: [
         {
           text: 'Cancel',
@@ -91,7 +96,7 @@ export class AllFavoritesPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteFavorite(this.localStorageProvider.getUserTokenValue(), favorite).subscribe(result => {
+            this.administratorChartPeriodProvider.deleteChartPeriod(this.localStorageProvider.getUserTokenValue(), chartPeriod).subscribe(result => {
               let toastOverlay = this.toastCtrl.create({
                 message: result.message,
                 duration: 3000,

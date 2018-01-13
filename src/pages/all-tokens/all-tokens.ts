@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Token } from '../../entities/token';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewTokenPage } from '../overview-token/overview-token';
-import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-all-tokens',
@@ -16,45 +15,60 @@ import { HomePage } from '../home/home';
 })
 export class AllTokensPage {
 
-  public filteredTokens: Array<Token> = [];
-  public allTokens: Array<Token> = [];
+  public filtered: Array<Token> = [];
+  public all: Array<Token> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllTokensPage });
+      return;
     }
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserRegistered()) {
-      this.registeredUserProvider.allTokens(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-        console.warn(data);
-
-        this.allTokens = data.data;
-        this.filteredTokens = data.data;
-      });
-    }
+    this.refreshData();
   }
 
-  public onRefreshTokensButtonClicked(): void {
-    this.registeredUserProvider.allTokens(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-      console.warn(data);
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
 
-      this.allTokens = data.data;
-      this.filteredTokens = data.data;
+    loadingOverlay.present();
+
+    this.registeredUserProvider.allTokens(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+
+      loadingOverlay.dismiss();
     });
   }
 
+  public onRefreshTokensButtonClicked(): void {
+    this.refreshData();
+  }
+
   public onFilterTriggered(event: any): void {
-    this.filteredTokens = this.allTokens;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredTokens = this.filteredTokens.filter((token: Token) => {
-        return token.value.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+      this.filtered = this.all.filter((token: Token) => {
+        return (token.value.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (token.creationDate.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
   }
@@ -64,7 +78,7 @@ export class AllTokensPage {
   }
 
   public onDeleteTokenButtonClicked(token: Token): void {
-    let confirmationAlert = this.alertCtrl.create({
+    let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this token?',
       buttons: [
@@ -77,29 +91,32 @@ export class AllTokensPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteToken(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), token).subscribe(data => {
-              console.warn(data);
+            this.registeredUserProvider.deleteToken(this.localStorageProvider.getUserTokenValue(), token).subscribe(result => {
+              let toastOverlay = this.toastCtrl.create({
+                message: result.message,
+                duration: 3000,
+                position: 'top'
+              });
 
-              let filteredIndex: number = this.filteredTokens.indexOf(token);
-              if (filteredIndex != -1) {
-                this.filteredTokens.splice(filteredIndex, 1);
-              }
-        
-              let allIndex: number = this.allTokens.indexOf(token);
-              if (allIndex != -1 && allIndex != filteredIndex) {
-                this.allTokens.splice(allIndex, 1);
-              }
+              toastOverlay.present();
 
-              if (this.localInformationProvider.getUserTokenValue() === token.value) {
-                this.localInformationProvider.clearAllInformation();
-                this.navCtrl.setRoot(HomePage);
-              }
+              this.refreshData();
+            }, error => {
+              console.error(error);
+
+              let toastOverlay = this.toastCtrl.create({
+                message: 'An error occured...',
+                duration: 3000,
+                position: 'top'
+              });
+
+              toastOverlay.present();
             });
           }
         }
       ]
     });
 
-    confirmationAlert.present();
+    confirmationAlertOverlay.present();
   }
 }

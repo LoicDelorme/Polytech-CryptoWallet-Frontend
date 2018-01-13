@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../entities/favorite';
+import { Device } from '../../entities/device';
 
 import { RegisteredUserProvider } from '../../providers/registered/user';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
-import { ChartPage } from '../chart/chart';
+import { OverviewDevicePage } from '../overview-device/overview-device';
+import { InsertDevicePage } from '../insert-device/insert-device';
 
 @Component({
-  selector: 'page-all-favorites',
-  templateUrl: 'all-favorites.html',
+  selector: 'page-all-devices',
+  templateUrl: 'all-devices.html',
 })
-export class AllFavoritesPage {
+export class AllDevicesPage {
 
-  public filtered: Array<Cryptocurrency> = [];
-  public all: Array<Cryptocurrency> = [];
+  public filtered: Array<Device> = [];
+  public all: Array<Device> = [];
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllFavoritesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllDevicesPage });
       return;
     }
   }
@@ -38,7 +39,7 @@ export class AllFavoritesPage {
 
     loadingOverlay.present();
 
-    this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+    this.registeredUserProvider.allDevices(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
       this.all = result.data;
       this.filtered = result.data;
 
@@ -58,7 +59,7 @@ export class AllFavoritesPage {
     });
   }
 
-  public onRefreshFavoritesButtonClicked(): void {
+  public onRefreshDevicesButtonClicked(): void {
     this.refreshData();
   }
 
@@ -67,20 +68,20 @@ export class AllFavoritesPage {
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filtered = this.all.filter((favorite: Cryptocurrency) => {
-        return (favorite.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (favorite.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+      this.filtered = this.all.filter((device: Device) => {
+        return (device.platform.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (device.uuid.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
   }
 
-  public onOverviewFavoriteButtonClicked(favorite: Cryptocurrency): void {
-    this.navCtrl.push(ChartPage, { cryptocurrency: favorite });
+  public onOverviewDeviceButtonClicked(device: Device): void {
+    this.navCtrl.push(OverviewDevicePage, { device: device });
   }
 
-  public onDeleteFavoriteButtonClicked(favorite: Cryptocurrency): void {
+  public onDeleteDeviceButtonClicked(device: Device): void {
     let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
-      message: 'Do you really want to delete this favorite?',
+      message: 'Do you really want to delete this device?',
       buttons: [
         {
           text: 'Cancel',
@@ -91,7 +92,7 @@ export class AllFavoritesPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteFavorite(this.localStorageProvider.getUserTokenValue(), favorite).subscribe(result => {
+            this.registeredUserProvider.deleteDevice(this.localStorageProvider.getUserTokenValue(), device).subscribe(result => {
               let toastOverlay = this.toastCtrl.create({
                 message: result.message,
                 duration: 3000,

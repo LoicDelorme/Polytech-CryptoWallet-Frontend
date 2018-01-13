@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { AlertType } from '../../entities/alerttype';
 
-import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype/alerttype';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewAlertTypePage } from '../overview-alerttype/overview-alerttype';
 import { InsertAlertTypePage } from '../insert-alerttype/insert-alerttype';
-import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-all-alerttypes',
@@ -17,27 +16,47 @@ import { HomePage } from '../home/home';
 })
 export class AllAlertTypesPage {
 
-  public filteredAlertTypes: Array<AlertType> = [];
-  public allAlertTypes: Array<AlertType> = [];
+  public filtered: Array<AlertType> = [];
+  public all: Array<AlertType> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public administratorAlertTypeProvider: AdministratorAlertTypeProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorAlertTypeProvider: AdministratorAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
+    if (!this.localStorageProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
+      return;
     }
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserAdministrator()) {
-      this.administratorAlertTypeProvider.allAlertTypes(this.localInformationProvider.getUserTokenValue()).subscribe(data => {
-        console.warn(data);
+    this.refreshData();
+  }
 
-        this.allAlertTypes = data.data;
-        this.filteredAlertTypes = data.data;
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loadingOverlay.present();
+
+    this.administratorAlertTypeProvider.allAlertTypes(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      loadingOverlay.dismiss();
+    });
   }
 
   public onInsertAlertTypeButtonClicked(): void {
@@ -45,20 +64,15 @@ export class AllAlertTypesPage {
   }
 
   public onRefreshAlertTypesButtonClicked(): void {
-    this.administratorAlertTypeProvider.allAlertTypes(this.localInformationProvider.getUserTokenValue()).subscribe(data => {
-      console.warn(data);
-
-      this.allAlertTypes = data.data;
-      this.filteredAlertTypes = data.data;
-    });
+    this.refreshData();
   }
 
   public onFilterTriggered(event: any): void {
-    this.filteredAlertTypes = this.allAlertTypes;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredAlertTypes = this.filteredAlertTypes.filter((alertType: AlertType) => {
+      this.filtered = this.all.filter((alertType: AlertType) => {
         return alertType.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
     }
@@ -69,7 +83,7 @@ export class AllAlertTypesPage {
   }
 
   public onDeleteAlertTypeButtonClicked(alertType: AlertType): void {
-    let confirmationAlert = this.alertCtrl.create({
+    let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this alert type?',
       buttons: [
@@ -82,24 +96,32 @@ export class AllAlertTypesPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.administratorAlertTypeProvider.deleteAlertType(this.localInformationProvider.getUserTokenValue(), alertType).subscribe(data => {
-              console.warn(data);
+            this.administratorAlertTypeProvider.deleteAlertType(this.localStorageProvider.getUserTokenValue(), alertType).subscribe(result => {
+              let toastOverlay = this.toastCtrl.create({
+                message: result.message,
+                duration: 3000,
+                position: 'top'
+              });
 
-              let filteredIndex: number = this.filteredAlertTypes.indexOf(alertType);
-              if (filteredIndex != -1) {
-                this.filteredAlertTypes.splice(filteredIndex, 1);
-              }
-        
-              let allIndex: number = this.allAlertTypes.indexOf(alertType);
-              if (allIndex != -1 && allIndex != filteredIndex) {
-                this.allAlertTypes.splice(allIndex, 1);
-              }
+              toastOverlay.present();
+
+              this.refreshData();
+            }, error => {
+              console.error(error);
+
+              let toastOverlay = this.toastCtrl.create({
+                message: 'An error occured...',
+                duration: 3000,
+                position: 'top'
+              });
+
+              toastOverlay.present();
             });
           }
         }
       ]
     });
 
-    confirmationAlert.present();
+    confirmationAlertOverlay.present();
   }
 }

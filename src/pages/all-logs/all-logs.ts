@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Log } from '../../entities/log';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewLogPage } from '../overview-log/overview-log';
@@ -15,45 +15,60 @@ import { OverviewLogPage } from '../overview-log/overview-log';
 })
 export class AllLogsPage {
 
-  public filteredLogs: Array<Log> = [];
-  public allLogs: Array<Log> = [];
+  public filtered: Array<Log> = [];
+  public all: Array<Log> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllLogsPage });
+      return;
     }
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserRegistered()) {
-      this.registeredUserProvider.allLogs(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-        console.warn(data);
-
-        this.allLogs = data.data;
-        this.filteredLogs = data.data;
-      });
-    }
+    this.refreshData();
   }
 
-  public onRefreshLogsButtonClicked(): void {
-    this.registeredUserProvider.allLogs(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-      console.warn(data);
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
 
-      this.allLogs = data.data;
-      this.filteredLogs = data.data;
+    loadingOverlay.present();
+
+    this.registeredUserProvider.allLogs(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+
+      loadingOverlay.dismiss();
     });
   }
 
+  public onRefreshLogsButtonClicked(): void {
+    this.refreshData();
+  }
+
   public onFilterTriggered(event: any): void {
-    this.filteredLogs = this.allLogs;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredLogs = this.filteredLogs.filter((log: Log) => {
-        return log.ipAddress.toLowerCase().indexOf(filter.toLowerCase()) > -1;
+      this.filtered = this.all.filter((log: Log) => {
+        return (log.ipAddress.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (log.creationDate.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
   }

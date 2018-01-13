@@ -1,64 +1,78 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 
-import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewCryptocurrencyPage } from '../overview-cryptocurrency/overview-cryptocurrency';
 import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-cryptocurrency';
-import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-all-cryptocurrencies',
   templateUrl: 'all-cryptocurrencies.html',
 })
-export class AllCryptocurrenciesPage {
+export class AllCurrenciesPage {
 
-  public filteredCryptocurrencies: Array<Cryptocurrency> = [];
-  public allCryptocurrencies: Array<Cryptocurrency> = [];
+  public filtered: Array<Cryptocurrency> = [];
+  public all: Array<Cryptocurrency> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
+    if (!this.localStorageProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCurrenciesPage });
+      return;
     }
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserAdministrator()) {
-      this.administratorCryptocurrencyProvider.allCryptocurrencies(this.localInformationProvider.getUserTokenValue()).subscribe(data => {
-        console.warn(data);
+    this.refreshData();
+  }
 
-        this.allCryptocurrencies = data.data;
-        this.filteredCryptocurrencies = data.data;
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loadingOverlay.present();
+
+    this.administratorCryptocurrencyProvider.allCryptocurrencies(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      loadingOverlay.dismiss();
+    });
   }
 
   public onInsertCryptocurrencyButtonClicked(): void {
     this.navCtrl.push(InsertCryptocurrencyPage);
   }
 
-  public onRefreshCryptocurrenciesButtonClicked(): void {
-    this.administratorCryptocurrencyProvider.allCryptocurrencies(this.localInformationProvider.getUserTokenValue()).subscribe(data => {
-      console.warn(data);
-
-      this.allCryptocurrencies = data.data;
-      this.filteredCryptocurrencies = data.data;
-    });
+  public onRefreshCurrenciesButtonClicked(): void {
+    this.refreshData();
   }
 
   public onFilterTriggered(event: any): void {
-    this.filteredCryptocurrencies = this.allCryptocurrencies;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredCryptocurrencies = this.filteredCryptocurrencies.filter((cryptocurrency: Cryptocurrency) => {
+      this.filtered = this.all.filter((cryptocurrency: Cryptocurrency) => {
         return (cryptocurrency.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (cryptocurrency.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
@@ -69,7 +83,7 @@ export class AllCryptocurrenciesPage {
   }
 
   public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
-    let confirmationAlert = this.alertCtrl.create({
+    let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this cryptocurrency?',
       buttons: [
@@ -82,24 +96,32 @@ export class AllCryptocurrenciesPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.administratorCryptocurrencyProvider.deleteCryptocurrency(this.localInformationProvider.getUserTokenValue(), cryptocurrency).subscribe(data => {
-              console.warn(data);
+            this.administratorCryptocurrencyProvider.deleteCryptocurrency(this.localStorageProvider.getUserTokenValue(), cryptocurrency).subscribe(result => {
+              let toastOverlay = this.toastCtrl.create({
+                message: result.message,
+                duration: 3000,
+                position: 'top'
+              });
 
-              let filteredIndex: number = this.filteredCryptocurrencies.indexOf(cryptocurrency);
-              if (filteredIndex != -1) {
-                this.filteredCryptocurrencies.splice(filteredIndex, 1);
-              }
-        
-              let allIndex: number = this.allCryptocurrencies.indexOf(cryptocurrency);
-              if (allIndex != -1 && allIndex != filteredIndex) {
-                this.allCryptocurrencies.splice(allIndex, 1);
-              }
+              toastOverlay.present();
+
+              this.refreshData();
+            }, error => {
+              console.error(error);
+
+              let toastOverlay = this.toastCtrl.create({
+                message: 'An error occured...',
+                duration: 3000,
+                position: 'top'
+              });
+
+              toastOverlay.present();
             });
           }
         }
       ]
     });
 
-    confirmationAlert.present();
+    confirmationAlertOverlay.present();
   }
 }

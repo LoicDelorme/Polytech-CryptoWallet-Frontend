@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../entities/favorite';
+import { Theme } from '../../entities/theme';
 
-import { RegisteredUserProvider } from '../../providers/registered/user';
+import { AdministratorThemeProvider } from '../../providers/administrator/theme';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
-import { ChartPage } from '../chart/chart';
+import { OverviewThemePage } from '../overview-theme/overview-theme';
+import { InsertThemePage } from '../insert-theme/insert-theme';
 
 @Component({
-  selector: 'page-all-favorites',
-  templateUrl: 'all-favorites.html',
+  selector: 'page-all-themes',
+  templateUrl: 'all-themes.html',
 })
-export class AllFavoritesPage {
+export class AllThemesPage {
 
-  public filtered: Array<Cryptocurrency> = [];
-  public all: Array<Cryptocurrency> = [];
+  public filtered: Array<Theme> = [];
+  public all: Array<Theme> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorThemeProvider: AdministratorThemeProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localStorageProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllFavoritesPage });
+    if (!this.localStorageProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllThemesPage });
       return;
     }
   }
@@ -38,7 +39,7 @@ export class AllFavoritesPage {
 
     loadingOverlay.present();
 
-    this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+    this.administratorThemeProvider.allThemes(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
       this.all = result.data;
       this.filtered = result.data;
 
@@ -58,7 +59,11 @@ export class AllFavoritesPage {
     });
   }
 
-  public onRefreshFavoritesButtonClicked(): void {
+  public onInsertThemeButtonClicked(): void {
+    this.navCtrl.push(InsertThemePage);
+  }
+
+  public onRefreshThemesButtonClicked(): void {
     this.refreshData();
   }
 
@@ -67,20 +72,20 @@ export class AllFavoritesPage {
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filtered = this.all.filter((favorite: Cryptocurrency) => {
-        return (favorite.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (favorite.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
+      this.filtered = this.all.filter((theme: Theme) => {
+        return theme.name.toLowerCase().indexOf(filter.toLowerCase()) > -1;
       });
     }
   }
 
-  public onOverviewFavoriteButtonClicked(favorite: Cryptocurrency): void {
-    this.navCtrl.push(ChartPage, { cryptocurrency: favorite });
+  public onOverviewThemeButtonClicked(theme: Theme): void {
+    this.navCtrl.push(OverviewThemePage, { theme: theme });
   }
 
-  public onDeleteFavoriteButtonClicked(favorite: Cryptocurrency): void {
+  public onDeleteThemeButtonClicked(theme: Theme): void {
     let confirmationAlertOverlay = this.alertCtrl.create({
       title: 'Are you sure?',
-      message: 'Do you really want to delete this favorite?',
+      message: 'Do you really want to delete this theme?',
       buttons: [
         {
           text: 'Cancel',
@@ -91,7 +96,7 @@ export class AllFavoritesPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteFavorite(this.localStorageProvider.getUserTokenValue(), favorite).subscribe(result => {
+            this.administratorThemeProvider.deleteTheme(this.localStorageProvider.getUserTokenValue(), theme).subscribe(result => {
               let toastOverlay = this.toastCtrl.create({
                 message: result.message,
                 duration: 3000,
