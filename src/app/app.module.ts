@@ -160,23 +160,33 @@ import { PriceCoinMarketCapProvider } from '../providers/coinmarketcap/price/pri
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {
+      provide: ErrorHandler,
+      useClass: IonicErrorHandler
+    },
     AdministratorAlertProvider,
     AdministratorAlertTypeProvider,
     AdministratorAssetProvider,
+    AdministratorChartPeriodProvider,
     AdministratorCryptocurrencyProvider,
+    AdministratorCurrencyProvider,
+    AdministratorDeviceProvider,
     AdministratorFavoriteProvider,
     AdministratorLogProvider,
     AdministratorSettingProvider,
+    AdministratorThemeProvider,
     AdministratorTokenProvider,
     AdministratorUserProvider,
     AdministratorWalletProvider,
-    LocalInformationProvider,
+    CoinMarketCapProvider,
     RegisteredAlertTypeProvider,
+    RegisteredChartPeriodProvider,
+    RegisteredCurrencyProvider,
+    RegisteredThemeProvider,
     RegisteredUserProvider,
+    LocalStorageProvider,
     UnregisteredCryptocurrencyProvider,
-    UnregisteredUserProvider,
-    PriceCoinMarketCapProvider
+    UnregisteredUserProvider
   ]
 })
 export class AppModule {
