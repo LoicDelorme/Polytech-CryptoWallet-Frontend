@@ -1,7 +1,7 @@
 {
   "name": "CryptoWallet",
   "version": "1.0.0",
-  "author": "Ionic Framework",
+  "author": "DELORME Loïc, KASPRZYK Nicolas & LAFAYE DE MICHEAUX Yoan",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
@@ -36,5 +36,5 @@
     "@ionic/app-scripts": "3.1.5",
     "typescript": "2.4.2"
   },
-  "description": "An Ionic project"
+  "description": "CryptoWallet project"
 }
