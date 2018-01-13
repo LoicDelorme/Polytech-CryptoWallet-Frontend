@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { AllAlertsPage } from '../pages/all-alerts/all-alerts';
 import { AllAlertTypesPage } from '../pages/all-alerttypes/all-alerttypes';
@@ -80,7 +79,6 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user';
 @NgModule({
   declarations: [
     MyApp,
-    TabsPage,
     AllAlertsPage,
     AllAlertTypesPage,
     AllAssetsPage,
@@ -127,7 +125,6 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user';
   ],
   entryComponents: [
     MyApp,
-    TabsPage,
     AllAlertsPage,
     AllAlertTypesPage,
     AllAssetsPage,
