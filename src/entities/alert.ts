@@ -14,6 +14,5 @@ export class Alert {
   public cryptocurrency: Cryptocurrency;
   public type: AlertType;
 
-  constructor() {
-  }
+  constructor() {}
 }

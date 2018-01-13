@@ -4,6 +4,7 @@ import { Alert } from './alert';
 import { Setting } from './setting';
 import { Token } from './token';
 import { Log } from './log';
+import { Device } from './device';
 
 export class User {
 
@@ -20,10 +21,10 @@ export class User {
   public favorites: Array<Cryptocurrency>;
   public wallets: Array<Wallet>;
   public alerts: Array<Alert>;
-  public settings: Array<Setting>;
+  public setting: Setting;
   public tokens: Array<Token>;
   public logs: Array<Log>;
+  public devices: Array<Device>;
 
-  constructor() {
-  }
+  constructor() {}
 }

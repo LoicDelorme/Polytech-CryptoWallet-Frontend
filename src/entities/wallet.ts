@@ -9,6 +9,5 @@ export class Wallet {
   public userId: number;
   public assets: Array<Asset>;
 
-  constructor() {
-  }
+  constructor() {}
 }

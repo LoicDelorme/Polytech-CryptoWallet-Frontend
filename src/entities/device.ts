@@ -1,9 +1,11 @@
-export class AlertType {
+export class Device {
 
   public id: number;
-  public name: string;
+  public platform: string;
+  public uuid: string;
   public creationDate: string;
   public lastUpdate: string;
+  public userId: number;
 
   constructor() {}
 }

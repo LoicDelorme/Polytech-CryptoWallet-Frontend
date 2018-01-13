@@ -1,4 +1,4 @@
-export class AlertType {
+export class ChartPeriod {
 
   public id: number;
   public name: string;

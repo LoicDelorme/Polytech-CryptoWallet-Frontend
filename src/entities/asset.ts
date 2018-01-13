@@ -7,6 +7,5 @@ export class Asset {
   public amount: number;
   public purchasePrice: number;
 
-  constructor() {
-  }
+  constructor() {}
 }
