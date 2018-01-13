@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { AlertType } from '../../entities/alerttype';
 
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { UpdateAlertTypePage } from '../update-alerttype/update-alerttype';
@@ -17,16 +17,17 @@ export class OverviewAlertTypePage {
 
   public alertType: AlertType;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.alertType = this.navParams.get("alertType");
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserAdministrator()) {
+    if (!this.localStorageProvider.isUserAdministrator()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
-    } else {
-      this.alertType = this.navParams.get("alertType");
+      return;
     }
+  }
+
+  public ionViewDidEnter(): void {
+    this.alertType = this.navParams.get("alertType");
   }
 
   public onUpdateAlertTypeButtonClicked(): void {

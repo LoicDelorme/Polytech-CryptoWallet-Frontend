@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Token } from '../../entities/token';
 
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllTokensPage } from '../all-tokens/all-tokens';
@@ -16,15 +16,16 @@ export class OverviewTokenPage {
 
   public token: Token;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.token = this.navParams.get("token");
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllTokensPage });
-    } else {
-      this.token = this.navParams.get("token");
+      return;
     }
+  }
+
+  public ionViewDidEnter(): void {
+    this.token = this.navParams.get("token");
   }
 }

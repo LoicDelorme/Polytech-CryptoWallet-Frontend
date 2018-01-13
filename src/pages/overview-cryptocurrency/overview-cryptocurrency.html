@@ -1,5 +1,11 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Overview</ion-title>
 
     <ion-buttons end>
@@ -30,11 +36,6 @@
     <ion-item>
       <ion-label floating>Image URL</ion-label>
       <ion-input type="text" value="{{ cryptocurrency.imageUrl }}" readonly="true"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Base URL</ion-label>
-      <ion-input type="text" value="{{ cryptocurrency.baseUrl }}" readonly="true"></ion-input>
     </ion-item>
 
     <ion-item>

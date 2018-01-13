@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Log } from '../../entities/log';
 
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllLogsPage } from '../all-logs/all-logs';
@@ -16,15 +16,16 @@ export class OverviewLogPage {
 
   public log: Log;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.log = this.navParams.get("log");
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllLogsPage });
-    } else {
-      this.log = this.navParams.get("log");
+      return;
     }
+  }
+
+  public ionViewDidEnter(): void {
+    this.log = this.navParams.get("log");
   }
 }

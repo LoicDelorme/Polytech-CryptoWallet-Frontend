@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Wallet } from '../../entities/wallet';
 
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { UpdateWalletPage } from '../update-wallet/update-wallet';
@@ -18,16 +18,17 @@ export class OverviewWalletPage {
 
   public wallet: Wallet;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.wallet = this.navParams.get("wallet");
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
-    } else {
-      this.wallet = this.navParams.get("wallet");
+      return;
     }
+  }
+
+  public ionViewDidEnter(): void {
+    this.wallet = this.navParams.get("wallet");
   }
 
   public onUpdateWalletButtonClicked(): void {

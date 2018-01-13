@@ -1,5 +1,11 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Overview</ion-title>
   </ion-navbar>
 </ion-header>
@@ -24,6 +30,11 @@
     <ion-item>
       <ion-label floating>End date</ion-label>
       <ion-input type="text" value="{{ token.endDate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Platform</ion-label>
+      <ion-input type="text" value="{{ token.platform }}" readonly="true"></ion-input>
     </ion-item>
 
     <ion-item>

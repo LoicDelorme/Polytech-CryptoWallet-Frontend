@@ -3,10 +3,10 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 
-import { UpdateCryptocurrencyPage } from '../update-cryptocurrency/update-cryptocurrency';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
+import { UpdateCryptocurrencyPage } from '../update-cryptocurrency/update-cryptocurrency';
 import { AllCryptocurrenciesPage } from '../all-cryptocurrencies/all-cryptocurrencies';
 
 @Component({
@@ -17,16 +17,17 @@ export class OverviewCryptocurrencyPage {
 
   public cryptocurrency: Cryptocurrency;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public localInformationProvider: LocalInformationProvider) {
-    this.cryptocurrency = this.navParams.get("cryptocurrency");
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserAdministrator()) {
+    if (!this.localStorageProvider.isUserAdministrator()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
-    } else {
-      this.cryptocurrency = this.navParams.get("cryptocurrency");
+      return;
     }
+  }
+
+  public ionViewDidEnter(): void {
+    this.cryptocurrency = this.navParams.get("cryptocurrency");
   }
 
   public onUpdateCryptocurrencyButtonClicked(): void {

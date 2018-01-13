@@ -1,36 +1,31 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Alert } from '../../entities/alert';
+import { Device } from '../../entities/device';
 
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
-import { UpdateAlertPage } from '../update-alert/update-alert';
-import { AllAlertsPage } from '../all-alerts/all-alerts';
+import { AllDevicesPage } from '../all-devices/all-devices';
 
 @Component({
-  selector: 'page-overview-alert',
-  templateUrl: 'overview-alert.html',
+  selector: 'page-overview-device',
+  templateUrl: 'overview-device.html',
 })
-export class OverviewAlertPage {
+export class OverviewDevicePage {
 
-  public alert: Alert;
+  public device: Device;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllDevicesPage });
       return;
     }
   }
 
   public ionViewDidEnter(): void {
-    this.alert = this.navParams.get("alert");
-  }
-
-  public onUpdateAlertButtonClicked(): void {
-    this.navCtrl.push(UpdateAlertPage, { alert: this.alert });
+    this.device = this.navParams.get("device");
   }
 }
