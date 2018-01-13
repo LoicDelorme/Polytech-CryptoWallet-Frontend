@@ -9,6 +9,5 @@ export class AlertForm {
   public cryptocurrencyId: number;
   public typeId: number;
 
-  constructor() {
-  }
+  constructor() {}
 }

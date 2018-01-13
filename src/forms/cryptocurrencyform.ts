@@ -4,9 +4,7 @@ export class CryptocurrencyForm {
   public name: string;
   public symbol: string;
   public imageUrl: string;
-  public baseUrl: string;
   public resourceUrl: string;
 
-  constructor() {
-  }
+  constructor() {}
 }

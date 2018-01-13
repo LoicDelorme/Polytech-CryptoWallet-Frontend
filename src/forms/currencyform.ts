@@ -1,8 +1,8 @@
-export class WalletForm {
+export class CurrencyForm {
 
   public id: number;
   public name: string;
-  public userId: number;
+  public symbol: string;
 
   constructor() {}
 }

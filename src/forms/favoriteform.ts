@@ -1,5 +1,4 @@
 export class FavoriteForm {
 
-  constructor() {
-  }
+  constructor() {}
 }

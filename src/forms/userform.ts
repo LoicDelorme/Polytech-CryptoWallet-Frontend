@@ -7,7 +7,7 @@ export class UserForm {
   public password: string;
   public enabled: boolean;
   public administrator: boolean;
+  public settingId: number;
 
-  constructor() {
-  }
+  constructor() {}
 }

@@ -1,8 +1,8 @@
-export class TokenForm {
+export class DeviceForm {
 
   public id: number;
-  public endDate: Date;
   public platform: string;
+  public uuid: string;
   public userId: number;
 
   constructor() {}

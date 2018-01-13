@@ -1,8 +1,7 @@
-export class WalletForm {
+export class ThemeForm {
 
   public id: number;
   public name: string;
-  public userId: number;
 
   constructor() {}
 }
