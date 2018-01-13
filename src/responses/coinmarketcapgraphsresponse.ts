@@ -1,4 +1,4 @@
-export interface CoinMarketCapResponse {
+export interface CoinMarketCapGraphsResponse {
 
   market_cap_by_available_supply: Array<Array<number>>;
   price_btc: Array<Array<number>>;
