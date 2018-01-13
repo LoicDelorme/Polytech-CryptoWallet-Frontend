@@ -4,7 +4,7 @@ import { User } from '../../entities/user';
 import { Token } from '../../entities/token';
 
 @Injectable()
-export class StorageProvider {
+export class LocalStorageProvider {
 
   private readonly userObjectKey: string = "user";
   private readonly userIdKey: string = "user.id";
