@@ -14,7 +14,7 @@ import { InsertCryptocurrencyPage } from '../insert-cryptocurrency/insert-crypto
   selector: 'page-all-cryptocurrencies',
   templateUrl: 'all-cryptocurrencies.html',
 })
-export class AllCurrenciesPage {
+export class AllCryptocurrenciesPage {
 
   public filtered: Array<Cryptocurrency> = [];
   public all: Array<Cryptocurrency> = [];
