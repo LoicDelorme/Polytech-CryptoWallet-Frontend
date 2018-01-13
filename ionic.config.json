@@ -5,10 +5,14 @@
   "proxies": [
     {
       "path": "/cryptowallet",
-      "proxyUrl": "http://localhost/api/cryptowallet/"
+      "proxyUrl": "http://localhost:8090/api/cryptowallet/"
     },
     {
-      "path": "/coinmarketcap",
+      "path": "/coinmarketcap_ticker",
+      "proxyUrl": "https://api.coinmarketcap.com/v1/ticker/"
+    },
+    {
+      "path": "/coinmarketcap_graphs",
       "proxyUrl": "https://graphs.coinmarketcap.com/currencies/"
     }
   ],
