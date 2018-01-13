@@ -49,26 +49,33 @@ import { UserOverviewPage } from '../pages/user-overview/user-overview';
 import { UserSubscriptionPage } from '../pages/user-subscription/user-subscription';
 import { UserUpdatePage } from '../pages/user-update/user-update';
 
-import { AdministratorAlertProvider } from '../providers/administrator/alert/alert';
-import { AdministratorAlertTypeProvider } from '../providers/administrator/alerttype/alerttype';
-import { AdministratorAssetProvider } from '../providers/administrator/asset/asset';
-import { AdministratorCryptocurrencyProvider } from '../providers/administrator/cryptocurrency/cryptocurrency';
-import { AdministratorFavoriteProvider } from '../providers/administrator/favorite/favorite';
-import { AdministratorLogProvider } from '../providers/administrator/log/log';
-import { AdministratorSettingProvider } from '../providers/administrator/setting/setting';
-import { AdministratorTokenProvider } from '../providers/administrator/token/token';
-import { AdministratorUserProvider } from '../providers/administrator/user/user';
-import { AdministratorWalletProvider } from '../providers/administrator/wallet/wallet';
+import { AdministratorAlertProvider } from '../providers/administrator/alert';
+import { AdministratorAlertTypeProvider } from '../providers/administrator/alerttype';
+import { AdministratorAssetProvider } from '../providers/administrator/asset';
+import { AdministratorChartPeriodProvider } from '../providers/administrator/chartperiod';
+import { AdministratorCryptocurrencyProvider } from '../providers/administrator/cryptocurrency';
+import { AdministratorCurrencyProvider } from '../providers/administrator/currency';
+import { AdministratorDeviceProvider } from '../providers/administrator/device';
+import { AdministratorFavoriteProvider } from '../providers/administrator/favorite';
+import { AdministratorLogProvider } from '../providers/administrator/log';
+import { AdministratorSettingProvider } from '../providers/administrator/setting';
+import { AdministratorThemeProvider } from '../providers/administrator/theme';
+import { AdministratorTokenProvider } from '../providers/administrator/token';
+import { AdministratorUserProvider } from '../providers/administrator/user';
+import { AdministratorWalletProvider } from '../providers/administrator/wallet';
 
-import { LocalInformationProvider } from '../providers/local/information/information';
+import { CoinMarketCapProvider } from '../providers/coinmarketcap/coinmarketcap';
 
-import { RegisteredAlertTypeProvider } from '../providers/registered/alerttype/alerttype';
-import { RegisteredUserProvider } from '../providers/registered/user/user';
+import { RegisteredAlertTypeProvider } from '../providers/registered/alerttype';
+import { RegisteredChartPeriodProvider } from '../providers/registered/chartperiod';
+import { RegisteredCurrencyProvider } from '../providers/registered/currency';
+import { RegisteredThemeProvider } from '../providers/registered/theme';
+import { RegisteredUserProvider } from '../providers/registered/user';
 
-import { UnregisteredCryptocurrencyProvider } from '../providers/unregistered/cryptocurrency/cryptocurrency';
-import { UnregisteredUserProvider } from '../providers/unregistered/user/user';
+import { LocalStorageProvider } from '../providers/storage/localstorage';
 
-import { PriceCoinMarketCapProvider } from '../providers/coinmarketcap/price/price';
+import { UnregisteredCryptocurrencyProvider } from '../providers/unregistered/cryptocurrency';
+import { UnregisteredUserProvider } from '../providers/unregistered/user';
 
 @NgModule({
   declarations: [
