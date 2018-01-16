@@ -2,40 +2,40 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 
-import { AlertTypeForm } from '../../forms/alerttypeform';
+import { ThemeForm } from '../../forms/themeform';
 
-import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype';
+import { AdministratorThemeProvider } from '../../providers/administrator/theme';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
-import { AllAlertTypesPage } from '../all-alerttypes/all-alerttypes';
+import { AllThemesPage } from '../all-themes/all-themes';
 
 @Component({
-  selector: 'page-insert-alerttype',
-  templateUrl: 'insert-alerttype.html',
+  selector: 'page-insert-theme',
+  templateUrl: 'insert-theme.html',
 })
-export class InsertAlertTypePage {
+export class InsertThemePage {
 
-  public alertTypeForm: AlertTypeForm;
-  public alertTypeFormGroup: FormGroup;
+  public themeForm: ThemeForm;
+  public themeFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorAlertTypeProvider: AdministratorAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
-    this.alertTypeForm = new AlertTypeForm();
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorThemeProvider: AdministratorThemeProvider, private localStorageProvider: LocalStorageProvider) {
+    this.themeForm = new ThemeForm();
 
-    this.alertTypeFormGroup = formBuilder.group({
+    this.themeFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllThemesPage });
       return;
     }
   }
 
   public onSubmit(value: any): void {
-    this.administratorAlertTypeProvider.insertAlertType(this.localStorageProvider.getUserTokenValue(), this.alertTypeForm).subscribe(result => {
+    this.administratorThemeProvider.insertTheme(this.localStorageProvider.getUserTokenValue(), this.themeForm).subscribe(result => {
       let toastOverlay = this.toastCtrl.create({
         message: result.message,
         duration: 3000,

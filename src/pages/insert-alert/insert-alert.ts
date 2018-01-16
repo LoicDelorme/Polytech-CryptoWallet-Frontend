@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { AlertType } from '../../entities/alerttype';
 import { AlertForm } from '../../forms/alertform';
 
-import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttype/alerttype';
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttype';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllAlertsPage } from '../all-alerts/all-alerts';
@@ -24,50 +24,88 @@ export class InsertAlertPage {
   public alertForm: AlertForm;
   public alertFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public registeredAlertTypeProvider: RegisteredAlertTypeProvider, public localInformationProvider: LocalInformationProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private registeredAlertTypeProvider: RegisteredAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
     this.alertForm = new AlertForm();
-    this.alertForm.userId = this.localInformationProvider.getUserId();
 
     this.alertFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       cryptocurrencyId: ['', Validators.compose([Validators.required])],
       typeId: ['', Validators.compose([Validators.required])],
       threshold: ['', Validators.compose([Validators.required])],
-      oneShot: [false],
-      active: [false]
+      oneShot: [false, Validators.compose([Validators.required])],
+      active: [false, Validators.compose([Validators.required])]
     });
   }
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+      return;
     }
   }
 
   public ionViewDidEnter(): void {
-    if (this.localInformationProvider.isUserRegistered()) {
-      this.registeredUserProvider.allFavorites(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-        console.warn(data);
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
 
-        this.allFavorites = data.data;
+    loadingOverlay.present();
+
+    this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.allFavorites = result.data;
+
+      this.registeredAlertTypeProvider.allAlertTypes(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+        this.allTypes = result.data;
+
+        loadingOverlay.dismiss();
+      }, error => {
+        console.error(error);
+  
+        let toastOverlay = this.toastCtrl.create({
+          message: 'An error occured...',
+          duration: 3000,
+          position: 'top'
+        });
+  
+        toastOverlay.present();
+      });
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
       });
 
-      this.registeredAlertTypeProvider.allAlertTypes(this.localInformationProvider.getUserTokenValue()).subscribe(data => {
-        console.warn(data);
-
-        this.allTypes = data.data;
-      });
-    }
+      toastOverlay.present();
+    });
   }
 
   public onSubmit(value: any): void {
-    if (this.alertFormGroup.valid) {
-      this.registeredUserProvider.insertAlert(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.alertForm).subscribe(data => {
-        console.warn(data);
+    this.alertForm.userId = this.localStorageProvider.getUserId();
 
-        this.navCtrl.pop();
+    this.registeredUserProvider.insertAlert(this.localStorageProvider.getUserTokenValue(), this.alertForm).subscribe(result => {
+      let toastOverlay = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      this.navCtrl.pop();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+    });
   }
 
   public updateName(): void {

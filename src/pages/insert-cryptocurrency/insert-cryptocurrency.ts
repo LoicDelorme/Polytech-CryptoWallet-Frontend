@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { CryptocurrencyForm } from '../../forms/cryptocurrencyform';
 
-import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllCryptocurrenciesPage } from '../all-cryptocurrencies/all-cryptocurrencies';
@@ -19,31 +19,45 @@ export class InsertCryptocurrencyPage {
   public cryptocurrencyForm: CryptocurrencyForm;
   public cryptocurrencyFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, public localInformationProvider: LocalInformationProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {
     this.cryptocurrencyForm = new CryptocurrencyForm();
 
     this.cryptocurrencyFormGroup = formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      baseUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       resourceUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserAdministrator()) {
+    if (!this.localStorageProvider.isUserAdministrator()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
+      return;
     }
   }
 
   public onSubmit(value: any): void {
-    if (this.cryptocurrencyFormGroup.valid) {
-      this.administratorCryptocurrencyProvider.insertCryptocurrency(this.localInformationProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(data => {
-        console.warn(data);
-
-        this.navCtrl.pop();
+    this.administratorCryptocurrencyProvider.insertCryptocurrency(this.localStorageProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(result => {
+      let toastOverlay = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      this.navCtrl.pop();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+    });
   }
 }
