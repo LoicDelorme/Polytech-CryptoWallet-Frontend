@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { CryptocurrencyForm } from '../../forms/cryptocurrencyform';
 
-import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency/cryptocurrency';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { AdministratorCryptocurrencyProvider } from '../../providers/administrator/cryptocurrency';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllCryptocurrenciesPage } from '../all-cryptocurrencies/all-cryptocurrencies';
@@ -20,40 +20,57 @@ export class UpdateCryptocurrencyPage {
   public cryptocurrencyForm: CryptocurrencyForm;
   public cryptocurrencyFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, public localInformationProvider: LocalInformationProvider) {
-    let cryptocurrency: Cryptocurrency = this.navParams.get("cryptocurrency");
-
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {
     this.cryptocurrencyForm = new CryptocurrencyForm();
-    this.cryptocurrencyForm.id = cryptocurrency.id;
-    this.cryptocurrencyForm.name = cryptocurrency.name;
-    this.cryptocurrencyForm.symbol = cryptocurrency.symbol;
-    this.cryptocurrencyForm.imageUrl = cryptocurrency.imageUrl;
-    this.cryptocurrencyForm.baseUrl = cryptocurrency.baseUrl;
-    this.cryptocurrencyForm.resourceUrl = cryptocurrency.resourceUrl;
 
     this.cryptocurrencyFormGroup = formBuilder.group({
-      name: [cryptocurrency.name, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      symbol: [cryptocurrency.symbol, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      imageUrl: [cryptocurrency.imageUrl, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      baseUrl: [cryptocurrency.baseUrl, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      resourceUrl: [cryptocurrency.resourceUrl, Validators.compose([Validators.required, Validators.maxLength(250)])]
+      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      baseUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      resourceUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserAdministrator()) {
+    if (!this.localStorageProvider.isUserAdministrator()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
+      return;
     }
   }
 
-  public onSubmit(value: any): void {
-    if (this.cryptocurrencyFormGroup.valid) {
-      this.administratorCryptocurrencyProvider.updateCryptocurrency(this.localInformationProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(data => {
-        console.warn(data);
+  public ionViewDidEnter(): void {
+    let cryptocurrency: Cryptocurrency = this.navParams.get("cryptocurrency");
 
-        this.navCtrl.getPrevious().data.cryptocurrency = data.data;
-        this.navCtrl.pop();
+    this.cryptocurrencyForm.id = cryptocurrency.id;
+    this.cryptocurrencyForm.name = cryptocurrency.name;
+    this.cryptocurrencyForm.symbol = cryptocurrency.symbol;
+    this.cryptocurrencyForm.imageUrl = cryptocurrency.imageUrl;
+    this.cryptocurrencyForm.resourceUrl = cryptocurrency.resourceUrl;
+  }
+
+  public onSubmit(value: any): void {
+    this.administratorCryptocurrencyProvider.updateCryptocurrency(this.localStorageProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(result => {
+      let toastOverlay = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      this.navCtrl.getPrevious().data.cryptocurrency = result.data;
+      this.navCtrl.pop();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+    });
   }
 }

@@ -1,5 +1,11 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Update cryptocurrency</ion-title>
   </ion-navbar>
 </ion-header>
@@ -42,19 +48,6 @@
     </ion-item>
 
     <ion-item *ngIf="cryptocurrencyFormGroup.controls.imageUrl.hasError('maxlength') && cryptocurrencyFormGroup.controls.imageUrl.touched">
-      <p>The maximum length is 250</p>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Base URL</ion-label>
-      <ion-input formControlName="baseUrl" type="text" [(ngModel)]="cryptocurrencyForm.baseUrl"></ion-input>
-    </ion-item>
-
-    <ion-item *ngIf="cryptocurrencyFormGroup.controls.baseUrl.hasError('required') && cryptocurrencyFormGroup.controls.baseUrl.touched">
-      <p>The field is required</p>
-    </ion-item>
-
-    <ion-item *ngIf="cryptocurrencyFormGroup.controls.baseUrl.hasError('maxlength') && cryptocurrencyFormGroup.controls.baseUrl.touched">
       <p>The maximum length is 250</p>
     </ion-item>
 

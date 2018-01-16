@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { AlertType } from '../../entities/alerttype';
 import { AlertTypeForm } from '../../forms/alerttypeform';
 
-import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype/alerttype';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { AdministratorAlertTypeProvider } from '../../providers/administrator/alerttype';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllAlertTypesPage } from '../all-alerttypes/all-alerttypes';
@@ -20,32 +20,50 @@ export class UpdateAlertTypePage {
   public alertTypeForm: AlertTypeForm;
   public alertTypeFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public administratorAlertTypeProvider: AdministratorAlertTypeProvider, public localInformationProvider: LocalInformationProvider) {
-    let alertType: AlertType = this.navParams.get("alertType");
-
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorAlertTypeProvider: AdministratorAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
     this.alertTypeForm = new AlertTypeForm();
-    this.alertTypeForm.id = alertType.id;
-    this.alertTypeForm.name = alertType.name;
 
     this.alertTypeFormGroup = formBuilder.group({
-      name: [alertType.name, Validators.compose([Validators.required, Validators.maxLength(250)])]
+      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserAdministrator()) {
+    if (!this.localStorageProvider.isUserAdministrator()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
+      return;
     }
   }
 
-  public onSubmit(value: any): void {
-    if (this.alertTypeFormGroup.valid) {
-      this.administratorAlertTypeProvider.updateAlertType(this.localInformationProvider.getUserTokenValue(), this.alertTypeForm).subscribe(data => {
-        console.warn(data);
+  public ionViewDidEnter(): void {
+    let alertType: AlertType = this.navParams.get("alertType");
 
-        this.navCtrl.getPrevious().data.alertType = data.data;
-        this.navCtrl.pop();
+    this.alertTypeForm.id = alertType.id;
+    this.alertTypeForm.name = alertType.name;
+  }
+
+  public onSubmit(value: any): void {
+    this.administratorAlertTypeProvider.updateAlertType(this.localStorageProvider.getUserTokenValue(), this.alertTypeForm).subscribe(result => {
+      let toastOverlay = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      this.navCtrl.getPrevious().data.alertType = result.data;
+      this.navCtrl.pop();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+    });
   }
 }

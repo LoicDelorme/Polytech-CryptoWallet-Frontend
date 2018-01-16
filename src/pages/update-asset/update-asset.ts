@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { Wallet } from '../../entities/wallet';
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { Asset } from '../../entities/asset';
 import { AssetForm } from '../../forms/assetform';
 
-import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllWalletsPage } from '../all-wallets/all-wallets';
@@ -25,36 +25,54 @@ export class UpdateAssetPage {
   public assetForm: AssetForm;
   public assetFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
+    this.assetForm = new AssetForm();
+
+    this.assetFormGroup = formBuilder.group({
+      amount: ['', Validators.compose([Validators.required])],
+      purchasePrice: ['', Validators.compose([Validators.required])]
+    });
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+      return;
+    }
+  }
+
+  public ionViewDidEnter(): void {
     let asset: Asset = this.navParams.get("asset");
     let wallet: Wallet = this.navParams.get("wallet");
 
     this.cryptocurrency = asset.cryptocurrency;
     this.wallet = wallet;
 
-    this.assetForm = new AssetForm();
     this.assetForm.amount = asset.amount;
     this.assetForm.purchasePrice = asset.purchasePrice;
-
-    this.assetFormGroup = formBuilder.group({
-      amount: [asset.amount, Validators.compose([Validators.required])],
-      purchasePrice: [asset.purchasePrice, Validators.compose([Validators.required])]
-    });
-  }
-
-  public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
-    }
   }
 
   public onSubmit(value: any): void {
-    if (this.assetFormGroup.valid) {
-      this.registeredUserProvider.updateAsset(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(data => {
-        console.warn(data);
-
-        this.navCtrl.pop();
+    this.registeredUserProvider.updateAsset(this.localStorageProvider.getUserTokenValue(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(result => {
+      let toastOverlay = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      this.navCtrl.pop();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+    });
   }
 }

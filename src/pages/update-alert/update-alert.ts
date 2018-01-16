@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 
 import { Alert } from '../../entities/alert';
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { AlertType } from '../../entities/alerttype';
 import { AlertForm } from '../../forms/alertform';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttype/alerttype';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { RegisteredAlertTypeProvider } from '../../providers/registered/alerttype';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { AllAlertsPage } from '../all-alerts/all-alerts';
@@ -25,10 +25,29 @@ export class UpdateAlertPage {
   public alertForm: AlertForm;
   public alertFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public registeredAlertTypeProvider: RegisteredAlertTypeProvider, public localInformationProvider: LocalInformationProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private registeredAlertTypeProvider: RegisteredAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
+    this.alertForm = new AlertForm();
+
+    this.alertFormGroup = formBuilder.group({
+      name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      cryptocurrencyId: ['', Validators.compose([Validators.required])],
+      typeId: ['', Validators.compose([Validators.required])],
+      threshold: ['', Validators.compose([Validators.required])],
+      oneShot: [false],
+      active: [false]
+    });
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+      return;
+    }
+  }
+
+  public ionViewDidEnter(): void {
     let alert: Alert = this.navParams.get("alert");
 
-    this.alertForm = new AlertForm();
     this.alertForm.id = alert.id;
     this.alertForm.name = alert.name;
     this.alertForm.threshold = alert.threshold;
@@ -38,47 +57,67 @@ export class UpdateAlertPage {
     this.alertForm.cryptocurrencyId = alert.cryptocurrency.id;
     this.alertForm.typeId = alert.type.id;
 
-    this.alertFormGroup = formBuilder.group({
-      name: [alert.name, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      cryptocurrencyId: [alert.cryptocurrency.id, Validators.compose([Validators.required])],
-      typeId: [alert.type.id, Validators.compose([Validators.required])],
-      threshold: [alert.threshold, Validators.compose([Validators.required])],
-      oneShot: [alert.oneShot],
-      active: [alert.active]
-    });
-  }
-
-  public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
-    }
-  }
-
-  public ionViewDidEnter(): void {
-    this.registeredUserProvider.allFavorites(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId()).subscribe(data => {
-      console.warn(data);
-
-      this.allFavorites = data.data;
-      this.updateName();
+    let loadingOverlay = this.loadingCtrl.create({
+      content: 'Please wait...'
     });
 
-    this.registeredAlertTypeProvider.allAlertTypes(this.localInformationProvider.getUserTokenValue()).subscribe(data => {
-      console.warn(data);
+    loadingOverlay.present();
 
-      this.allTypes = data.data;
-      this.updateName();
+    this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+      this.allFavorites = result.data;
+
+      this.registeredAlertTypeProvider.allAlertTypes(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+        this.allTypes = result.data;
+        this.updateName();
+
+        loadingOverlay.dismiss();
+      }, error => {
+        console.error(error);
+  
+        let toastOverlay = this.toastCtrl.create({
+          message: 'An error occured...',
+          duration: 3000,
+          position: 'top'
+        });
+  
+        toastOverlay.present();
+      });
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
     });
   }
 
   public onSubmit(value: any): void {
-    if (this.alertFormGroup.valid) {
-      this.registeredUserProvider.updateAlert(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), this.alertForm).subscribe(data => {
-        console.warn(data);
-
-        this.navCtrl.getPrevious().data.alert = data.data;
-        this.navCtrl.pop();
+    this.registeredUserProvider.updateAlert(this.localStorageProvider.getUserTokenValue(), this.alertForm).subscribe(result => {
+      let toastOverlay = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top'
       });
-    }
+
+      toastOverlay.present();
+
+      this.navCtrl.getPrevious().data.alert = result.data;
+      this.navCtrl.pop();
+    }, error => {
+      console.error(error);
+
+      let toastOverlay = this.toastCtrl.create({
+        message: 'An error occured...',
+        duration: 3000,
+        position: 'top'
+      });
+
+      toastOverlay.present();
+    });
   }
 
   public updateName(): void {
