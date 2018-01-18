@@ -1,4 +1,4 @@
-export interface Response<T> {
+export interface CryptoWalletResponse<T> {
 
   success: boolean;
   message: string;
