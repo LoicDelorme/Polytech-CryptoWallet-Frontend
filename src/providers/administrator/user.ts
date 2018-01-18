@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../entities/user';
 import { UserForm } from '../../forms/userform';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class AdministratorUserProvider {
@@ -17,23 +17,23 @@ export class AdministratorUserProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allUsers(token: string): Observable<Response<Array<User>>> {
-    return this.http.get<Response<Array<User>>>(this.allUsersPath.replace("TOKEN", token));
+  public allUsers(token: string): Observable<CryptoWalletResponse<Array<User>>> {
+    return this.http.get<CryptoWalletResponse<Array<User>>>(this.allUsersPath.replace("TOKEN", token));
   }
 
-  public getUser(token: string, userId: number): Observable<Response<User>> {
-    return this.http.get<Response<User>>(this.getUserPath.replace("TOKEN", token).replace("ID", userId.toString()));
+  public getUser(token: string, userId: number): Observable<CryptoWalletResponse<User>> {
+    return this.http.get<CryptoWalletResponse<User>>(this.getUserPath.replace("TOKEN", token).replace("ID", userId.toString()));
   }
 
-  public insertUser(token: string, userForm: UserForm): Observable<Response<User>> {
-    return this.http.post<Response<User>>(this.insertUserPath.replace("TOKEN", token), userForm);
+  public insertUser(token: string, userForm: UserForm): Observable<CryptoWalletResponse<User>> {
+    return this.http.post<CryptoWalletResponse<User>>(this.insertUserPath.replace("TOKEN", token), userForm);
   }
 
-  public updateUser(token: string, userForm: UserForm): Observable<Response<User>> {
-    return this.http.put<Response<User>>(this.updateUserPath.replace("TOKEN", token).replace("ID", userForm.id.toString()), userForm);
+  public updateUser(token: string, userForm: UserForm): Observable<CryptoWalletResponse<User>> {
+    return this.http.put<CryptoWalletResponse<User>>(this.updateUserPath.replace("TOKEN", token).replace("ID", userForm.id.toString()), userForm);
   }
 
-  public deleteUser(token: string, user: User): Observable<Response<User>> {
-    return this.http.delete<Response<User>>(this.deleteUserPath.replace("TOKEN", token).replace("ID", user.id.toString()));
+  public deleteUser(token: string, user: User): Observable<CryptoWalletResponse<User>> {
+    return this.http.delete<CryptoWalletResponse<User>>(this.deleteUserPath.replace("TOKEN", token).replace("ID", user.id.toString()));
   }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { AlertType } from '../../entities/alerttype';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class RegisteredAlertTypeProvider {
@@ -13,11 +13,11 @@ export class RegisteredAlertTypeProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allAlertTypes(token: string): Observable<Response<Array<AlertType>>> {
-    return this.http.get<Response<Array<AlertType>>>(this.allAlertTypesPath.replace("TOKEN", token));
+  public allAlertTypes(token: string): Observable<CryptoWalletResponse<Array<AlertType>>> {
+    return this.http.get<CryptoWalletResponse<Array<AlertType>>>(this.allAlertTypesPath.replace("TOKEN", token));
   }
 
-  public getAlertType(token: string, alertTypeId: number): Observable<Response<AlertType>> {
-    return this.http.get<Response<AlertType>>(this.getAlertTypePath.replace("TOKEN", token).replace("ID", alertTypeId.toString()));
+  public getAlertType(token: string, alertTypeId: number): Observable<CryptoWalletResponse<AlertType>> {
+    return this.http.get<CryptoWalletResponse<AlertType>>(this.getAlertTypePath.replace("TOKEN", token).replace("ID", alertTypeId.toString()));
   }
 }

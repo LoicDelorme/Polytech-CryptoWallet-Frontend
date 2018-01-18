@@ -6,7 +6,7 @@ import { User } from '../../entities/user';
 import { Token } from '../../entities/token';
 import { UserForm } from '../../forms/userform';
 import { AuthenticationForm } from '../../forms/authenticationform';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class UnregisteredUserProvider {
@@ -16,11 +16,11 @@ export class UnregisteredUserProvider {
 
   constructor(private http: HttpClient) {}
 
-  public subscribe(userForm: UserForm): Observable<Response<User>> {
-    return this.http.post<Response<User>>(this.subscribePath, userForm);
+  public subscribe(userForm: UserForm): Observable<CryptoWalletResponse<User>> {
+    return this.http.post<CryptoWalletResponse<User>>(this.subscribePath, userForm);
   }
 
-  public authenticate(authenticationForm: AuthenticationForm): Observable<Response<Token>> {
-    return this.http.post<Response<Token>>(this.authenticatePath, authenticationForm);
+  public authenticate(authenticationForm: AuthenticationForm): Observable<CryptoWalletResponse<Token>> {
+    return this.http.post<CryptoWalletResponse<Token>>(this.authenticatePath, authenticationForm);
   }
 }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Log } from '../../entities/log';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class AdministratorLogProvider {
@@ -13,11 +13,11 @@ export class AdministratorLogProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allLogs(token: string): Observable<Response<Array<Log>>> {
-    return this.http.get<Response<Array<Log>>>(this.allLogsPath.replace("TOKEN", token));
+  public allLogs(token: string): Observable<CryptoWalletResponse<Array<Log>>> {
+    return this.http.get<CryptoWalletResponse<Array<Log>>>(this.allLogsPath.replace("TOKEN", token));
   }
 
-  public getLog(token: string, logId: number): Observable<Response<Log>> {
-    return this.http.get<Response<Log>>(this.getLogPath.replace("TOKEN", token).replace("ID", logId.toString()));
+  public getLog(token: string, logId: number): Observable<CryptoWalletResponse<Log>> {
+    return this.http.get<CryptoWalletResponse<Log>>(this.getLogPath.replace("TOKEN", token).replace("ID", logId.toString()));
   }
 }

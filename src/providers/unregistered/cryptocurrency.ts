@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class UnregisteredCryptocurrencyProvider {
@@ -13,11 +13,11 @@ export class UnregisteredCryptocurrencyProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allCryptocurrencies(): Observable<Response<Array<Cryptocurrency>>> {
-    return this.http.get<Response<Array<Cryptocurrency>>>(this.allCryptocurrenciesPath);
+  public allCryptocurrencies(): Observable<CryptoWalletResponse<Array<Cryptocurrency>>> {
+    return this.http.get<CryptoWalletResponse<Array<Cryptocurrency>>>(this.allCryptocurrenciesPath);
   }
 
-  public getCryptocurrency(cryptocurrencyId: number): Observable<Response<Cryptocurrency>> {
-    return this.http.get<Response<Cryptocurrency>>(this.getCryptocurrencyPath.replace("ID", cryptocurrencyId.toString()));
+  public getCryptocurrency(cryptocurrencyId: number): Observable<CryptoWalletResponse<Cryptocurrency>> {
+    return this.http.get<CryptoWalletResponse<Cryptocurrency>>(this.getCryptocurrencyPath.replace("ID", cryptocurrencyId.toString()));
   }
 }

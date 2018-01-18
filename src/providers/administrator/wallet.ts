@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Wallet } from '../../entities/wallet';
 import { WalletForm } from '../../forms/walletform';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class AdministratorWalletProvider {
@@ -17,23 +17,23 @@ export class AdministratorWalletProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allWallets(token: string): Observable<Response<Array<Wallet>>> {
-    return this.http.get<Response<Array<Wallet>>>(this.allWalletsPath.replace("TOKEN", token));
+  public allWallets(token: string): Observable<CryptoWalletResponse<Array<Wallet>>> {
+    return this.http.get<CryptoWalletResponse<Array<Wallet>>>(this.allWalletsPath.replace("TOKEN", token));
   }
 
-  public getWallet(token: string, walletId: number): Observable<Response<Wallet>> {
-    return this.http.get<Response<Wallet>>(this.getWalletPath.replace("TOKEN", token).replace("ID", walletId.toString()));
+  public getWallet(token: string, walletId: number): Observable<CryptoWalletResponse<Wallet>> {
+    return this.http.get<CryptoWalletResponse<Wallet>>(this.getWalletPath.replace("TOKEN", token).replace("ID", walletId.toString()));
   }
 
-  public insertWallet(token: string, walletForm: WalletForm): Observable<Response<Wallet>> {
-    return this.http.post<Response<Wallet>>(this.insertWalletPath.replace("TOKEN", token), walletForm);
+  public insertWallet(token: string, walletForm: WalletForm): Observable<CryptoWalletResponse<Wallet>> {
+    return this.http.post<CryptoWalletResponse<Wallet>>(this.insertWalletPath.replace("TOKEN", token), walletForm);
   }
 
-  public updateWallet(token: string, walletForm: WalletForm): Observable<Response<Wallet>> {
-    return this.http.put<Response<Wallet>>(this.updateWalletPath.replace("TOKEN", token).replace("ID", walletForm.id.toString()), walletForm);
+  public updateWallet(token: string, walletForm: WalletForm): Observable<CryptoWalletResponse<Wallet>> {
+    return this.http.put<CryptoWalletResponse<Wallet>>(this.updateWalletPath.replace("TOKEN", token).replace("ID", walletForm.id.toString()), walletForm);
   }
 
-  public deleteWallet(token: string, wallet: Wallet): Observable<Response<Wallet>> {
-    return this.http.delete<Response<Wallet>>(this.deleteWalletPath.replace("TOKEN", token).replace("ID", wallet.id.toString()));
+  public deleteWallet(token: string, wallet: Wallet): Observable<CryptoWalletResponse<Wallet>> {
+    return this.http.delete<CryptoWalletResponse<Wallet>>(this.deleteWalletPath.replace("TOKEN", token).replace("ID", wallet.id.toString()));
   }
 }

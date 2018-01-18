@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Theme } from '../../entities/theme';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class RegisteredThemeProvider {
@@ -13,11 +13,11 @@ export class RegisteredThemeProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allThemes(token: string): Observable<Response<Array<Theme>>> {
-    return this.http.get<Response<Array<Theme>>>(this.allThemesPath.replace("TOKEN", token));
+  public allThemes(token: string): Observable<CryptoWalletResponse<Array<Theme>>> {
+    return this.http.get<CryptoWalletResponse<Array<Theme>>>(this.allThemesPath.replace("TOKEN", token));
   }
 
-  public getTheme(token: string, themeId: number): Observable<Response<Theme>> {
-    return this.http.get<Response<Theme>>(this.getThemePath.replace("TOKEN", token).replace("ID", themeId.toString()));
+  public getTheme(token: string, themeId: number): Observable<CryptoWalletResponse<Theme>> {
+    return this.http.get<CryptoWalletResponse<Theme>>(this.getThemePath.replace("TOKEN", token).replace("ID", themeId.toString()));
   }
 }

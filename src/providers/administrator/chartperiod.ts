@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ChartPeriod } from '../../entities/chartperiod';
 import { ChartPeriodForm } from '../../forms/chartperiodform';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class AdministratorChartPeriodProvider {
@@ -17,23 +17,23 @@ export class AdministratorChartPeriodProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allChartPeriods(token: string): Observable<Response<Array<ChartPeriod>>> {
-    return this.http.get<Response<Array<ChartPeriod>>>(this.allChartPeriodsPath.replace("TOKEN", token));
+  public allChartPeriods(token: string): Observable<CryptoWalletResponse<Array<ChartPeriod>>> {
+    return this.http.get<CryptoWalletResponse<Array<ChartPeriod>>>(this.allChartPeriodsPath.replace("TOKEN", token));
   }
 
-  public getChartPeriod(token: string, chartPeriodId: number): Observable<Response<ChartPeriod>> {
-    return this.http.get<Response<ChartPeriod>>(this.getChartPeriodPath.replace("TOKEN", token).replace("ID", chartPeriodId.toString()));
+  public getChartPeriod(token: string, chartPeriodId: number): Observable<CryptoWalletResponse<ChartPeriod>> {
+    return this.http.get<CryptoWalletResponse<ChartPeriod>>(this.getChartPeriodPath.replace("TOKEN", token).replace("ID", chartPeriodId.toString()));
   }
 
-  public insertChartPeriod(token: string, chartPeriodForm: ChartPeriodForm): Observable<Response<ChartPeriod>> {
-    return this.http.post<Response<ChartPeriod>>(this.insertChartPeriodPath.replace("TOKEN", token), chartPeriodForm);
+  public insertChartPeriod(token: string, chartPeriodForm: ChartPeriodForm): Observable<CryptoWalletResponse<ChartPeriod>> {
+    return this.http.post<CryptoWalletResponse<ChartPeriod>>(this.insertChartPeriodPath.replace("TOKEN", token), chartPeriodForm);
   }
 
-  public updateChartPeriod(token: string, chartPeriodForm: ChartPeriodForm): Observable<Response<ChartPeriod>> {
-    return this.http.put<Response<ChartPeriod>>(this.updateChartPeriodPath.replace("TOKEN", token).replace("ID", chartPeriodForm.id.toString()), chartPeriodForm);
+  public updateChartPeriod(token: string, chartPeriodForm: ChartPeriodForm): Observable<CryptoWalletResponse<ChartPeriod>> {
+    return this.http.put<CryptoWalletResponse<ChartPeriod>>(this.updateChartPeriodPath.replace("TOKEN", token).replace("ID", chartPeriodForm.id.toString()), chartPeriodForm);
   }
 
-  public deleteChartPeriod(token: string, chartPeriod: ChartPeriod): Observable<Response<ChartPeriod>> {
-    return this.http.delete<Response<ChartPeriod>>(this.deleteChartPeriodPath.replace("TOKEN", token).replace("ID", chartPeriod.id.toString()));
+  public deleteChartPeriod(token: string, chartPeriod: ChartPeriod): Observable<CryptoWalletResponse<ChartPeriod>> {
+    return this.http.delete<CryptoWalletResponse<ChartPeriod>>(this.deleteChartPeriodPath.replace("TOKEN", token).replace("ID", chartPeriod.id.toString()));
   }
 }

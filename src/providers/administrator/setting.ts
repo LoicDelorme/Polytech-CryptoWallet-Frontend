@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Setting } from '../../entities/setting';
 import { SettingForm } from '../../forms/settingform';
-import { Response } from '../../responses/response';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 @Injectable()
 export class AdministratorSettingProvider {
@@ -15,15 +15,15 @@ export class AdministratorSettingProvider {
 
   constructor(private http: HttpClient) {}
 
-  public allSettings(token: string): Observable<Response<Array<Setting>>> {
-    return this.http.get<Response<Array<Setting>>>(this.allSettingsPath.replace("TOKEN", token));
+  public allSettings(token: string): Observable<CryptoWalletResponse<Array<Setting>>> {
+    return this.http.get<CryptoWalletResponse<Array<Setting>>>(this.allSettingsPath.replace("TOKEN", token));
   }
 
-  public getSetting(token: string, settingId: number): Observable<Response<Setting>> {
-    return this.http.get<Response<Setting>>(this.getSettingPath.replace("TOKEN", token).replace("ID", settingId.toString()));
+  public getSetting(token: string, settingId: number): Observable<CryptoWalletResponse<Setting>> {
+    return this.http.get<CryptoWalletResponse<Setting>>(this.getSettingPath.replace("TOKEN", token).replace("ID", settingId.toString()));
   }
 
-  public updateSetting(token: string, settingForm: SettingForm): Observable<Response<Setting>> {
-    return this.http.put<Response<Setting>>(this.updateSettingPath.replace("TOKEN", token).replace("ID", settingForm.id.toString()), settingForm);
+  public updateSetting(token: string, settingForm: SettingForm): Observable<CryptoWalletResponse<Setting>> {
+    return this.http.put<CryptoWalletResponse<Setting>>(this.updateSettingPath.replace("TOKEN", token).replace("ID", settingForm.id.toString()), settingForm);
   }
 }
