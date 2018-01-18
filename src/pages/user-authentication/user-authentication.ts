@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { Device } from '@ionic-native/device';
 
 import { AuthenticationForm } from '../../forms/authenticationform';
 
@@ -17,7 +18,7 @@ export class UserAuthenticationPage {
   public userAuthenticationForm: AuthenticationForm;
   public userAuthenticationFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams,  private toastCtrl: ToastController, private formBuilder: FormBuilder, private unregisteredUserProvider: UnregisteredUserProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams,  private toastCtrl: ToastController, private device: Device, private formBuilder: FormBuilder, private unregisteredUserProvider: UnregisteredUserProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.userAuthenticationForm = new AuthenticationForm();
 
     this.userAuthenticationFormGroup = formBuilder.group({
@@ -27,6 +28,9 @@ export class UserAuthenticationPage {
   }
 
   public onSubmit(value: any): void {
+    this.userAuthenticationForm.deviceUuid = this.device.uuid;
+    this.userAuthenticationForm.devicePlatform = this.device.platform;
+
     this.unregisteredUserProvider.authenticate(this.userAuthenticationForm).subscribe(result => {
       this.localStorageProvider.saveTokenInformation(result.data);
 
