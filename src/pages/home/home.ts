@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { FavoriteForm } from '../../forms/favoriteform';
 
-import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency/cryptocurrency';
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { ChartPage } from '../chart/chart';
 
@@ -17,40 +17,46 @@ import { ChartPage } from '../chart/chart';
 export class HomePage {
 
   public isRegistered: boolean = null;
-  public filteredCryptocurrencies: Array<Cryptocurrency> = [];
-  public allCryptocurrencies: Array<Cryptocurrency> = [];
+  public filtered: Array<Cryptocurrency> = [];
+  public all: Array<Cryptocurrency> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    this.isRegistered = this.localInformationProvider.isUserRegistered();
+    this.isRegistered = this.localStorageProvider.isUserRegistered();
   }
 
   public ionViewDidEnter(): void {
-    this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
-      console.warn(data);
+    this.refreshData();
+  }
 
-      this.allCryptocurrencies = data.data;
-      this.filteredCryptocurrencies = data.data;
+  private refreshData(): void {
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
+    loadingOverlay.present();
+
+    this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(result => {
+      this.all = result.data;
+      this.filtered = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+
+      loadingOverlay.dismiss();
     });
   }
 
   public onRefreshCryptocurrenciesButtonClicked(): void {
-    this.unregisteredCryptocurrencyProvider.allCryptocurrencies().subscribe(data => {
-      console.warn(data);
-
-      this.allCryptocurrencies = data.data;
-      this.filteredCryptocurrencies = data.data;
-    });
+    this.refreshData();
   }
 
   public onFilterTriggered(event: any): void {
-    this.filteredCryptocurrencies = this.allCryptocurrencies;
+    this.filtered = this.all;
 
     let filter = event.target.value;
     if (filter && filter.trim() != '') {
-      this.filteredCryptocurrencies = this.filteredCryptocurrencies.filter((cryptocurrency: Cryptocurrency) => {
+      this.filtered = this.filtered.filter((cryptocurrency: Cryptocurrency) => {
         return (cryptocurrency.name.toLowerCase().indexOf(filter.toLowerCase()) > -1) || (cryptocurrency.symbol.toLowerCase().indexOf(filter.toLowerCase()) > -1);
       });
     }
@@ -61,8 +67,11 @@ export class HomePage {
   }
 
   public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
-    this.registeredUserProvider.insertFavorite(this.localInformationProvider.getUserTokenValue(), this.localInformationProvider.getUserId(), cryptocurrency, new FavoriteForm()).subscribe(data => {
-      console.warn(data);
+    this.registeredUserProvider.insertFavorite(this.localStorageProvider.getUserTokenValue(), cryptocurrency, new FavoriteForm()).subscribe(result => {
+      this.toastCtrl.create({ message: 'Your favorite was successfully added!', duration: 3000, position: 'top' }).present();
+    }, error => {
+      console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }

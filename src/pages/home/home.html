@@ -1,5 +1,11 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Cryptocurrencies</ion-title>
 
     <ion-buttons end>
@@ -14,29 +20,29 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list *ngIf="!isRegistered" inset>
-    <button ion-item *ngFor="let filteredCryptocurrency of filteredCryptocurrencies" (click)="onOverviewCryptocurrencyButtonClicked(filteredCryptocurrency)">
+    <button ion-item *ngFor="let cryptocurrency of filtered" (click)="onOverviewCryptocurrencyButtonClicked(cryptocurrency)">
       <ion-avatar item-start>
-        <img src="{{ filteredCryptocurrency.imageUrl }}" />
+        <img src="{{ cryptocurrency.imageUrl }}" />
       </ion-avatar>
 
-      <h3>{{ filteredCryptocurrency.name }}</h3>
-      <p>{{ filteredCryptocurrency.symbol }}</p>
+      <h3>{{ cryptocurrency.name }}</h3>
+      <p>{{ cryptocurrency.symbol }}</p>
     </button>
   </ion-list>
 
   <ion-list *ngIf="isRegistered" inset>
-    <ion-item-sliding *ngFor="let filteredCryptocurrency of filteredCryptocurrencies">
-      <button ion-item (click)="onOverviewCryptocurrencyButtonClicked(filteredCryptocurrency)">
+    <ion-item-sliding *ngFor="let cryptocurrency of filtered">
+      <button ion-item (click)="onOverviewCryptocurrencyButtonClicked(cryptocurrency)">
         <ion-avatar item-start>
-          <img src="{{ filteredCryptocurrency.imageUrl }}" />
+          <img src="{{ cryptocurrency.imageUrl }}" />
         </ion-avatar>
-  
-        <h3>{{ filteredCryptocurrency.name }}</h3>
-        <p>{{ filteredCryptocurrency.symbol }}</p>
+
+        <h3>{{ cryptocurrency.name }}</h3>
+        <p>{{ cryptocurrency.symbol }}</p>
       </button>
 
       <ion-item-options side="right">
-        <button ion-button (click)="onInsertFavoriteButtonClicked(filteredCryptocurrency)" icon-start>
+        <button ion-button (click)="onInsertFavoriteButtonClicked(cryptocurrency)" icon-start>
           <ion-icon name="favorite"></ion-icon>
           Favorite
         </button>
