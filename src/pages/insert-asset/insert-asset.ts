@@ -44,6 +44,10 @@ export class InsertAssetPage {
   }
 
   public ionViewDidEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      return;
+    }
+
     let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 

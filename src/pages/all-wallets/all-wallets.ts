@@ -29,6 +29,10 @@ export class AllWalletsPage {
   }
 
   public ionViewDidEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      return;
+    }
+
     this.refreshData();
   }
 

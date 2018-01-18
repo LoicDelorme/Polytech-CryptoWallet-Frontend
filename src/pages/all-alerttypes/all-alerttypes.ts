@@ -29,6 +29,10 @@ export class AllAlertTypesPage {
   }
 
   public ionViewDidEnter(): void {
+    if (!this.localStorageProvider.isUserAdministrator()) {
+      return;
+    }
+
     this.refreshData();
   }
 

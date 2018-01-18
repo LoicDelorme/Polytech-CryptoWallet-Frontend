@@ -29,6 +29,10 @@ export class AllCurrenciesPage {
   }
 
   public ionViewDidEnter(): void {
+    if (!this.localStorageProvider.isUserAdministrator()) {
+      return;
+    }
+
     this.refreshData();
   }
 

@@ -34,6 +34,10 @@ export class AllAssetsPage {
   }
 
   public ionViewDidEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      return;
+    }
+
     this.refreshData();
   }
 
