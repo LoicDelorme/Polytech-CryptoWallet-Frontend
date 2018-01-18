@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
-import { Platform, NavController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { LocalStorageProvider } from '../providers/storage/localstorage';
 
 import { HomePage } from '../pages/home/home';
 import { AllFavoritesPage } from '../pages/all-favorites/all-favorites';
@@ -18,9 +16,11 @@ import { UserSubscriptionPage } from '../pages/user-subscription/user-subscripti
 })
 export class MyApp {
 
+  @ViewChild('content') navCtrl;
+
   public rootPage: any = HomePage;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private navCtrl: NavController) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private menuCtrl: MenuController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -30,30 +30,37 @@ export class MyApp {
   }
 
   public onHomeButtonClicked(): void {
+    this.menuCtrl.close();
     this.navCtrl.setRoot(HomePage);
   }
 
   public onFavoritesButtonClicked(): void {
+    this.menuCtrl.close();
     this.navCtrl.setRoot(AllFavoritesPage);
   }
 
   public onWalletsButtonClicked(): void {
+    this.menuCtrl.close();
     this.navCtrl.setRoot(AllWalletsPage);
   }
 
   public onAlertsButtonClicked(): void {
+    this.menuCtrl.close();
     this.navCtrl.setRoot(AllAlertsPage);
   }
 
   public onSettingsButtonClicked(): void {
+    this.menuCtrl.close();
     this.navCtrl.setRoot(SettingsPage);
   }
 
   public onLogInButtonClicked(): void {
+    this.menuCtrl.close();
     this.navCtrl.setRoot(UserAuthenticationPage);
   }
 
   public onSubscribeButtonClicked(): void {
+    this.menuCtrl.close();
     this.navCtrl.setRoot(UserSubscriptionPage);
   }
 }
