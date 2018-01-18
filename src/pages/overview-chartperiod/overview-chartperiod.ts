@@ -24,9 +24,7 @@ export class OverviewChartPeriodPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllChartPeriodsPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.chartPeriod = this.navParams.get("chartPeriod");
   }
 

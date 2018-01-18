@@ -23,9 +23,7 @@ export class OverviewTokenPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllTokensPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.token = this.navParams.get("token");
   }
 }

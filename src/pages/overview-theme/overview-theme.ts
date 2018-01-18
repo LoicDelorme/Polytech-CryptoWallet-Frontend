@@ -24,9 +24,7 @@ export class OverviewThemePage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllThemesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.theme = this.navParams.get("theme");
   }
 

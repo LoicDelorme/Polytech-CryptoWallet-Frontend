@@ -24,9 +24,7 @@ export class OverviewCryptocurrencyPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.cryptocurrency = this.navParams.get("cryptocurrency");
   }
 

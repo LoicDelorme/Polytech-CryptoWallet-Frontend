@@ -24,9 +24,7 @@ export class OverviewAlertTypePage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.alertType = this.navParams.get("alertType");
   }
 

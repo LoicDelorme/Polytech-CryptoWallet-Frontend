@@ -23,9 +23,7 @@ export class OverviewLogPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllLogsPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.log = this.navParams.get("log");
   }
 }

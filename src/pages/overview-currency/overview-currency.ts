@@ -24,9 +24,7 @@ export class OverviewCurrencyPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCurrenciesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.currency = this.navParams.get("currency");
   }
 

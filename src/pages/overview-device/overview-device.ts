@@ -23,9 +23,7 @@ export class OverviewDevicePage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllDevicesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.device = this.navParams.get("device");
   }
 }

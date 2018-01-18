@@ -25,9 +25,7 @@ export class OverviewWalletPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     this.wallet = this.navParams.get("wallet");
   }
 
