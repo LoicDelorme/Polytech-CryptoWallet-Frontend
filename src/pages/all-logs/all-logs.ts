@@ -32,10 +32,7 @@ export class AllLogsPage {
   }
 
   private refreshData(): void {
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.registeredUserProvider.allLogs(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -45,14 +42,7 @@ export class AllLogsPage {
       loadingOverlay.dismiss();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
       loadingOverlay.dismiss();
     });

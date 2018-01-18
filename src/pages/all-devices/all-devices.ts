@@ -8,7 +8,6 @@ import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewDevicePage } from '../overview-device/overview-device';
-import { InsertDevicePage } from '../insert-device/insert-device';
 
 @Component({
   selector: 'page-all-devices',
@@ -33,10 +32,7 @@ export class AllDevicesPage {
   }
 
   private refreshData(): void {
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.registeredUserProvider.allDevices(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -46,14 +42,7 @@ export class AllDevicesPage {
       loadingOverlay.dismiss();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
       loadingOverlay.dismiss();
     });
@@ -79,7 +68,7 @@ export class AllDevicesPage {
   }
 
   public onDeleteDeviceButtonClicked(device: Device): void {
-    let confirmationAlertOverlay = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this device?',
       buttons: [
@@ -93,31 +82,15 @@ export class AllDevicesPage {
           role: null,
           handler: () => {
             this.registeredUserProvider.deleteDevice(this.localStorageProvider.getUserTokenValue(), device).subscribe(result => {
-              let toastOverlay = this.toastCtrl.create({
-                message: result.message,
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
-
+              this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
               this.refreshData();
             }, error => {
               console.error(error);
-
-              let toastOverlay = this.toastCtrl.create({
-                message: 'An error occured...',
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
+              this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
             });
           }
         }
       ]
-    });
-
-    confirmationAlertOverlay.present();
+    }).present();
   }
 }

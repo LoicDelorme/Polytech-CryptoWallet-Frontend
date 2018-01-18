@@ -33,10 +33,7 @@ export class AllCurrenciesPage {
   }
 
   private refreshData(): void {
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.administratorCurrencyProvider.allCurrencies(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -46,14 +43,7 @@ export class AllCurrenciesPage {
       loadingOverlay.dismiss();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
       loadingOverlay.dismiss();
     });
@@ -83,7 +73,7 @@ export class AllCurrenciesPage {
   }
 
   public onDeleteCurrencyButtonClicked(currency: Currency): void {
-    let confirmationAlertOverlay = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this currency?',
       buttons: [
@@ -97,31 +87,15 @@ export class AllCurrenciesPage {
           role: null,
           handler: () => {
             this.administratorCurrencyProvider.deleteCurrency(this.localStorageProvider.getUserTokenValue(), currency).subscribe(result => {
-              let toastOverlay = this.toastCtrl.create({
-                message: result.message,
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
-
+              this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
               this.refreshData();
             }, error => {
               console.error(error);
-
-              let toastOverlay = this.toastCtrl.create({
-                message: 'An error occured...',
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
+              this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
             });
           }
         }
       ]
-    });
-
-    confirmationAlertOverlay.present();
+    }).present();
   }
 }

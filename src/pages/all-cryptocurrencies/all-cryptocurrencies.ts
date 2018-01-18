@@ -23,7 +23,7 @@ export class AllCryptocurrenciesPage {
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCurrenciesPage });
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
       return;
     }
   }
@@ -33,10 +33,7 @@ export class AllCryptocurrenciesPage {
   }
 
   private refreshData(): void {
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.administratorCryptocurrencyProvider.allCryptocurrencies(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -46,14 +43,7 @@ export class AllCryptocurrenciesPage {
       loadingOverlay.dismiss();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
       loadingOverlay.dismiss();
     });
@@ -63,7 +53,7 @@ export class AllCryptocurrenciesPage {
     this.navCtrl.push(InsertCryptocurrencyPage);
   }
 
-  public onRefreshCurrenciesButtonClicked(): void {
+  public onRefreshCryptocurrenciesButtonClicked(): void {
     this.refreshData();
   }
 
@@ -83,7 +73,7 @@ export class AllCryptocurrenciesPage {
   }
 
   public onDeleteCryptocurrencyButtonClicked(cryptocurrency: Cryptocurrency): void {
-    let confirmationAlertOverlay = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this cryptocurrency?',
       buttons: [
@@ -97,31 +87,15 @@ export class AllCryptocurrenciesPage {
           role: null,
           handler: () => {
             this.administratorCryptocurrencyProvider.deleteCryptocurrency(this.localStorageProvider.getUserTokenValue(), cryptocurrency).subscribe(result => {
-              let toastOverlay = this.toastCtrl.create({
-                message: result.message,
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
-
+              this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
               this.refreshData();
             }, error => {
               console.error(error);
-
-              let toastOverlay = this.toastCtrl.create({
-                message: 'An error occured...',
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
+              this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
             });
           }
         }
       ]
-    });
-
-    confirmationAlertOverlay.present();
+    }).present();
   }
 }

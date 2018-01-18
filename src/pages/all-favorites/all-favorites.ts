@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
-import { Cryptocurrency } from '../../entities/favorite';
+import { Cryptocurrency } from '../../entities/cryptocurrency';
 
 import { RegisteredUserProvider } from '../../providers/registered/user';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
@@ -32,10 +32,7 @@ export class AllFavoritesPage {
   }
 
   private refreshData(): void {
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -45,14 +42,7 @@ export class AllFavoritesPage {
       loadingOverlay.dismiss();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
       loadingOverlay.dismiss();
     });
@@ -78,7 +68,7 @@ export class AllFavoritesPage {
   }
 
   public onDeleteFavoriteButtonClicked(favorite: Cryptocurrency): void {
-    let confirmationAlertOverlay = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this favorite?',
       buttons: [
@@ -92,31 +82,15 @@ export class AllFavoritesPage {
           role: null,
           handler: () => {
             this.registeredUserProvider.deleteFavorite(this.localStorageProvider.getUserTokenValue(), favorite).subscribe(result => {
-              let toastOverlay = this.toastCtrl.create({
-                message: result.message,
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
-
+              this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
               this.refreshData();
             }, error => {
               console.error(error);
-
-              let toastOverlay = this.toastCtrl.create({
-                message: 'An error occured...',
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
+              this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
             });
           }
         }
       ]
-    });
-
-    confirmationAlertOverlay.present();
+    }).present();
   }
 }

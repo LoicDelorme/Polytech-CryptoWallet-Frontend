@@ -23,9 +23,9 @@
     <ion-item-sliding *ngFor="let device of filtered">
       <button ion-item (click)="onOverviewDeviceButtonClicked(device)">
         <ion-avatar item-start>
-            <ion-icon name="device"></ion-icon>
+          <ion-icon name="device"></ion-icon>
         </ion-avatar>
-  
+
         <h3>{{ device.platform }} ({{ device.uuid }})</h3>
       </button>
       <ion-item-options side="right">

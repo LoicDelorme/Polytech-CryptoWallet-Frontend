@@ -22,9 +22,9 @@
   <ion-list inset>
     <ion-item-sliding *ngFor="let favorite of filtered">
       <button ion-item (click)="onOverviewFavoriteButtonClicked(favorite)">
-          <ion-avatar item-start>
-            <img src="{{ favorite.imageUrl }}" />
-          </ion-avatar>
+        <ion-avatar item-start>
+          <img src="{{ favorite.imageUrl }}" />
+        </ion-avatar>
 
         <h3>{{ favorite.name }}</h3>
         <p>{{ favorite.symbol }}</p>

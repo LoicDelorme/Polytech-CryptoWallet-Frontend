@@ -33,10 +33,7 @@ export class AllChartPeriodsPage {
   }
 
   private refreshData(): void {
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.administratorChartPeriodProvider.allChartPeriods(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -46,14 +43,7 @@ export class AllChartPeriodsPage {
       loadingOverlay.dismiss();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
       loadingOverlay.dismiss();
     });
@@ -83,7 +73,7 @@ export class AllChartPeriodsPage {
   }
 
   public onDeleteChartPeriodButtonClicked(chartPeriod: ChartPeriod): void {
-    let confirmationAlertOverlay = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete this chart period?',
       buttons: [
@@ -97,31 +87,15 @@ export class AllChartPeriodsPage {
           role: null,
           handler: () => {
             this.administratorChartPeriodProvider.deleteChartPeriod(this.localStorageProvider.getUserTokenValue(), chartPeriod).subscribe(result => {
-              let toastOverlay = this.toastCtrl.create({
-                message: result.message,
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
-
+              this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
               this.refreshData();
             }, error => {
               console.error(error);
-
-              let toastOverlay = this.toastCtrl.create({
-                message: 'An error occured...',
-                duration: 3000,
-                position: 'top'
-              });
-
-              toastOverlay.present();
+              this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
             });
           }
         }
       ]
-    });
-
-    confirmationAlertOverlay.present();
+    }).present();
   }
 }

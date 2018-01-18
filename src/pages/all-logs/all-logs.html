@@ -22,9 +22,9 @@
   <ion-list inset>
     <button ion-item *ngFor="let log of filtered" (click)="onOverviewLogButtonClicked(log)">
       <ion-avatar item-start>
-          <ion-icon name="log"></ion-icon>
+        <ion-icon name="log"></ion-icon>
       </ion-avatar>
-      <h3>{{ log.ipAddress }} ({{ filteredLog.creationDate }})</h3>
+      <h3>{{ log.ipAddress }} ({{ log.creationDate }})</h3>
     </button>
   </ion-list>
 </ion-content>
