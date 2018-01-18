@@ -39,55 +39,33 @@ export class InsertAssetPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
       return;
     }
+
+    this.wallet = this.navParams.get("wallet");
   }
 
   public ionViewDidEnter(): void {
-    this.wallet = this.navParams.get("wallet");
-
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
-      this.allFavorites = result.data;
+        this.allFavorites = result.data;
 
-      loadingOverlay.dismiss();
-    }, error => {
-      console.error(error);
+        loadingOverlay.dismiss();
+      }, error => {
+        console.error(error);
+        this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+        loadingOverlay.dismiss();
     });
   }
 
   public onSubmit(value: any): void {
     this.registeredUserProvider.insertAsset(this.localStorageProvider.getUserTokenValue(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }

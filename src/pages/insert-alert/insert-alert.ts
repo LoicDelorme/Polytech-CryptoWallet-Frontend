@@ -45,10 +45,7 @@ export class InsertAlertPage {
   }
 
   public ionViewDidEnter(): void {
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -60,25 +57,15 @@ export class InsertAlertPage {
         loadingOverlay.dismiss();
       }, error => {
         console.error(error);
-  
-        let toastOverlay = this.toastCtrl.create({
-          message: 'An error occured...',
-          duration: 3000,
-          position: 'top'
-        });
-  
-        toastOverlay.present();
+        this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+
+        loadingOverlay.dismiss();
       });
     }, error => {
       console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      loadingOverlay.dismiss();
     });
   }
 
@@ -86,25 +73,11 @@ export class InsertAlertPage {
     this.alertForm.userId = this.localStorageProvider.getUserId();
 
     this.registeredUserProvider.insertAlert(this.localStorageProvider.getUserTokenValue(), this.alertForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 
