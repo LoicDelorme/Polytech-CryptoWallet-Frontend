@@ -1,13 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
-import { CoinMarketCapResponse } from '../../responses/coinmarketcapresponse';
+import { CoinMarketCapGraphsResponse } from '../../responses/coinmarketcapgraphsresponse';
 
-import { PriceCoinMarketCapProvider } from '../../providers/coinmarketcap/price/price';
+import { CoinMarketCapProvider } from '../../providers/coinmarketcap/coinmarketcap';
 
 @Component({
   selector: 'page-chart',
@@ -15,11 +15,11 @@ import { PriceCoinMarketCapProvider } from '../../providers/coinmarketcap/price/
 })
 export class ChartPage {
 
-  public static readonly buttonValues: Array<string> = ["1D", "7D", "1M", "3M", "1Y", "ALL"];
-  public static readonly numberValues: Array<string> = ["1", "7", "1", "3", "1", null];
-  public static readonly durationValues: Array<moment.unitOfTime.DurationConstructor> = ["d", "d", "M", "M", "y", null];
-  public static readonly formatValues: Array<string> = ["HH", "DD", "DD", "MMM", "MMM YYYY", "[Q]Q YYYY"];
-  public static readonly maxTicksValues: Array<number> = [8, 7, 8, 6, 12, 12];
+  private readonly buttonValues: Array<string> = ["1D", "7D", "1M", "3M", "1Y", "ALL"];
+  private readonly numberValues: Array<string> = ["1", "7", "1", "3", "1", null];
+  private readonly durationValues: Array<moment.unitOfTime.DurationConstructor> = ["d", "d", "M", "M", "y", null];
+  private readonly formatValues: Array<string> = ["HH", "DD", "DD", "MMM", "MMM YYYY", "[Q]Q YYYY"];
+  private readonly maxTicksValues: Array<number> = [8, 7, 8, 6, 12, 12];
 
   @ViewChild('usdChart') usdChart;
   @ViewChild('btcChart') btcChart;
@@ -36,17 +36,20 @@ export class ChartPage {
   public marketCapChartButtonDisabled: string;
   public volumesChartButtonDisabled: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public priceCoinMarketCapProvider: PriceCoinMarketCapProvider) {
-    this.cryptocurrency = this.navParams.get("cryptocurrency");
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private coinMarketCapProvider: CoinMarketCapProvider) {
+    let defaultButtonValue: string = this.buttonValues[1];
+    this.usdPeriod = defaultButtonValue;
+    this.usdChartButtonDisabled = defaultButtonValue;
+    this.btcPeriod = defaultButtonValue;
+    this.btcChartButtonDisabled = defaultButtonValue;
+    this.marketCapPeriod = defaultButtonValue
+    this.marketCapChartButtonDisabled = defaultButtonValue;
+    this.volumesPeriod = defaultButtonValue;
+    this.volumesChartButtonDisabled = defaultButtonValue;
+  }
 
-    this.usdPeriod = ChartPage.buttonValues[1];
-    this.usdChartButtonDisabled = ChartPage.buttonValues[1];
-    this.btcPeriod = ChartPage.buttonValues[1];
-    this.btcChartButtonDisabled = ChartPage.buttonValues[1];
-    this.marketCapPeriod = ChartPage.buttonValues[1];
-    this.marketCapChartButtonDisabled = ChartPage.buttonValues[1];
-    this.volumesPeriod = ChartPage.buttonValues[1];
-    this.volumesChartButtonDisabled = ChartPage.buttonValues[1];
+  public ionViewWillEnter(): void {
+    this.cryptocurrency = this.navParams.get("cryptocurrency");
   }
 
   public ionViewDidEnter(): void {
@@ -235,36 +238,46 @@ export class ChartPage {
   }
 
   private refreshData(chart: Chart, period: string, refreshChart: Function, refreshChartCallback: Function): void {
-    let offsetValue: number = ChartPage.buttonValues.indexOf(period);
-    let numberValue: string = ChartPage.numberValues[offsetValue];
-    let durationValue: moment.unitOfTime.DurationConstructor = ChartPage.durationValues[offsetValue];
-    let formatValue: string = ChartPage.formatValues[offsetValue];
-    let maxTicksValue: number = ChartPage.maxTicksValues[offsetValue];
+    let offsetValue: number = this.buttonValues.indexOf(period);
+
+    let numberValue: string = this.numberValues[offsetValue];
+    let durationValue: moment.unitOfTime.DurationConstructor = this.durationValues[offsetValue];
+    let formatValue: string = this.formatValues[offsetValue];
+    let maxTicksValue: number = this.maxTicksValues[offsetValue];
+
     let startDateValue: string = moment().subtract(numberValue, durationValue).format("x");
     let endDateValue: string = moment().format("x");
 
-    let observableResponse: Observable<CoinMarketCapResponse> = (numberValue != null && durationValue != null ? this.priceCoinMarketCapProvider.allPricesBetween(this.cryptocurrency, startDateValue, endDateValue) : this.priceCoinMarketCapProvider.allPrices(this.cryptocurrency));
-    observableResponse.subscribe(data => {
-      console.warn(data);
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
+    loadingOverlay.present();
 
-      refreshChartCallback(refreshChart, chart, data, formatValue, maxTicksValue);
+    let coinMarketCapGraphsResponse: Observable<CoinMarketCapGraphsResponse> = (period === "ALL" ? this.coinMarketCapProvider.allPrices(this.cryptocurrency) : this.coinMarketCapProvider.allPricesBetween(this.cryptocurrency, startDateValue, endDateValue));
+    coinMarketCapGraphsResponse.subscribe(result => {
+      refreshChartCallback(refreshChart, chart, result, formatValue, maxTicksValue);
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+
+      loadingOverlay.dismiss();
     });
   }
 
-  private refreshUsdChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapResponse.price_usd, labelFormat, maxTicksValue);
+  private refreshUsdChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapGraphsResponse.price_usd, labelFormat, maxTicksValue);
   }
 
-  private refreshBtcChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapResponse.price_btc, labelFormat, maxTicksValue);
+  private refreshBtcChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapGraphsResponse.price_btc, labelFormat, maxTicksValue);
   }
 
-  private refreshMarketCapChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapResponse.market_cap_by_available_supply, labelFormat, maxTicksValue);
+  private refreshMarketCapChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapGraphsResponse.market_cap_by_available_supply, labelFormat, maxTicksValue);
   }
 
-  private refreshVolumesChart(refreshChart: Function, chart: Chart, coinMarketCapResponse: CoinMarketCapResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapResponse.volume_usd, labelFormat, maxTicksValue);
+  private refreshVolumesChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, coinMarketCapGraphsResponse.volume_usd, labelFormat, maxTicksValue);
   }
 
   private refreshChart(chart: Chart, values: Array<Array<number>>, labelFormat: string, maxTicksValue: number): void {
