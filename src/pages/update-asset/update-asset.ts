@@ -7,7 +7,6 @@ import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { Asset } from '../../entities/asset';
 import { AssetForm } from '../../forms/assetform';
 
-import { UnregisteredCryptocurrencyProvider } from '../../providers/unregistered/cryptocurrency';
 import { RegisteredUserProvider } from '../../providers/registered/user';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
@@ -25,10 +24,10 @@ export class UpdateAssetPage {
   public assetForm: AssetForm;
   public assetFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.assetForm = new AssetForm();
 
-    this.assetFormGroup = formBuilder.group({
+    this.assetFormGroup = this.formBuilder.group({
       amount: ['', Validators.compose([Validators.required])],
       purchasePrice: ['', Validators.compose([Validators.required])]
     });

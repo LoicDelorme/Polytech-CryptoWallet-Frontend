@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Token } from '../../entities/token';
 
@@ -18,7 +18,7 @@ export class AllTokensPage {
   public filtered: Array<Token> = [];
   public all: Array<Token> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { ThemeForm } from '../../forms/themeform';
 
@@ -19,10 +19,10 @@ export class InsertThemePage {
   public themeForm: ThemeForm;
   public themeFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorThemeProvider: AdministratorThemeProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorThemeProvider: AdministratorThemeProvider, private localStorageProvider: LocalStorageProvider) {
     this.themeForm = new ThemeForm();
 
-    this.themeFormGroup = formBuilder.group({
+    this.themeFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }

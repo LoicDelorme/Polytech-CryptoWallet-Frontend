@@ -23,7 +23,7 @@ export class UpdateCryptocurrencyPage {
   constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {
     this.cryptocurrencyForm = new CryptocurrencyForm();
 
-    this.cryptocurrencyFormGroup = formBuilder.group({
+    this.cryptocurrencyFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],

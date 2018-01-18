@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { CryptocurrencyForm } from '../../forms/cryptocurrencyform';
 
@@ -19,10 +19,10 @@ export class InsertCryptocurrencyPage {
   public cryptocurrencyForm: CryptocurrencyForm;
   public cryptocurrencyFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {
     this.cryptocurrencyForm = new CryptocurrencyForm();
 
-    this.cryptocurrencyFormGroup = formBuilder.group({
+    this.cryptocurrencyFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
@@ -36,7 +36,7 @@ export class ChartPage {
   public marketCapChartButtonDisabled: string;
   public volumesChartButtonDisabled: string;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private coinMarketCapProvider: CoinMarketCapProvider) {
+  constructor(private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private coinMarketCapProvider: CoinMarketCapProvider) {
     let defaultButtonValue: string = this.buttonValues[1];
     this.usdPeriod = defaultButtonValue;
     this.usdChartButtonDisabled = defaultButtonValue;

@@ -4,15 +4,15 @@
       <button ion-button menuToggle icon-only>
         <ion-icon name='menu'></ion-icon>
       </button>
-
-      <button ion-button icon-only (click)="onInsertCryptocurrencyButtonClicked()">
-        <ion-icon name="insert"></ion-icon>
-      </button>
     </ion-buttons>
 
     <ion-title>Cryptocurrencies</ion-title>
 
     <ion-buttons end>
+      <button ion-button icon-only (click)="onInsertCryptocurrencyButtonClicked()">
+        <ion-icon name="insert"></ion-icon>
+      </button>
+
       <button ion-button icon-only (click)="onRefreshCryptocurrenciesButtonClicked()">
         <ion-icon name="refresh"></ion-icon>
       </button>

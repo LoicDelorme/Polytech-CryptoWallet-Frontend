@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { AlertType } from '../../entities/alerttype';
@@ -24,10 +24,10 @@ export class InsertAlertPage {
   public alertForm: AlertForm;
   public alertFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private registeredAlertTypeProvider: RegisteredAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private registeredAlertTypeProvider: RegisteredAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
     this.alertForm = new AlertForm();
 
-    this.alertFormGroup = formBuilder.group({
+    this.alertFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       cryptocurrencyId: ['', Validators.compose([Validators.required])],
       typeId: ['', Validators.compose([Validators.required])],

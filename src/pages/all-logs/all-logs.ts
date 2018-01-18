@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController } from 'ionic-angular';
 
 import { Log } from '../../entities/log';
 
@@ -18,7 +18,7 @@ export class AllLogsPage {
   public filtered: Array<Log> = [];
   public all: Array<Log> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {

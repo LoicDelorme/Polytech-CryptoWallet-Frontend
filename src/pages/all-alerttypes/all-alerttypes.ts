@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { AlertType } from '../../entities/alerttype';
 
@@ -19,7 +19,7 @@ export class AllAlertTypesPage {
   public filtered: Array<AlertType> = [];
   public all: Array<AlertType> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorAlertTypeProvider: AdministratorAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorAlertTypeProvider: AdministratorAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { FavoriteForm } from '../../forms/favoriteform';
@@ -20,7 +20,7 @@ export class HomePage {
   public filtered: Array<Cryptocurrency> = [];
   public all: Array<Cryptocurrency> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private unregisteredCryptocurrencyProvider: UnregisteredCryptocurrencyProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     this.isRegistered = this.localStorageProvider.isUserRegistered();

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { User } from '../../entities/user';
 import { UserForm } from '../../forms/userform';
@@ -20,7 +20,7 @@ export class UserUpdatePage {
   public userForm: UserForm;
   public userFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.userForm = new UserForm();
 
     this.userFormGroup = formBuilder.group({

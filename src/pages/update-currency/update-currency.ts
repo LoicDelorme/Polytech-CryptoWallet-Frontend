@@ -23,7 +23,7 @@ export class UpdateCurrencyPage {
   constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCurrencyProvider: AdministratorCurrencyProvider, private localStorageProvider: LocalStorageProvider) {
     this.currencyForm = new CurrencyForm();
 
-    this.currencyFormGroup = formBuilder.group({
+    this.currencyFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(3)])]
     });

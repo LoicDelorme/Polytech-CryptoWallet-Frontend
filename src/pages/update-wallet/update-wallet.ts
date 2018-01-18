@@ -23,7 +23,7 @@ export class UpdateWalletPage {
   constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.walletForm = new WalletForm();
 
-    this.walletFormGroup = formBuilder.group({
+    this.walletFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }

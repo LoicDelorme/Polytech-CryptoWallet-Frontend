@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { UserForm } from '../../forms/userform';
 
@@ -18,10 +18,10 @@ export class UserSubscriptionPage {
   public userSubscriptionForm: UserForm;
   public userSubscriptionFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private unregisteredUserProvider: UnregisteredUserProvider) {
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private unregisteredUserProvider: UnregisteredUserProvider) {
     this.userSubscriptionForm = new UserForm();
 
-    this.userSubscriptionFormGroup = formBuilder.group({
+    this.userSubscriptionFormGroup = this.formBuilder.group({
       lastname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       firstname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       email: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],

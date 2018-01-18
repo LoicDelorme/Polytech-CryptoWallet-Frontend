@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { ChartPeriodForm } from '../../forms/chartperiodform';
 
@@ -19,10 +19,10 @@ export class InsertChartPeriodPage {
   public chartPeriodForm: ChartPeriodForm;
   public chartPeriodFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorChartPeriodProvider: AdministratorChartPeriodProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorChartPeriodProvider: AdministratorChartPeriodProvider, private localStorageProvider: LocalStorageProvider) {
     this.chartPeriodForm = new ChartPeriodForm();
 
-    this.chartPeriodFormGroup = formBuilder.group({
+    this.chartPeriodFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(3)])]
     });
   }

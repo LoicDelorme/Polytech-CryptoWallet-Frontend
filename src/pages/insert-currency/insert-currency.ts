@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 import { CurrencyForm } from '../../forms/currencyform';
 
@@ -19,10 +19,10 @@ export class InsertCurrencyPage {
   public currencyForm: CurrencyForm;
   public currencyFormGroup: FormGroup;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCurrencyProvider: AdministratorCurrencyProvider, private localStorageProvider: LocalStorageProvider) {
+  constructor(private navCtrl: NavController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorCurrencyProvider: AdministratorCurrencyProvider, private localStorageProvider: LocalStorageProvider) {
     this.currencyForm = new CurrencyForm();
 
-    this.currencyFormGroup = formBuilder.group({
+    this.currencyFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(3)])]
     });

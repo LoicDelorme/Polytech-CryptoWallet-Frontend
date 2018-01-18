@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { ChartPeriod } from '../../entities/chartperiod';
 
@@ -19,7 +19,7 @@ export class AllChartPeriodsPage {
   public filtered: Array<ChartPeriod> = [];
   public all: Array<ChartPeriod> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorChartPeriodProvider: AdministratorChartPeriodProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorChartPeriodProvider: AdministratorChartPeriodProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {

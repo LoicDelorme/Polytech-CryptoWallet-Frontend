@@ -21,7 +21,7 @@ export class UserAuthenticationPage {
   constructor(private navCtrl: NavController, private navParams: NavParams,  private toastCtrl: ToastController, private device: Device, private formBuilder: FormBuilder, private unregisteredUserProvider: UnregisteredUserProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.userAuthenticationForm = new AuthenticationForm();
 
-    this.userAuthenticationFormGroup = formBuilder.group({
+    this.userAuthenticationFormGroup = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.maxLength(250)])],
       password: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });

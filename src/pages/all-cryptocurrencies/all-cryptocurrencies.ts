@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 
@@ -19,7 +19,7 @@ export class AllCryptocurrenciesPage {
   public filtered: Array<Cryptocurrency> = [];
   public all: Array<Cryptocurrency> = [];
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private administratorCryptocurrencyProvider: AdministratorCryptocurrencyProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {

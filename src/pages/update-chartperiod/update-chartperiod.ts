@@ -23,7 +23,7 @@ export class UpdateChartPeriodPage {
   constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorChartPeriodProvider: AdministratorChartPeriodProvider, private localStorageProvider: LocalStorageProvider) {
     this.chartPeriodForm = new ChartPeriodForm();
 
-    this.chartPeriodFormGroup = formBuilder.group({
+    this.chartPeriodFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }

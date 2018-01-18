@@ -27,7 +27,7 @@ export class InsertAssetPage {
   constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.assetForm = new AssetForm();
 
-    this.assetFormGroup = formBuilder.group({
+    this.assetFormGroup = this.formBuilder.group({
       cryptocurrency: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required])],
       purchasePrice: ['', Validators.compose([Validators.required])]

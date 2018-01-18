@@ -23,7 +23,7 @@ export class UpdateAlertTypePage {
   constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorAlertTypeProvider: AdministratorAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
     this.alertTypeForm = new AlertTypeForm();
 
-    this.alertTypeFormGroup = formBuilder.group({
+    this.alertTypeFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }

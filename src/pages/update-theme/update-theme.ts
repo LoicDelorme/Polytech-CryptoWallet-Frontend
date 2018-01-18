@@ -23,7 +23,7 @@ export class UpdateThemePage {
   constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private administratorThemeProvider: AdministratorThemeProvider, private localStorageProvider: LocalStorageProvider) {
     this.themeForm = new ThemeForm();
 
-    this.themeFormGroup = formBuilder.group({
+    this.themeFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
