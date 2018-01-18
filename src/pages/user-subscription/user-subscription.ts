@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { UserForm } from '../../forms/userform';
 
-import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
+import { UnregisteredUserProvider } from '../../providers/unregistered/user';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-user-subscription',
@@ -17,7 +18,7 @@ export class UserSubscriptionPage {
   public userSubscriptionForm: UserForm;
   public userSubscriptionFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public unregisteredUserProvider: UnregisteredUserProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private unregisteredUserProvider: UnregisteredUserProvider) {
     this.userSubscriptionForm = new UserForm();
 
     this.userSubscriptionFormGroup = formBuilder.group({
@@ -29,12 +30,12 @@ export class UserSubscriptionPage {
   }
 
   public onSubmit(value: any): void {
-    if (this.userSubscriptionFormGroup.valid) {
-      this.unregisteredUserProvider.subscribe(this.userSubscriptionForm).subscribe(data => {
-        console.warn(data);
-
-        this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: this.navParams.get("onSuccessRedirect") });
-      });
-    }
+    this.unregisteredUserProvider.subscribe(this.userSubscriptionForm).subscribe(result => {
+      this.toastCtrl.create({ message: 'Your account was successfully created!', duration: 3000, position: 'top' }).present();
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
+    }, error => {
+      console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+    });
   }
 }

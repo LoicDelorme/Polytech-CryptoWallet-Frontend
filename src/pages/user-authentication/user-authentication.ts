@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { AuthenticationForm } from '../../forms/authenticationform';
 
-import { UnregisteredUserProvider } from '../../providers/unregistered/user/user';
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
-import { UserSubscriptionPage } from '../user-subscription/user-subscription';
+import { UnregisteredUserProvider } from '../../providers/unregistered/user';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 @Component({
   selector: 'page-user-authentication',
@@ -18,7 +17,7 @@ export class UserAuthenticationPage {
   public userAuthenticationForm: AuthenticationForm;
   public userAuthenticationFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public unregisteredUserProvider: UnregisteredUserProvider, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
+  constructor(private navCtrl: NavController, private navParams: NavParams,  private toastCtrl: ToastController, private formBuilder: FormBuilder, private unregisteredUserProvider: UnregisteredUserProvider, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.userAuthenticationForm = new AuthenticationForm();
 
     this.userAuthenticationFormGroup = formBuilder.group({
@@ -27,25 +26,20 @@ export class UserAuthenticationPage {
     });
   }
 
-  public onSubscribeButtonClicked(): void {
-    this.navCtrl.push(UserSubscriptionPage, {onSuccessRedirect: this.navParams.get("onSuccessRedirect")});
-  }
-
   public onSubmit(value: any): void {
-    if (this.userAuthenticationFormGroup.valid) {
-      this.unregisteredUserProvider.authenticate(this.userAuthenticationForm).subscribe(data => {
-        console.warn(data);
+    this.unregisteredUserProvider.authenticate(this.userAuthenticationForm).subscribe(result => {
+      this.localStorageProvider.saveTokenInformation(result.data);
 
-        this.localInformationProvider.saveTokenInformation(data.data);
-
-        this.registeredUserProvider.getUser(data.data.value, data.data.userId).subscribe(data => {
-          console.warn(data);
-
-          this.localInformationProvider.saveUserInformation(data.data);
-
-          this.navCtrl.setRoot(this.navParams.get("onSuccessRedirect"));
-        });
+      this.registeredUserProvider.getUser(result.data.value).subscribe(result => {
+        this.localStorageProvider.saveUserInformation(result.data);
+        this.navCtrl.setRoot(this.navParams.get("onSuccessRedirect"));
+      }, error => {
+        console.error(error);
+        this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
       });
-    }
+    }, error => {
+      console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+    });
   }
 }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 
 import { User } from '../../entities/user';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { UserUpdatePage } from '../user-update/user-update';
@@ -18,16 +18,15 @@ export class UserOverviewPage {
 
   public user: User;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-    this.user = this.navParams.get("user");
-  }
+  constructor(private navCtrl: NavController, private navParams: NavParams, private alertCtrl: AlertController, private toastCtrl: ToastController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
-    if (!this.localInformationProvider.isUserRegistered()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: HomePage });
-    } else {
-      this.user = this.navParams.get("user");
+      return;
     }
+
+    this.user = this.navParams.get("user");
   }
 
   public onUpdateUserButtonClicked(): void {
@@ -35,7 +34,7 @@ export class UserOverviewPage {
   }
 
   public onDeleteUserButtonClicked(): void {
-    let confirmationAlert = this.alertCtrl.create({
+    this.alertCtrl.create({
       title: 'Are you sure?',
       message: 'Do you really want to delete your account?',
       buttons: [
@@ -48,18 +47,17 @@ export class UserOverviewPage {
           text: 'Ok',
           role: null,
           handler: () => {
-            this.registeredUserProvider.deleteUser(this.localInformationProvider.getUserTokenValue(), this.user).subscribe(data => {
-              console.warn(data);
-
-              this.localInformationProvider.clearAllInformation();
-
+            this.registeredUserProvider.deleteUser(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+              this.toastCtrl.create({ message: 'Your account was successfully deleted!', duration: 3000, position: 'top' }).present();
+              this.localStorageProvider.clearAllInformation();
               this.navCtrl.setRoot(HomePage);
+            }, error => {
+              console.error(error);
+              this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
             });
           }
         }
       ]
-    });
-
-    confirmationAlert.present();
+    }).present();
   }
 }

@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { User } from '../../entities/user';
 import { UserForm } from '../../forms/userform';
 
-import { RegisteredUserProvider } from '../../providers/registered/user/user';
-import { LocalInformationProvider } from '../../providers/local/information/information';
+import { RegisteredUserProvider } from '../../providers/registered/user';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
+
+import { UserAuthenticationPage } from '../user-authentication/user-authentication';
+import { SettingsPage } from '../settings/settings';
 
 @Component({
   selector: 'page-user-update',
@@ -17,10 +20,24 @@ export class UserUpdatePage {
   public userForm: UserForm;
   public userFormGroup: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public registeredUserProvider: RegisteredUserProvider, public localInformationProvider: LocalInformationProvider) {
-    let user: User = this.navParams.get("user");
-
+  constructor(private navCtrl: NavController, private navParams: NavParams, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
     this.userForm = new UserForm();
+
+    this.userFormGroup = formBuilder.group({
+      lastname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      firstname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      email: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
+      password: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+    });
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: SettingsPage });
+      return;
+    }
+
+    let user: User = this.navParams.get("user");
     this.userForm.id = user.id;
     this.userForm.lastname = user.lastname;
     this.userForm.firstname = user.firstname;
@@ -28,25 +45,17 @@ export class UserUpdatePage {
     this.userForm.password = user.password;
     this.userForm.enabled = user.enabled;
     this.userForm.administrator = user.administrator;
-
-    this.userFormGroup = formBuilder.group({
-      lastname: [user.lastname, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      firstname: [user.firstname, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      email: [user.email, Validators.compose([Validators.required, Validators.maxLength(250)])],
-      password: [user.password, Validators.compose([Validators.required, Validators.maxLength(250)])]
-    });
   }
 
   public onSubmit(value: any): void {
-    if (this.userFormGroup.valid) {
-      this.registeredUserProvider.updateUser(this.localInformationProvider.getUserTokenValue(), this.userForm).subscribe(data => {
-        console.warn(data);
-
-        this.localInformationProvider.saveUserInformation(data.data);
-
-        this.navCtrl.getPrevious().data.user = data.data;
-        this.navCtrl.pop();
-      });
-    }
+    this.registeredUserProvider.updateUser(this.localStorageProvider.getUserTokenValue(), this.userForm).subscribe(result => {
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
+      this.localStorageProvider.saveUserInformation(result.data);
+      this.navCtrl.getPrevious().data.user = result.data;
+      this.navCtrl.pop();
+    }, error => {
+      console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+    });
   }
 }
