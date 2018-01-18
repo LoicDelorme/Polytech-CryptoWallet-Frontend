@@ -33,37 +33,20 @@ export class UpdateAlertTypePage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     let alertType: AlertType = this.navParams.get("alertType");
-
     this.alertTypeForm.id = alertType.id;
     this.alertTypeForm.name = alertType.name;
   }
 
   public onSubmit(value: any): void {
     this.administratorAlertTypeProvider.updateAlertType(this.localStorageProvider.getUserTokenValue(), this.alertTypeForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.getPrevious().data.alertType = result.data;
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }

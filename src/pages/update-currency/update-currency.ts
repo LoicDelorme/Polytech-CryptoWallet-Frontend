@@ -34,11 +34,8 @@ export class UpdateCurrencyPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCurrenciesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     let currency: Currency = this.navParams.get("currency");
-
     this.currencyForm.id = currency.id;
     this.currencyForm.name = currency.name;
     this.currencyForm.symbol = currency.symbol;
@@ -46,26 +43,12 @@ export class UpdateCurrencyPage {
 
   public onSubmit(value: any): void {
     this.administratorCurrencyProvider.updateCurrency(this.localStorageProvider.getUserTokenValue(), this.currencyForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.getPrevious().data.currency = result.data;
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }

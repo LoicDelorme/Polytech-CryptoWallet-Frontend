@@ -33,37 +33,20 @@ export class UpdateThemePage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllThemesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     let theme: Theme = this.navParams.get("theme");
-
     this.themeForm.id = theme.id;
     this.themeForm.name = theme.name;
   }
 
   public onSubmit(value: any): void {
     this.administratorThemeProvider.updateTheme(this.localStorageProvider.getUserTokenValue(), this.themeForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.getPrevious().data.theme = result.data;
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }

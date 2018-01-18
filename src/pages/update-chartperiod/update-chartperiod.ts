@@ -33,37 +33,20 @@ export class UpdateChartPeriodPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllChartPeriodsPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     let chartPeriod: ChartPeriod = this.navParams.get("chartPeriod");
-
     this.chartPeriodForm.id = chartPeriod.id;
     this.chartPeriodForm.name = chartPeriod.name;
   }
 
   public onSubmit(value: any): void {
     this.administratorChartPeriodProvider.updateChartPeriod(this.localStorageProvider.getUserTokenValue(), this.chartPeriodForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.getPrevious().data.chartPeriod = result.data;
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }

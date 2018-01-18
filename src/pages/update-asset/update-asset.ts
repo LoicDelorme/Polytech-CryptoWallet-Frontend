@@ -39,40 +39,22 @@ export class UpdateAssetPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     let asset: Asset = this.navParams.get("asset");
     let wallet: Wallet = this.navParams.get("wallet");
-
     this.cryptocurrency = asset.cryptocurrency;
     this.wallet = wallet;
-
     this.assetForm.amount = asset.amount;
     this.assetForm.purchasePrice = asset.purchasePrice;
   }
 
   public onSubmit(value: any): void {
     this.registeredUserProvider.updateAsset(this.localStorageProvider.getUserTokenValue(), this.wallet, this.cryptocurrency, this.assetForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }

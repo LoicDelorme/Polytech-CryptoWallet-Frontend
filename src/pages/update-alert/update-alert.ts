@@ -43,11 +43,8 @@ export class UpdateAlertPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     let alert: Alert = this.navParams.get("alert");
-
     this.alertForm.id = alert.id;
     this.alertForm.name = alert.name;
     this.alertForm.threshold = alert.threshold;
@@ -56,11 +53,10 @@ export class UpdateAlertPage {
     this.alertForm.userId = alert.userId;
     this.alertForm.cryptocurrencyId = alert.cryptocurrency.id;
     this.alertForm.typeId = alert.type.id;
+  }
 
-    let loadingOverlay = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-
+  public ionViewDidEnter(): void {
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
     this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
@@ -68,55 +64,30 @@ export class UpdateAlertPage {
 
       this.registeredAlertTypeProvider.allAlertTypes(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
         this.allTypes = result.data;
-        this.updateName();
 
         loadingOverlay.dismiss();
       }, error => {
         console.error(error);
-  
-        let toastOverlay = this.toastCtrl.create({
-          message: 'An error occured...',
-          duration: 3000,
-          position: 'top'
-        });
-  
-        toastOverlay.present();
+        this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+
+        loadingOverlay.dismiss();
       });
     }, error => {
       console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
 
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      loadingOverlay.dismiss();
     });
   }
 
   public onSubmit(value: any): void {
     this.registeredUserProvider.updateAlert(this.localStorageProvider.getUserTokenValue(), this.alertForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.getPrevious().data.alert = result.data;
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 

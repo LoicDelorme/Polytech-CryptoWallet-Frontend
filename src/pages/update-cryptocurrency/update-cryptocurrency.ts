@@ -37,11 +37,8 @@ export class UpdateCryptocurrencyPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
       return;
     }
-  }
 
-  public ionViewDidEnter(): void {
     let cryptocurrency: Cryptocurrency = this.navParams.get("cryptocurrency");
-
     this.cryptocurrencyForm.id = cryptocurrency.id;
     this.cryptocurrencyForm.name = cryptocurrency.name;
     this.cryptocurrencyForm.symbol = cryptocurrency.symbol;
@@ -51,26 +48,12 @@ export class UpdateCryptocurrencyPage {
 
   public onSubmit(value: any): void {
     this.administratorCryptocurrencyProvider.updateCryptocurrency(this.localStorageProvider.getUserTokenValue(), this.cryptocurrencyForm).subscribe(result => {
-      let toastOverlay = this.toastCtrl.create({
-        message: result.message,
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
-
+      this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
       this.navCtrl.getPrevious().data.cryptocurrency = result.data;
       this.navCtrl.pop();
     }, error => {
       console.error(error);
-
-      let toastOverlay = this.toastCtrl.create({
-        message: 'An error occured...',
-        duration: 3000,
-        position: 'top'
-      });
-
-      toastOverlay.present();
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
     });
   }
 }
