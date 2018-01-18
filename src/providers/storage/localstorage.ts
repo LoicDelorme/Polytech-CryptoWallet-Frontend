@@ -118,7 +118,7 @@ export class LocalStorageProvider {
   }
 
   public isUserRegistered(): boolean {
-    return this.getObjectValue(this.userObjectKey) == undefined;
+    return this.getObjectValue(this.userObjectKey) != undefined;
   }
 
   public isUserAdministrator(): boolean {
