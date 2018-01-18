@@ -1,1 +1,42 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+        <ion-list>
+            <button ion-item (click)="onHomeButtonClicked()">
+                <ion-icon name="home" item-start></ion-icon>
+                <ion-label>Home</ion-label>
+            </button>
+            <button ion-item (click)="onFavoritesButtonClicked()">
+                <ion-icon name="favorite" item-start></ion-icon>
+                <ion-label>Favorites</ion-label>
+            </button>
+            <button ion-item (click)="onWalletsButtonClicked()">
+                <ion-icon name="wallet" item-start></ion-icon>
+                <ion-label>Wallets</ion-label>
+            </button>
+            <button ion-item (click)="onAlertsButtonClicked()">
+                <ion-icon name="alert" item-start></ion-icon>
+                <ion-label>Alerts</ion-label>
+            </button>
+            <button ion-item (click)="onSettingsButtonClicked()">
+                <ion-icon name="setting" item-start></ion-icon>
+                <ion-label>Settings</ion-label>
+            </button>
+            <button ion-item (click)="onLogInButtonClicked()">
+                <ion-icon name="log-in" item-start></ion-icon>
+                <ion-label>Log in</ion-label>
+            </button>
+            <button ion-item (click)="onSubscribeButtonClicked()">
+                <ion-icon name="subscribe" item-start></ion-icon>
+                <ion-label>Subscribe</ion-label>
+            </button>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav #content [root]="rootPage"></ion-nav>

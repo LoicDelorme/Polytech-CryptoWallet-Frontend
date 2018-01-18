@@ -10,37 +10,48 @@ import { MyApp } from './app.component';
 import { AllAlertsPage } from '../pages/all-alerts/all-alerts';
 import { AllAlertTypesPage } from '../pages/all-alerttypes/all-alerttypes';
 import { AllAssetsPage } from '../pages/all-assets/all-assets';
+import { AllChartPeriodsPage } from '../pages/all-chartperiods/all-chartperiods';
 import { AllCryptocurrenciesPage } from '../pages/all-cryptocurrencies/all-cryptocurrencies';
+import { AllCurrenciesPage } from '../pages/all-currencies/all-currencies';
+import { AllDevicesPage } from '../pages/all-devices/all-devices';
 import { AllFavoritesPage } from '../pages/all-favorites/all-favorites';
 import { AllLogsPage } from '../pages/all-logs/all-logs';
-import { AllSettingsPage } from '../pages/all-settings/all-settings';
+import { AllThemesPage } from '../pages/all-themes/all-themes';
 import { AllTokensPage } from '../pages/all-tokens/all-tokens';
 import { AllWalletsPage } from '../pages/all-wallets/all-wallets';
 
 import { ChartPage } from '../pages/chart/chart';
-import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
 
 import { InsertAlertPage } from '../pages/insert-alert/insert-alert';
 import { InsertAlertTypePage } from '../pages/insert-alerttype/insert-alerttype';
 import { InsertAssetPage } from '../pages/insert-asset/insert-asset';
+import { InsertChartPeriodPage } from '../pages/insert-chartperiod/insert-chartperiod';
 import { InsertCryptocurrencyPage } from '../pages/insert-cryptocurrency/insert-cryptocurrency';
-import { InsertSettingPage } from '../pages/insert-setting/insert-setting';
+import { InsertCurrencyPage } from '../pages/insert-currency/insert-currency';
+import { InsertThemePage } from '../pages/insert-theme/insert-theme';
 import { InsertWalletPage } from '../pages/insert-wallet/insert-wallet';
 
 import { OverviewAlertPage } from '../pages/overview-alert/overview-alert';
 import { OverviewAlertTypePage } from '../pages/overview-alerttype/overview-alerttype';
+import { OverviewChartPeriodPage } from '../pages/overview-chartperiod/overview-chartperiod';
 import { OverviewCryptocurrencyPage } from '../pages/overview-cryptocurrency/overview-cryptocurrency';
+import { OverviewCurrencyPage } from '../pages/overview-currency/overview-currency';
+import { OverviewDevicePage } from '../pages/overview-device/overview-device';
 import { OverviewLogPage } from '../pages/overview-log/overview-log';
-import { OverviewSettingPage } from '../pages/overview-setting/overview-setting';
+import { OverviewThemePage } from '../pages/overview-theme/overview-theme';
 import { OverviewTokenPage } from '../pages/overview-token/overview-token';
 import { OverviewWalletPage } from '../pages/overview-wallet/overview-wallet';
+
+import { SettingsPage } from '../pages/settings/settings';
 
 import { UpdateAlertPage } from '../pages/update-alert/update-alert';
 import { UpdateAlertTypePage } from '../pages/update-alerttype/update-alerttype';
 import { UpdateAssetPage } from '../pages/update-asset/update-asset';
+import { UpdateChartPeriodPage } from '../pages/update-chartperiod/update-chartperiod';
 import { UpdateCryptocurrencyPage } from '../pages/update-cryptocurrency/update-cryptocurrency';
-import { UpdateSettingPage } from '../pages/update-setting/update-setting';
+import { UpdateCurrencyPage } from '../pages/update-currency/update-currency';
+import { UpdateThemePage } from '../pages/update-theme/update-theme';
 import { UpdateWalletPage } from '../pages/update-wallet/update-wallet';
 
 import { UserAuthenticationPage } from '../pages/user-authentication/user-authentication';
@@ -82,33 +93,43 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user';
     AllAlertsPage,
     AllAlertTypesPage,
     AllAssetsPage,
+    AllChartPeriodsPage,
     AllCryptocurrenciesPage,
+    AllCurrenciesPage,
+    AllDevicesPage,
     AllFavoritesPage,
     AllLogsPage,
-    AllSettingsPage,
+    AllThemesPage,
     AllTokensPage,
     AllWalletsPage,
     ChartPage,
-    SettingsPage,
     HomePage,
     InsertAlertPage,
     InsertAlertTypePage,
     InsertAssetPage,
+    InsertChartPeriodPage,
     InsertCryptocurrencyPage,
-    InsertSettingPage,
+    InsertCurrencyPage,
+    InsertThemePage,
     InsertWalletPage,
     OverviewAlertPage,
     OverviewAlertTypePage,
+    OverviewChartPeriodPage,
     OverviewCryptocurrencyPage,
+    OverviewCurrencyPage,
+    OverviewDevicePage,
     OverviewLogPage,
-    OverviewSettingPage,
+    OverviewThemePage,
     OverviewTokenPage,
     OverviewWalletPage,
+    SettingsPage,
     UpdateAlertPage,
     UpdateAlertTypePage,
     UpdateAssetPage,
+    UpdateChartPeriodPage,
     UpdateCryptocurrencyPage,
-    UpdateSettingPage,
+    UpdateCurrencyPage,
+    UpdateThemePage,
     UpdateWalletPage,
     UserAuthenticationPage,
     UserOverviewPage,
@@ -128,33 +149,43 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user';
     AllAlertsPage,
     AllAlertTypesPage,
     AllAssetsPage,
+    AllChartPeriodsPage,
     AllCryptocurrenciesPage,
+    AllCurrenciesPage,
+    AllDevicesPage,
     AllFavoritesPage,
     AllLogsPage,
-    AllSettingsPage,
+    AllThemesPage,
     AllTokensPage,
     AllWalletsPage,
     ChartPage,
-    SettingsPage,
     HomePage,
     InsertAlertPage,
     InsertAlertTypePage,
     InsertAssetPage,
+    InsertChartPeriodPage,
     InsertCryptocurrencyPage,
-    InsertSettingPage,
+    InsertCurrencyPage,
+    InsertThemePage,
     InsertWalletPage,
     OverviewAlertPage,
     OverviewAlertTypePage,
+    OverviewChartPeriodPage,
     OverviewCryptocurrencyPage,
+    OverviewCurrencyPage,
+    OverviewDevicePage,
     OverviewLogPage,
-    OverviewSettingPage,
+    OverviewThemePage,
     OverviewTokenPage,
     OverviewWalletPage,
+    SettingsPage,
     UpdateAlertPage,
     UpdateAlertTypePage,
     UpdateAssetPage,
+    UpdateChartPeriodPage,
     UpdateCryptocurrencyPage,
-    UpdateSettingPage,
+    UpdateCurrencyPage,
+    UpdateThemePage,
     UpdateWalletPage,
     UserAuthenticationPage,
     UserOverviewPage,
