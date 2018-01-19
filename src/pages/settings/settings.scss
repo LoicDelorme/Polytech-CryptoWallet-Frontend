@@ -1,16 +1,16 @@
 page-settings {
-    .ion-ios-setting,
-    .ion-ios-setting-outline,
-    .ion-md-setting {
-        content: url(../../assets/imgs/black/setting.svg);
-        width: 24px;
-        height: 24px;
-    }
-
     .ion-ios-token,
     .ion-ios-token-outline,
     .ion-md-token {
         content: url(../../assets/imgs/black/token.svg);
+        width: 24px;
+        height: 24px;
+    }
+
+    .ion-ios-device,
+    .ion-ios-device-outline,
+    .ion-md-device {
+        content: url(../../assets/imgs/black/device.svg);
         width: 24px;
         height: 24px;
     }
@@ -51,6 +51,14 @@ page-settings {
     .ion-ios-parameter-outline,
     .ion-md-parameter {
         content: url(../../assets/imgs/black/parameter.svg);
+        width: 24px;
+        height: 24px;
+    }
+
+    .ion-ios-chart,
+    .ion-ios-chart-outline,
+    .ion-md-chart {
+        content: url(../../assets/imgs/black/chart.svg);
         width: 24px;
         height: 24px;
     }

@@ -1,33 +1,16 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Settings</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="outer-content">
-  <ion-list>
-    <ion-list-header>Settings</ion-list-header>
-
-    <button ion-item (click)="onOverviewSettingsButtonClicked()">
-      <ion-icon name="setting" item-start></ion-icon>
-      <ion-label>My settings</ion-label>
-    </button>
-  </ion-list>
-
-  <ion-list>
-    <ion-list-header>Security</ion-list-header>
-
-    <button ion-item (click)="onOverviewTokensButtonClicked()">
-      <ion-icon name="token" item-start></ion-icon>
-      <ion-label>My tokens</ion-label>
-    </button>
-
-    <button ion-item (click)="onOverviewLogsButtonClicked()">
-      <ion-icon name="log" item-start></ion-icon>
-      <ion-label>My logs</ion-label>
-    </button>
-  </ion-list>
-
   <ion-list>
     <ion-list-header>Account</ion-list-header>
 
@@ -42,6 +25,25 @@
     </button>
   </ion-list>
 
+  <ion-list>
+    <ion-list-header>Security</ion-list-header>
+
+    <button ion-item (click)="onOverviewTokensButtonClicked()">
+      <ion-icon name="token" item-start></ion-icon>
+      <ion-label>My tokens</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewDevicesButtonClicked()">
+      <ion-icon name="device" item-start></ion-icon>
+      <ion-label>My devices</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewLogsButtonClicked()">
+      <ion-icon name="log" item-start></ion-icon>
+      <ion-label>My logs</ion-label>
+    </button>
+  </ion-list>
+
   <ion-list *ngIf="isAdministrator">
     <ion-list-header>Administration</ion-list-header>
 
@@ -50,9 +52,24 @@
       <ion-label>Cryptocurrencies</ion-label>
     </button>
 
+    <button ion-item (click)="onOverviewCurrenciesButtonClicked()">
+      <ion-icon name="cryptocurrency" item-start></ion-icon>
+      <ion-label>Currencies</ion-label>
+    </button>
+
     <button ion-item (click)="onOverviewAlertTypesButtonClicked()">
       <ion-icon name="parameter" item-start></ion-icon>
       <ion-label>Alert types</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewChartPeriodsButtonClicked()">
+      <ion-icon name="chart" item-start></ion-icon>
+      <ion-label>Chart periods</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewThemesButtonClicked()">
+      <ion-icon name="parameter" item-start></ion-icon>
+      <ion-label>Themes</ion-label>
     </button>
   </ion-list>
 </ion-content>
