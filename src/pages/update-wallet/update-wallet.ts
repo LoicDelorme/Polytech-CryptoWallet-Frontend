@@ -29,7 +29,7 @@ export class UpdateWalletPage {
   }
 
   public ionViewWillEnter(): void {
-    if (!this.localStorageProvider.isUserAdministrator()) {
+    if (!this.localStorageProvider.isUserRegistered()) {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
       return;
     }
