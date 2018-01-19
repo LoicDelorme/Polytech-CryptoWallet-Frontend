@@ -18,7 +18,9 @@ export class UserOverviewPage {
 
   public user: User;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private alertCtrl: AlertController, private toastCtrl: ToastController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private alertCtrl: AlertController, private toastCtrl: ToastController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {
+    this.user = this.navParams.get("user");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {

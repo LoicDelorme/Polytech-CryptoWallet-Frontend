@@ -17,7 +17,9 @@ export class OverviewAlertPage {
 
   public alert: Alert;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {
+    this.alert = this.navParams.get("alert");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {

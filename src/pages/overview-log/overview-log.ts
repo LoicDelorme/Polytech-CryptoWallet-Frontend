@@ -16,7 +16,9 @@ export class OverviewLogPage {
 
   public log: Log;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {
+    this.log = this.navParams.get("log");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {

@@ -16,7 +16,9 @@ export class OverviewDevicePage {
 
   public device: Device;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {
+    this.device = this.navParams.get("device");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {

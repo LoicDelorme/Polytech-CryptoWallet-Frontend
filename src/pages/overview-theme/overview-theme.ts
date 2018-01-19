@@ -17,7 +17,9 @@ export class OverviewThemePage {
 
   public theme: Theme;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {
+    this.theme = this.navParams.get("theme");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {

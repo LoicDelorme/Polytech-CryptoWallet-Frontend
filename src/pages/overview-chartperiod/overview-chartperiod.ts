@@ -17,7 +17,9 @@ export class OverviewChartPeriodPage {
 
   public chartPeriod: ChartPeriod;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {
+    this.chartPeriod = this.navParams.get("chartPeriod");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {

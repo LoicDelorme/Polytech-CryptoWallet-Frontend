@@ -16,7 +16,9 @@ export class OverviewTokenPage {
 
   public token: Token;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {
+    this.token = this.navParams.get("token");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {

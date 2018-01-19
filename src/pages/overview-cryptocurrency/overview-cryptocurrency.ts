@@ -17,7 +17,9 @@ export class OverviewCryptocurrencyPage {
 
   public cryptocurrency: Cryptocurrency;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private localStorageProvider: LocalStorageProvider) {
+    this.cryptocurrency = this.navParams.get("cryptocurrency");
+  }
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserAdministrator()) {

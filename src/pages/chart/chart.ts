@@ -37,6 +37,8 @@ export class ChartPage {
   public volumesChartButtonDisabled: string;
 
   constructor(private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private coinMarketCapProvider: CoinMarketCapProvider) {
+    this.cryptocurrency = this.navParams.get("cryptocurrency");
+
     let defaultButtonValue: string = this.buttonValues[1];
     this.usdPeriod = defaultButtonValue;
     this.usdChartButtonDisabled = defaultButtonValue;
