@@ -3,6 +3,8 @@ import { Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { LocalStorageProvider } from '../providers/storage/localstorage';
+
 import { HomePage } from '../pages/home/home';
 import { AllFavoritesPage } from '../pages/all-favorites/all-favorites';
 import { AllWalletsPage } from '../pages/all-wallets/all-wallets';
@@ -20,7 +22,7 @@ export class MyApp {
 
   public rootPage: any = HomePage;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private menuCtrl: MenuController) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen, private menuCtrl: MenuController, public localStorageProvider: LocalStorageProvider) {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -30,37 +32,35 @@ export class MyApp {
   }
 
   public onHomeButtonClicked(): void {
-    this.menuCtrl.close();
-    this.navCtrl.setRoot(HomePage);
+    this.onPageButtonClicked(HomePage);
   }
 
   public onFavoritesButtonClicked(): void {
-    this.menuCtrl.close();
-    this.navCtrl.setRoot(AllFavoritesPage);
+    this.onPageButtonClicked(AllFavoritesPage);
   }
 
   public onWalletsButtonClicked(): void {
-    this.menuCtrl.close();
-    this.navCtrl.setRoot(AllWalletsPage);
+    this.onPageButtonClicked(AllWalletsPage);
   }
 
   public onAlertsButtonClicked(): void {
-    this.menuCtrl.close();
-    this.navCtrl.setRoot(AllAlertsPage);
+    this.onPageButtonClicked(AllAlertsPage);
   }
 
   public onSettingsButtonClicked(): void {
-    this.menuCtrl.close();
-    this.navCtrl.setRoot(SettingsPage);
+    this.onPageButtonClicked(SettingsPage);
   }
 
   public onLogInButtonClicked(): void {
-    this.menuCtrl.close();
-    this.navCtrl.setRoot(UserAuthenticationPage);
+    this.onPageButtonClicked(UserAuthenticationPage);
   }
 
   public onSubscribeButtonClicked(): void {
+    this.onPageButtonClicked(UserSubscriptionPage);
+  }
+
+  private onPageButtonClicked(rootPage: any): void {
     this.menuCtrl.close();
-    this.navCtrl.setRoot(UserSubscriptionPage);
+    this.navCtrl.setRoot(rootPage);
   }
 }
