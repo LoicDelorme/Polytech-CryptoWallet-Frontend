@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, ItemSliding } from 'ionic-angular';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { FavoriteForm } from '../../forms/favoriteform';
@@ -66,7 +66,9 @@ export class HomePage {
     this.navCtrl.push(ChartPage, { cryptocurrency: cryptocurrency });
   }
 
-  public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency): void {
+  public onInsertFavoriteButtonClicked(cryptocurrency: Cryptocurrency, slidingItem: ItemSliding): void {
+    slidingItem.close();
+
     this.registeredUserProvider.insertFavorite(this.localStorageProvider.getUserTokenValue(), cryptocurrency, new FavoriteForm()).subscribe(result => {
       this.toastCtrl.create({ message: 'Your favorite was successfully added!', duration: 3000, position: 'top' }).present();
     }, error => {

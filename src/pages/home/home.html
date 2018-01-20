@@ -31,7 +31,7 @@
   </ion-list>
 
   <ion-list *ngIf="isRegistered" inset>
-    <ion-item-sliding *ngFor="let cryptocurrency of filtered">
+    <ion-item-sliding *ngFor="let cryptocurrency of filtered" #slidingItem>
       <button ion-item (click)="onOverviewCryptocurrencyButtonClicked(cryptocurrency)">
         <ion-avatar item-start>
           <img src="{{ cryptocurrency.imageUrl }}" />
@@ -42,7 +42,7 @@
       </button>
 
       <ion-item-options side="right">
-        <button ion-button (click)="onInsertFavoriteButtonClicked(cryptocurrency)" icon-start>
+        <button ion-button (click)="onInsertFavoriteButtonClicked(cryptocurrency, slidingItem)" icon-start>
           <ion-icon name="favorite"></ion-icon>
           Favorite
         </button>
