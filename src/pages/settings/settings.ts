@@ -10,7 +10,7 @@ import { SettingForm } from '../../forms/settingform';
 import { RegisteredUserProvider } from '../../providers/registered/user';
 import { RegisteredThemeProvider } from '../../providers/registered/theme';
 import { RegisteredCurrencyProvider } from '../../providers/registered/currency';
-import { RegisteredChartPeriodProvider } from '../../providers/registered/chartperiod';
+import { UnregisteredChartPeriodProvider } from '../../providers/unregistered/chartperiod';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
@@ -37,7 +37,7 @@ export class SettingsPage {
   public allCurrencies: Array<Currency> = [];
   public allChartPeriods: Array<ChartPeriod> = [];
 
-  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider, private registeredThemeProvider: RegisteredThemeProvider, private registeredCurrencyProvider: RegisteredCurrencyProvider, private registeredChartPeriodProvider: RegisteredChartPeriodProvider) {
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider, private registeredThemeProvider: RegisteredThemeProvider, private registeredCurrencyProvider: RegisteredCurrencyProvider, private unregisteredChartPeriodProvider: UnregisteredChartPeriodProvider) {
     this.settingForm = new SettingForm();
   }
 
@@ -60,6 +60,8 @@ export class SettingsPage {
 
     this.registeredUserProvider.allSettings(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
       let setting: Setting = result.data;
+      this.localStorageProvider.saveSettingInformation(setting);
+
       this.settingForm.id = setting.id;
       this.settingForm.themeId = setting.theme.id;
       this.settingForm.currencyId = setting.currency.id;
@@ -71,7 +73,7 @@ export class SettingsPage {
         this.registeredCurrencyProvider.allCurrencies(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
           this.allCurrencies = result.data;
 
-          this.registeredChartPeriodProvider.allChartPeriods(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+          this.unregisteredChartPeriodProvider.allChartPeriods().subscribe(result => {
             this.allChartPeriods = result.data;
       
             loadingOverlay.dismiss();
@@ -103,6 +105,7 @@ export class SettingsPage {
 
   public updateSettings(): void {
     this.registeredUserProvider.updateSettings(this.localStorageProvider.getUserTokenValue(), this.settingForm).subscribe(result => {
+      this.localStorageProvider.saveSettingInformation(result.data);
       this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
     }, error => {
       console.error(error);
