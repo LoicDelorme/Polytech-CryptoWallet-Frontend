@@ -9,9 +9,9 @@ import { CoinMarketCapGraphsResponse } from '../../responses/coinmarketcapgraphs
 @Injectable()
 export class CoinMarketCapProvider {
 
-  private readonly getPricePath: string = "coinmarketcap_ticker/RESOURCE_URL/";
-  private readonly allPricesPath: string = "coinmarketcap_graphs/RESOURCE_URL/";
-  private readonly allPricesBetweenPath: string = "coinmarketcap_graphs/RESOURCE_URL/START_DATE/END_DATE/";
+  private readonly getPricePath: string = "coinmarketcapticker/RESOURCE_URL/";
+  private readonly allPricesPath: string = "coinmarketcapgraphs/RESOURCE_URL/";
+  private readonly allPricesBetweenPath: string = "coinmarketcapgraphs/RESOURCE_URL/START_DATE/END_DATE/";
 
   constructor(private http: HttpClient) {}
 

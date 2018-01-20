@@ -8,12 +8,12 @@
       "proxyUrl": "http://localhost:8090/api/cryptowallet/"
     },
     {
-      "path": "/coinmarketcap_ticker",
+      "path": "/coinmarketcapticker",
       "proxyUrl": "https://api.coinmarketcap.com/v1/ticker/"
     },
     {
-      "path": "/coinmarketcap_graphs",
-      "proxyUrl": "https://graphs.coinmarketcap.com/currencies/"
+      "path": "/coinmarketcapgraphs",
+      "proxyUrl": "https://graphs2.coinmarketcap.com/currencies/"
     }
   ],
   "integrations": {
