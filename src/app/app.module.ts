@@ -78,7 +78,7 @@ import { AdministratorWalletProvider } from '../providers/administrator/wallet';
 import { CoinMarketCapProvider } from '../providers/coinmarketcap/coinmarketcap';
 
 import { RegisteredAlertTypeProvider } from '../providers/registered/alerttype';
-import { RegisteredChartPeriodProvider } from '../providers/registered/chartperiod';
+import { UnregisteredChartPeriodProvider } from '../providers/unregistered/chartperiod';
 import { RegisteredCurrencyProvider } from '../providers/registered/currency';
 import { RegisteredThemeProvider } from '../providers/registered/theme';
 import { RegisteredUserProvider } from '../providers/registered/user';
@@ -217,11 +217,11 @@ import { UnregisteredUserProvider } from '../providers/unregistered/user';
     AdministratorWalletProvider,
     CoinMarketCapProvider,
     RegisteredAlertTypeProvider,
-    RegisteredChartPeriodProvider,
     RegisteredCurrencyProvider,
     RegisteredThemeProvider,
     RegisteredUserProvider,
     LocalStorageProvider,
+    UnregisteredChartPeriodProvider,
     UnregisteredCryptocurrencyProvider,
     UnregisteredUserProvider
   ]
