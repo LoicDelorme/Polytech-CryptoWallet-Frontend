@@ -27,7 +27,6 @@ export class UpdateCryptocurrencyPage {
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      baseUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       resourceUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
