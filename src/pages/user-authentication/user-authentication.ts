@@ -9,6 +9,8 @@ import { UnregisteredUserProvider } from '../../providers/unregistered/user';
 import { RegisteredUserProvider } from '../../providers/registered/user';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
+import { HomePage } from '../home/home';
+
 @Component({
   selector: 'page-user-authentication',
   templateUrl: 'user-authentication.html',
@@ -39,7 +41,9 @@ export class UserAuthenticationPage {
 
         this.registeredUserProvider.allSettings(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
           this.localStorageProvider.saveSettingInformation(result.data);
-          this.navCtrl.setRoot(this.navParams.get("onSuccessRedirect"));
+
+          let nextPage: any = this.navParams.get("onSuccessRedirect");
+          this.navCtrl.setRoot(nextPage != undefined ? nextPage : HomePage);
         }, error => {
           console.error(error);
           this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
