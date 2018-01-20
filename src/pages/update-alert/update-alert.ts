@@ -65,9 +65,11 @@ export class UpdateAlertPage {
 
     this.registeredUserProvider.allFavorites(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
       this.allFavorites = result.data;
+      this.updateName();
 
       this.registeredAlertTypeProvider.allAlertTypes(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
         this.allTypes = result.data;
+        this.updateName();
 
         loadingOverlay.dismiss();
       }, error => {
