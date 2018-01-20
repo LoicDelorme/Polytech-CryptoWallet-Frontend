@@ -55,6 +55,14 @@ page-settings {
         height: 24px;
     }
 
+    .ion-ios-theme,
+    .ion-ios-theme-outline,
+    .ion-md-theme {
+        content: url(../../assets/imgs/black/parameter.svg);
+        width: 24px;
+        height: 24px;
+    }
+
     .ion-ios-parameter,
     .ion-ios-parameter-outline,
     .ion-md-parameter {

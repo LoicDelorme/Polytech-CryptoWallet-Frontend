@@ -1,9 +1,9 @@
 export class SettingForm {
 
   public id: number;
-  public themeId: string;
-  public currencyId: string;
-  public chartPeriodId: string;
+  public themeId: number;
+  public currencyId: number;
+  public chartPeriodId: number;
 
   constructor() {}
 }
