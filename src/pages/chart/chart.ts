@@ -5,9 +5,12 @@ import { Chart } from 'chart.js';
 import * as moment from 'moment';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
+import { ChartPeriod } from '../../entities/chartperiod';
 import { CoinMarketCapGraphsResponse } from '../../responses/coinmarketcapgraphsresponse';
 
 import { CoinMarketCapProvider } from '../../providers/coinmarketcap/coinmarketcap';
+import { UnregisteredChartPeriodProvider } from '../../providers/unregistered/chartperiod';
+import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 @Component({
   selector: 'page-chart',
@@ -15,39 +18,20 @@ import { CoinMarketCapProvider } from '../../providers/coinmarketcap/coinmarketc
 })
 export class ChartPage {
 
-  private readonly buttonValues: Array<string> = ["1D", "7D", "1M", "3M", "1Y", "ALL"];
-  private readonly numberValues: Array<string> = ["1", "7", "1", "3", "1", null];
-  private readonly durationValues: Array<moment.unitOfTime.DurationConstructor> = ["d", "d", "M", "M", "y", null];
-  private readonly formatValues: Array<string> = ["HH", "DD", "DD", "MMM", "MMM YYYY", "[Q]Q YYYY"];
-  private readonly maxTicksValues: Array<number> = [8, 7, 8, 6, 12, 12];
-
   @ViewChild('usdChart') usdChart;
   @ViewChild('btcChart') btcChart;
   @ViewChild('marketCapChart') marketCapChart;
   @ViewChild('volumesChart') volumesChart;
 
+  public allChartPeriods: Array<ChartPeriod>;
   public cryptocurrency: Cryptocurrency;
-  public usdPeriod: string;
-  public btcPeriod: string;
-  public marketCapPeriod: string;
-  public volumesPeriod: string;
-  public usdChartButtonDisabled: string;
-  public btcChartButtonDisabled: string;
-  public marketCapChartButtonDisabled: string;
-  public volumesChartButtonDisabled: string;
+  public usdChartPeriod: string;
+  public btcChartPeriod: string;
+  public marketCapChartPeriod: string;
+  public volumesChartPeriod: string;
 
-  constructor(private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private coinMarketCapProvider: CoinMarketCapProvider) {
+  constructor(private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private coinMarketCapProvider: CoinMarketCapProvider, private unregisteredChartPeriodProvider: UnregisteredChartPeriodProvider, private localStorageProvider: LocalStorageProvider) {
     this.cryptocurrency = this.navParams.get("cryptocurrency");
-
-    let defaultButtonValue: string = this.buttonValues[1];
-    this.usdPeriod = defaultButtonValue;
-    this.usdChartButtonDisabled = defaultButtonValue;
-    this.btcPeriod = defaultButtonValue;
-    this.btcChartButtonDisabled = defaultButtonValue;
-    this.marketCapPeriod = defaultButtonValue
-    this.marketCapChartButtonDisabled = defaultButtonValue;
-    this.volumesPeriod = defaultButtonValue;
-    this.volumesChartButtonDisabled = defaultButtonValue;
   }
 
   public ionViewWillEnter(): void {
@@ -55,6 +39,26 @@ export class ChartPage {
   }
 
   public ionViewDidEnter(): void {
+    let defaultChartPeriod: string = (this.localStorageProvider.isUserRegistered() ? this.localStorageProvider.getSetting().chartPeriod.name : "7D");
+    this.usdChartPeriod = defaultChartPeriod;
+    this.btcChartPeriod = defaultChartPeriod;
+    this.marketCapChartPeriod = defaultChartPeriod;
+    this.volumesChartPeriod = defaultChartPeriod;
+
+    let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
+    loadingOverlay.present();
+
+    this.unregisteredChartPeriodProvider.allChartPeriods().subscribe(result => {
+      this.allChartPeriods = result.data;
+
+      loadingOverlay.dismiss();
+    }, error => {
+      console.error(error);
+      this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+
+      loadingOverlay.dismiss();
+    });
+
     this.usdChart = new Chart(this.usdChart.nativeElement, {
       type: 'line',
       data: {
@@ -73,7 +77,7 @@ export class ChartPage {
         scales: {
           xAxes: [{
             ticks: {
-              maxTicksLimit: 7
+              maxTicksLimit: this.getMaxTicksValue(this.usdChartPeriod)
             }
           }],
           yAxes: [{
@@ -104,7 +108,7 @@ export class ChartPage {
         scales: {
           xAxes: [{
             ticks: {
-                maxTicksLimit: 7
+                maxTicksLimit: this.getMaxTicksValue(this.btcChartPeriod)
             }
           }],
           yAxes: [{
@@ -135,7 +139,7 @@ export class ChartPage {
         scales: {
           xAxes: [{
             ticks: {
-                maxTicksLimit: 7
+                maxTicksLimit: this.getMaxTicksValue(this.marketCapChartPeriod)
             }
           }],
           yAxes: [{
@@ -166,7 +170,7 @@ export class ChartPage {
         scales: {
           xAxes: [{
             ticks: {
-                maxTicksLimit: 7
+                maxTicksLimit: this.getMaxTicksValue(this.volumesChartPeriod)
             }
           }],
           yAxes: [{
@@ -199,55 +203,40 @@ export class ChartPage {
     this.refreshVolumesData();
   }
 
-  public onRefreshUsdChartButtonClicked(usdPeriod: string): void {
-    this.usdPeriod = usdPeriod;
-    this.usdChartButtonDisabled = usdPeriod;
+  public onRefreshUsdChartPeriodChanged(): void {
     this.refreshUsdData();
   }
 
-  public onRefreshBtcChartButtonClicked(btcPeriod: string): void {
-    this.btcPeriod = btcPeriod;
-    this.btcChartButtonDisabled = btcPeriod;
+  public onRefreshBtcChartPeriodChanged(): void {
     this.refreshBtcData();
   }
 
-  public onRefreshMarketCapChartButtonClicked(marketCapPeriod: string): void {
-    this.marketCapPeriod = marketCapPeriod;
-    this.marketCapChartButtonDisabled = marketCapPeriod;
+  public onRefreshMarketCapChartPeriodChanged(): void {
     this.refreshMarketCapData();
   }
 
-  public onRefreshVolumesChartButtonClicked(volumesPeriod: string): void {
-    this.volumesPeriod = volumesPeriod;
-    this.volumesChartButtonDisabled = volumesPeriod;
+  public onRefreshVolumesChartPeriodChanged(): void {
     this.refreshVolumesData();
   }
 
   private refreshUsdData(): void {
-    this.refreshData(this.usdChart, this.usdPeriod, this.refreshChart, this.refreshUsdChart);
+    this.refreshData(this.usdChart, this.usdChartPeriod, this.refreshChart, this.refreshUsdChart);
   }
 
   private refreshBtcData(): void {
-    this.refreshData(this.btcChart, this.btcPeriod, this.refreshChart, this.refreshBtcChart);
+    this.refreshData(this.btcChart, this.btcChartPeriod, this.refreshChart, this.refreshBtcChart);
   }
 
   private refreshMarketCapData(): void {
-    this.refreshData(this.marketCapChart, this.marketCapPeriod, this.refreshChart, this.refreshMarketCapChart);
+    this.refreshData(this.marketCapChart, this.marketCapChartPeriod, this.refreshChart, this.refreshMarketCapChart);
   }
 
   private refreshVolumesData(): void {
-    this.refreshData(this.volumesChart, this.volumesPeriod, this.refreshChart, this.refreshVolumesChart);
+    this.refreshData(this.volumesChart, this.volumesChartPeriod, this.refreshChart, this.refreshVolumesChart);
   }
 
   private refreshData(chart: Chart, period: string, refreshChart: Function, refreshChartCallback: Function): void {
-    let offsetValue: number = this.buttonValues.indexOf(period);
-
-    let numberValue: string = this.numberValues[offsetValue];
-    let durationValue: moment.unitOfTime.DurationConstructor = this.durationValues[offsetValue];
-    let formatValue: string = this.formatValues[offsetValue];
-    let maxTicksValue: number = this.maxTicksValues[offsetValue];
-
-    let startDateValue: string = moment().subtract(numberValue, durationValue).format("x");
+    let startDateValue: string = moment().subtract(this.getNumberValue(period), this.getDurationValue(period)).format("x");
     let endDateValue: string = moment().format("x");
 
     let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
@@ -255,7 +244,7 @@ export class ChartPage {
 
     let coinMarketCapGraphsResponse: Observable<CoinMarketCapGraphsResponse> = (period === "ALL" ? this.coinMarketCapProvider.allPrices(this.cryptocurrency) : this.coinMarketCapProvider.allPricesBetween(this.cryptocurrency, startDateValue, endDateValue));
     coinMarketCapGraphsResponse.subscribe(result => {
-      refreshChartCallback(refreshChart, chart, result, formatValue, maxTicksValue);
+      refreshChartCallback(refreshChart, chart, result, this.getFormatValue(period), this.getMaxTicksValue(period));
 
       loadingOverlay.dismiss();
     }, error => {
@@ -264,6 +253,59 @@ export class ChartPage {
 
       loadingOverlay.dismiss();
     });
+  }
+
+  private getNumberValue(chartPeriod: string): string {
+    let number: string = chartPeriod.charAt(0);
+    return (number !== "A" ? number : null);
+  }
+
+  private getDurationValue(chartPeriod: string): moment.unitOfTime.DurationConstructor {
+    let duration: string = chartPeriod.charAt(chartPeriod.length - 1);
+    switch(duration) {
+      case "D":
+        return "d";
+      case "M":
+        return "M";
+      case "Y":
+        return "y";
+      default:
+        return null;
+    }
+  }
+
+  private getFormatValue(chartPeriod: string): string {
+    switch(chartPeriod) {
+      case "1D":
+        return "HH";
+      case "7D":
+        return "DD";
+      case "1M":
+        return "DD";
+      case "3M":
+        return "MMM";
+      case "1Y":
+        return "MMM YYYY";
+      default:
+        return "[Q]Q YYYY";
+    }
+  }
+
+  private getMaxTicksValue(chartPeriod: string): number {
+    switch(chartPeriod) {
+      case "1D":
+        return 8;
+      case "7D":
+        return 7;
+      case "1M":
+        return 8;
+      case "3M":
+        return 6;
+      case "1Y":
+        return 12;
+      default:
+        return 12;
+    }
   }
 
   private refreshUsdChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {

@@ -17,33 +17,16 @@
     <ion-card-content>
       <canvas #usdChart></canvas>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small class="ion-col-left-button" (click)="onRefreshUsdChartButtonClicked('1D')" [disabled]="usdChartButtonDisabled === '1D'">1D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshUsdChartButtonClicked('7D')" [disabled]="usdChartButtonDisabled === '7D'">7D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshUsdChartButtonClicked('1M')" [disabled]="usdChartButtonDisabled === '1M'">1M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshUsdChartButtonClicked('3M')" [disabled]="usdChartButtonDisabled === '3M'">3M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshUsdChartButtonClicked('1Y')" [disabled]="usdChartButtonDisabled === '1Y'">1Y</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small class="ion-col-right-button" (click)="onRefreshUsdChartButtonClicked('ALL')" [disabled]="usdChartButtonDisabled === 'ALL'">ALL</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="usdChartPeriod" (ngModelChange)="onRefreshUsdChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 
@@ -53,33 +36,16 @@
     <ion-card-content>
       <canvas #btcChart></canvas>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col class="ion-col-buttons">
-            <button ion-button class="ion-col-left-button" full small (click)="onRefreshBtcChartButtonClicked('1D')" [disabled]="btcChartButtonDisabled === '1D'">1D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshBtcChartButtonClicked('7D')" [disabled]="btcChartButtonDisabled === '7D'">7D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshBtcChartButtonClicked('1M')" [disabled]="btcChartButtonDisabled === '1M'">1M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshBtcChartButtonClicked('3M')" [disabled]="btcChartButtonDisabled === '3M'">3M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshBtcChartButtonClicked('1Y')" [disabled]="btcChartButtonDisabled === '1Y'">1Y</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button class="ion-col-right-button" full small (click)="onRefreshBtcChartButtonClicked('ALL')" [disabled]="btcChartButtonDisabled === 'ALL'">ALL</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="btcChartPeriod" (ngModelChange)="onRefreshBtcChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 
@@ -89,33 +55,16 @@
     <ion-card-content>
       <canvas #marketCapChart></canvas>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col class="ion-col-buttons">
-            <button ion-button class="ion-col-left-button" full small (click)="onRefreshMarketCapChartButtonClicked('1D')" [disabled]="marketCapChartButtonDisabled === '1D'">1D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshMarketCapChartButtonClicked('7D')" [disabled]="marketCapChartButtonDisabled === '7D'">7D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshMarketCapChartButtonClicked('1M')" [disabled]="marketCapChartButtonDisabled === '1M'">1M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshMarketCapChartButtonClicked('3M')" [disabled]="marketCapChartButtonDisabled === '3M'">3M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshMarketCapChartButtonClicked('1Y')" [disabled]="marketCapChartButtonDisabled === '1Y'">1Y</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button class="ion-col-right-button" full small (click)="onRefreshMarketCapChartButtonClicked('ALL')" [disabled]="marketCapChartButtonDisabled === 'ALL'">ALL</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="marketCapChartPeriod" (ngModelChange)="onRefreshMarketCapChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 
@@ -125,33 +74,16 @@
     <ion-card-content>
       <canvas #volumesChart></canvas>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col class="ion-col-buttons">
-            <button ion-button class="ion-col-left-button" full small (click)="onRefreshVolumesChartButtonClicked('1D')" [disabled]="volumesChartButtonDisabled === '1D'">1D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshVolumesChartButtonClicked('7D')" [disabled]="volumesChartButtonDisabled === '7D'">7D</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshVolumesChartButtonClicked('1M')" [disabled]="volumesChartButtonDisabled === '1M'">1M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshVolumesChartButtonClicked('3M')" [disabled]="volumesChartButtonDisabled === '3M'">3M</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button full small (click)="onRefreshVolumesChartButtonClicked('1Y')" [disabled]="volumesChartButtonDisabled === '1Y'">1Y</button>
-          </ion-col>
-
-          <ion-col class="ion-col-buttons">
-            <button ion-button class="ion-col-right-button" full small (click)="onRefreshVolumesChartButtonClicked('ALL')" [disabled]="volumesChartButtonDisabled === 'ALL'">ALL</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="volumesChartPeriod" (ngModelChange)="onRefreshVolumesChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 </ion-content>
