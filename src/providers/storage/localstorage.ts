@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { User } from '../../entities/user';
 import { Token } from '../../entities/token';
+import { Setting } from '../../entities/setting';
 
 @Injectable()
 export class LocalStorageProvider {
@@ -25,6 +26,17 @@ export class LocalStorageProvider {
   private readonly tokenEndDateKey: string = "token.endDate";
   private readonly tokenCreationDateKey: string = "token.creationDate";
   private readonly tokenLastUpdateKey: string = "token.lastUpdate";
+
+  private readonly settingObjectKey: string = "setting";
+  private readonly settingIdKey: string = "setting.id";
+  private readonly settingCreationDateKey: string = "setting.creationDate";
+  private readonly settingLastUpdateKey: string = "setting.lastUpdate";
+  private readonly settingThemeIdKey: string = "setting.theme.id";
+  private readonly settingThemeNameKey: string = "setting.theme.name";
+  private readonly settingCurrencyIdKey: string = "setting.currency.id";
+  private readonly settingCurrencyNameKey: string = "setting.currency.name";
+  private readonly settingChartPeriodIdKey: string = "setting.chartPeriod.id";
+  private readonly settingChartPeriodNameKey: string = "setting.chartPeriod.name";
 
   constructor() {}
 
@@ -64,6 +76,10 @@ export class LocalStorageProvider {
     return this.getObjectValue(this.tokenObjectKey);
   }
 
+  public getSetting(): Setting {
+    return this.getObjectValue(this.settingObjectKey);
+  }
+
   public saveUserInformation(user: User): void {
     this.setObjectValue(this.userObjectKey, user);
     this.setNumberValue(this.userIdKey, user.id);
@@ -88,9 +104,23 @@ export class LocalStorageProvider {
     this.setStringValue(this.tokenLastUpdateKey, token.lastUpdate);
   }
 
+  public saveSettingInformation(setting: Setting): void {
+    this.setObjectValue(this.settingObjectKey, setting);
+    this.setNumberValue(this.settingIdKey, setting.id);
+    this.setStringValue(this.settingCreationDateKey, setting.creationDate);
+    this.setStringValue(this.settingLastUpdateKey, setting.lastUpdate);
+    this.setNumberValue(this.settingThemeIdKey, setting.theme.id);
+    this.setStringValue(this.settingThemeNameKey, setting.theme.name);
+    this.setNumberValue(this.settingCurrencyIdKey, setting.currency.id);
+    this.setStringValue(this.settingCurrencyNameKey, setting.currency.name);
+    this.setNumberValue(this.settingChartPeriodIdKey, setting.chartPeriod.id);
+    this.setStringValue(this.settingChartPeriodNameKey, setting.chartPeriod.name);
+  }
+
   public clearAllInformation(): void {
     this.clearTokenInformation();
     this.clearUserInformation();
+    this.clearSettingInformation();
   }
 
   public clearUserInformation(): void {
@@ -115,6 +145,19 @@ export class LocalStorageProvider {
     this.removeValue(this.tokenEndDateKey);
     this.removeValue(this.tokenCreationDateKey);
     this.removeValue(this.tokenLastUpdateKey);
+  }
+
+  public clearSettingInformation(): void {
+    this.removeValue(this.settingObjectKey);
+    this.removeValue(this.settingIdKey);
+    this.removeValue(this.settingCreationDateKey);
+    this.removeValue(this.settingLastUpdateKey);
+    this.removeValue(this.settingThemeIdKey);
+    this.removeValue(this.settingThemeNameKey);
+    this.removeValue(this.settingCurrencyIdKey);
+    this.removeValue(this.settingCurrencyNameKey);
+    this.removeValue(this.settingChartPeriodIdKey);
+    this.removeValue(this.settingChartPeriodNameKey);
   }
 
   public isUserRegistered(): boolean {
