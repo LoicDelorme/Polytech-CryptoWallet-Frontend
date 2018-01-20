@@ -36,7 +36,14 @@ export class UserAuthenticationPage {
 
       this.registeredUserProvider.getUser(result.data.value).subscribe(result => {
         this.localStorageProvider.saveUserInformation(result.data);
-        this.navCtrl.setRoot(this.navParams.get("onSuccessRedirect"));
+
+        this.registeredUserProvider.allSettings(this.localStorageProvider.getUserTokenValue()).subscribe(result => {
+          this.localStorageProvider.saveSettingInformation(result.data);
+          this.navCtrl.setRoot(this.navParams.get("onSuccessRedirect"));
+        }, error => {
+          console.error(error);
+          this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+        });
       }, error => {
         console.error(error);
         this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
