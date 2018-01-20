@@ -8,6 +8,7 @@ import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { OverviewTokenPage } from '../overview-token/overview-token';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-all-tokens',
@@ -87,7 +88,12 @@ export class AllTokensPage {
           handler: () => {
             this.registeredUserProvider.deleteToken(this.localStorageProvider.getUserTokenValue(), token).subscribe(result => {
               this.toastCtrl.create({ message: result.message, duration: 3000, position: 'top' }).present();
-              this.refreshData();
+              if (this.localStorageProvider.getUserTokenValue() !== token.value) {
+                this.refreshData();
+              } else {
+                this.localStorageProvider.clearAllInformation();
+                this.navCtrl.setRoot(HomePage);
+              }
             }, error => {
               console.error(error);
               this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
