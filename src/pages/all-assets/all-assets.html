@@ -24,7 +24,7 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
-    <ion-item-sliding *ngFor="let asset of filtered">
+    <ion-item-sliding *ngFor="let asset of filtered" #slidingItem>
       <ion-item>
         <ion-avatar item-start>
           <img src="{{ asset.cryptocurrency.imageUrl }}" />
@@ -34,7 +34,7 @@
         <p>Purchase price: {{ asset.purchasePrice }}</p>
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button (click)="onUpdateAssetButtonClicked(asset)" icon-start>
+        <button ion-button (click)="onUpdateAssetButtonClicked(asset, slidingItem)" icon-start>
           <ion-icon name="update"></ion-icon>
           Update
         </button>

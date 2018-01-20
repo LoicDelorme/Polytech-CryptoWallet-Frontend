@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController, ItemSliding } from 'ionic-angular';
 
 import { Wallet } from '../../entities/wallet';
 import { Asset } from '../../entities/asset';
@@ -77,7 +77,9 @@ export class AllAssetsPage {
     }
   }
 
-  public onUpdateAssetButtonClicked(asset: Asset): void {
+  public onUpdateAssetButtonClicked(asset: Asset, slidingItem: ItemSliding): void {
+    slidingItem.close();
+
     this.navCtrl.push(UpdateAssetPage, { wallet: this.wallet, asset: asset });
   }
 
