@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import * as moment from 'moment';
 
 import { LocalStorageProvider } from '../providers/storage/localstorage';
 
@@ -28,6 +29,13 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.navCtrl.viewWillEnter.subscribe((view) => {
+        if (moment().isAfter(moment(this.localStorageProvider.getUserTokenEndDate(), "DD/MM/YYYY HH:mm:ss"))) {
+          this.localStorageProvider.clearAllInformation();
+          this.navCtrl.setRoot(HomePage);
+        }
+      });
     });
   }
 
