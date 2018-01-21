@@ -9,9 +9,9 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorSettingProvider {
 
-  private readonly allSettingsPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/setting";
-  private readonly getSettingPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/setting/ID";
-  private readonly updateSettingPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/setting/ID";
+  private readonly allSettingsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/setting";
+  private readonly getSettingPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/setting/ID";
+  private readonly updateSettingPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/setting/ID";
 
   constructor(private http: HttpClient) {}
 

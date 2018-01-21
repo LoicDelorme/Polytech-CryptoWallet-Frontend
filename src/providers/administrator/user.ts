@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorUserProvider {
 
-  private readonly allUsersPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/user";
-  private readonly getUserPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/user/ID";
-  private readonly insertUserPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/user";
-  private readonly updateUserPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/user/ID";
-  private readonly deleteUserPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/user/ID";
+  private readonly allUsersPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/user";
+  private readonly getUserPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/user/ID";
+  private readonly insertUserPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/user";
+  private readonly updateUserPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/user/ID";
+  private readonly deleteUserPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/user/ID";
 
   constructor(private http: HttpClient) {}
 
