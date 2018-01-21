@@ -1,11 +1,11 @@
 {
   "name": "CryptoWallet",
-  "app_id": "",
+  "app_id": "6885ab3c",
   "type": "ionic-angular",
   "proxies": [
     {
       "path": "/cryptowallet",
-      "proxyUrl": "http://localhost:8090/api/cryptowallet/"
+      "proxyUrl": "http://localhost/api/cryptowallet/"
     },
     {
       "path": "/coinmarketcapticker",
