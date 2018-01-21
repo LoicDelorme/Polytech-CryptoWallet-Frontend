@@ -1,0 +1,23 @@
+{
+  "name": "CryptoWallet",
+  "app_id": "6885ab3c",
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/cryptowallet",
+      "proxyUrl": "http://localhost/api/cryptowallet/"
+    },
+    {
+      "path": "/coinmarketcapticker",
+      "proxyUrl": "https://api.coinmarketcap.com/v1/ticker/"
+    },
+    {
+      "path": "/coinmarketcapgraphs",
+      "proxyUrl": "https://graphs2.coinmarketcap.com/currencies/"
+    }
+  ],
+  "integrations": {
+    "cordova": {
+    }
+  }
+}

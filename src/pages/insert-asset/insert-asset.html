@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Insert asset</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="assetFormGroup" (ngSubmit)="onSubmit(assetFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Cryptocurrency</ion-label>
+      <ion-select formControlName="cryptocurrency" [(ngModel)]="cryptocurrency">
+        <ion-option *ngFor="let favorite of allFavorites" [value]="favorite">{{ favorite.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Amount</ion-label>
+      <ion-input formControlName="amount" type="number" [(ngModel)]="assetForm.amount"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="assetFormGroup.controls.amount.hasError('required') && assetFormGroup.controls.amount.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Purchase price</ion-label>
+      <ion-input formControlName="purchasePrice" type="number" [(ngModel)]="assetForm.purchasePrice"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="assetFormGroup.controls.purchasePrice.hasError('required') && assetFormGroup.controls.purchasePrice.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!assetFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>

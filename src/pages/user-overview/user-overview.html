@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Overview</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onUpdateUserButtonClicked()">
+        <ion-icon name="update"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-item>
+      <ion-label floating>ID</ion-label>
+      <ion-input type="number" value="{{ user.id }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Lastname</ion-label>
+      <ion-input type="text" value="{{ user.lastname }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Firstname</ion-label>
+      <ion-input type="text" value="{{ user.firstname }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="text" value="{{ user.email }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" value="{{ user.password }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Enabled</ion-label>
+      <ion-input type="text" value="{{ user.enabled }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Administrator</ion-label>
+      <ion-input type="text" value="{{ user.administrator }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Creation date</ion-label>
+      <ion-input type="text" value="{{ user.creationDate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last update</ion-label>
+      <ion-input type="text" value="{{ user.lastUpdate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last activity</ion-label>
+      <ion-input type="text" value="{{ user.lastActivity }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <button ion-button block color="danger" (click)="onDeleteUserButtonClicked()" icon-left>
+      <ion-icon name="delete"></ion-icon> Delete your account
+    </button>
+  </form>
+</ion-content>

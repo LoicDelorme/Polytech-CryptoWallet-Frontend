@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Authentication</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="userAuthenticationFormGroup" (ngSubmit)="onSubmit(userAuthenticationFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input formControlName="email" type="email" [(ngModel)]="userAuthenticationForm.email"></ion-input>
+    </ion-item>
+  
+    <ion-item *ngIf="userAuthenticationFormGroup.controls.email.hasError('required') && userAuthenticationFormGroup.controls.email.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userAuthenticationFormGroup.controls.email.hasError('maxlength') && userAuthenticationFormGroup.controls.email.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input formControlName="password" type="password" [(ngModel)]="userAuthenticationForm.password"></ion-input>
+    </ion-item>
+  
+    <ion-item *ngIf="userAuthenticationFormGroup.controls.password.hasError('required') && userAuthenticationFormGroup.controls.password.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userAuthenticationFormGroup.controls.password.hasError('maxlength') && userAuthenticationFormGroup.controls.password.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!userAuthenticationFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="log-in"></ion-icon> Sign in
+    </button>
+  </form>
+</ion-content>

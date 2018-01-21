@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ cryptocurrency.symbol }} charts</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshChartsButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header class="ion-card-title">Price (USD)</ion-card-header>
+
+    <ion-card-content>
+      <canvas #usdChart></canvas>
+
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="usdChartPeriod" (ngModelChange)="onRefreshUsdChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header class="ion-card-title">Price (BTC)</ion-card-header>
+
+    <ion-card-content>
+      <canvas #btcChart></canvas>
+
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="btcChartPeriod" (ngModelChange)="onRefreshBtcChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header class="ion-card-title">Market Cap (USD)</ion-card-header>
+
+    <ion-card-content>
+      <canvas #marketCapChart></canvas>
+
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="marketCapChartPeriod" (ngModelChange)="onRefreshMarketCapChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header class="ion-card-title">Volumes (USD)</ion-card-header>
+
+    <ion-card-content>
+      <canvas #volumesChart></canvas>
+
+      <ion-row no-padding>
+        <ion-col text-center>
+          <ion-item>
+            <ion-label>Chart period</ion-label>
+            <ion-select interface="popover" [(ngModel)]="volumesChartPeriod" (ngModelChange)="onRefreshVolumesChartPeriodChanged()">
+              <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.name }}">{{ chartPeriod.name }}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

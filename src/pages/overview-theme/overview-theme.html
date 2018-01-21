@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Overview</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onUpdateThemeButtonClicked()">
+        <ion-icon name="update"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-item>
+      <ion-label floating>ID</ion-label>
+      <ion-input type="number" value="{{ theme.id }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" value="{{ theme.name }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Creation date</ion-label>
+      <ion-input type="text" value="{{ theme.creationDate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last update</ion-label>
+      <ion-input type="text" value="{{ theme.lastUpdate }}" readonly="true"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

@@ -1,0 +1,25 @@
+page-overview-wallet {
+    .ion-label-assets {
+        color: black;
+    }
+
+    .ion-input-assets {
+        margin: 8px 8px 8px -7px;
+    }
+
+    .ion-ios-assets,
+    .ion-ios-assets-outline,
+    .ion-md-assets {
+        content: url(../../assets/imgs/black/assets.svg);
+        width: 36px;
+        height: 36px;
+    }
+
+    .ion-ios-update,
+    .ion-ios-update-outline,
+    .ion-md-update {
+        content: url(../../assets/imgs/black/update.svg);
+        width: 22px;
+        height: 22px;
+    }
+}

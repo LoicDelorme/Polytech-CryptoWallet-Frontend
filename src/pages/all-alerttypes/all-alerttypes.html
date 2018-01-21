@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Alert types</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onInsertAlertTypeButtonClicked()">
+        <ion-icon name="insert"></ion-icon>
+      </button>
+
+      <button ion-button icon-only (click)="onRefreshAlertTypesButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
+  <ion-list inset>
+    <ion-item-sliding *ngFor="let alertType of filtered">
+      <button ion-item (click)="onOverviewAlertTypeButtonClicked(alertType)">
+        <ion-avatar item-start>
+            <ion-icon name="parameter"></ion-icon>
+        </ion-avatar>
+
+        <h3>{{ alertType.name }}</h3>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="onDeleteAlertTypeButtonClicked(alertType)" icon-start>
+          <ion-icon name="delete"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

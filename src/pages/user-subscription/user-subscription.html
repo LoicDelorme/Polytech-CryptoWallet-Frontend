@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Subscribe</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="userSubscriptionFormGroup" (ngSubmit)="onSubmit(userSubscriptionFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Lastname</ion-label>
+      <ion-input formControlName="lastname" type="text" [(ngModel)]="userSubscriptionForm.lastname"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.lastname.hasError('required') && userSubscriptionFormGroup.controls.lastname.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.lastname.hasError('maxlength') && userSubscriptionFormGroup.controls.lastname.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Firstname</ion-label>
+      <ion-input formControlName="firstname" type="text" [(ngModel)]="userSubscriptionForm.firstname"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.firstname.hasError('required') && userSubscriptionFormGroup.controls.firstname.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.firstname.hasError('maxlength') && userSubscriptionFormGroup.controls.firstname.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input formControlName="email" type="text" [(ngModel)]="userSubscriptionForm.email"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.email.hasError('required') && userSubscriptionFormGroup.controls.email.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.email.hasError('maxlength') && userSubscriptionFormGroup.controls.email.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input formControlName="password" type="password" [(ngModel)]="userSubscriptionForm.password"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.password.hasError('required') && userSubscriptionFormGroup.controls.password.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userSubscriptionFormGroup.controls.password.hasError('maxlength') && userSubscriptionFormGroup.controls.password.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!userSubscriptionFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>

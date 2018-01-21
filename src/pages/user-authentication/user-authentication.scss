@@ -1,0 +1,21 @@
+page-user-authentication {
+    .ion-ios-update,
+    .ion-ios-update-outline,
+    .ion-md-update {
+        content: url(../../assets/imgs/black/update.svg);
+        width: 22px;
+        height: 22px;
+    }
+
+    .ion-ios-log-in,
+    .ion-ios-log-in-outline,
+    .ion-md-log-in {
+        content: url(../../assets/imgs/white/log-in.svg);
+        width: 22px;
+        height: 22px;
+    }
+
+    .button-block {
+        margin-top: 20px;
+    }
+}

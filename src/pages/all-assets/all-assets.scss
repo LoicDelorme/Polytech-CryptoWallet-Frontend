@@ -1,0 +1,33 @@
+page-all-assets {
+    .ion-ios-insert,
+    .ion-ios-insert-outline,
+    .ion-md-insert {
+        content: url(../../assets/imgs/black/insert.svg);
+        width: 22px;
+        height: 22px;
+    }
+
+    .ion-ios-refresh,
+    .ion-ios-refresh-outline,
+    .ion-md-refresh {
+        content: url(../../assets/imgs/black/refresh.svg);
+        width: 22px;
+        height: 22px;
+    }
+
+    .ion-ios-update,
+    .ion-ios-update-outline,
+    .ion-md-update {
+        content: url(../../assets/imgs/white/update.svg);
+        width: 22px;
+        height: 22px;
+    }
+
+    .ion-ios-delete,
+    .ion-ios-delete-outline,
+    .ion-md-delete {
+        content: url(../../assets/imgs/white/delete.svg);
+        width: 22px;
+        height: 22px;
+    }
+}

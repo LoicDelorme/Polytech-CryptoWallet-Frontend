@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My wallets</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onInsertWalletButtonClicked()">
+        <ion-icon name="insert"></ion-icon>
+      </button>
+
+      <button ion-button icon-only (click)="onRefreshWalletsButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
+  <ion-list inset>
+    <ion-item-sliding *ngFor="let wallet of filtered">
+      <button ion-item (click)="onOverviewWalletButtonClicked(wallet)">
+        <ion-avatar item-start>
+          <ion-icon name="wallet"></ion-icon>
+        </ion-avatar>
+
+        <h3>{{ wallet.name }}</h3>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="onDeleteWalletButtonClicked(wallet)" icon-start>
+          <ion-icon name="delete"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Overview</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-item>
+      <ion-label floating>ID</ion-label>
+      <ion-input type="number" value="{{ device.id }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Platform</ion-label>
+      <ion-input type="text" value="{{ device.platform }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>UUID</ion-label>
+      <ion-input type="text" value="{{ device.uuid }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Creation date</ion-label>
+      <ion-input type="text" value="{{ device.creationDate }}" readonly="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last update</ion-label>
+      <ion-input type="text" value="{{ device.lastUpdate }}" readonly="true"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

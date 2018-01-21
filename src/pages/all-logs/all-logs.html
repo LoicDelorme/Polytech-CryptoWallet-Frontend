@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My logs</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshLogsButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
+  <ion-list inset>
+    <button ion-item *ngFor="let log of filtered" (click)="onOverviewLogButtonClicked(log)">
+      <ion-avatar item-start>
+        <ion-icon name="log"></ion-icon>
+      </ion-avatar>
+      <h3>{{ log.ipAddress }} ({{ log.creationDate }})</h3>
+    </button>
+  </ion-list>
+</ion-content>

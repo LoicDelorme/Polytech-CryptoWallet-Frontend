@@ -1,0 +1,17 @@
+page-home {
+    .ion-ios-refresh,
+    .ion-ios-refresh-outline,
+    .ion-md-refresh {
+        content: url(../../assets/imgs/black/refresh.svg);
+        width: 22px;
+        height: 22px;
+    }
+
+    .ion-ios-favorite,
+    .ion-ios-favorite-outline,
+    .ion-md-favorite {
+        content: url(../../assets/imgs/white/favorite.svg);
+        width: 22px;
+        height: 22px;
+    }
+}

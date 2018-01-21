@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Update profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="userFormGroup" (ngSubmit)="onSubmit(userFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Lastname</ion-label>
+      <ion-input formControlName="lastname" type="text" [(ngModel)]="userForm.lastname"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="userFormGroup.controls.lastname.hasError('required') && userFormGroup.controls.lastname.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userFormGroup.controls.lastname.hasError('maxlength') && userFormGroup.controls.lastname.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Firstname</ion-label>
+      <ion-input formControlName="firstname" type="text" [(ngModel)]="userForm.firstname"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="userFormGroup.controls.firstname.hasError('required') && userFormGroup.controls.firstname.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userFormGroup.controls.firstname.hasError('maxlength') && userFormGroup.controls.firstname.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input formControlName="email" type="text" [(ngModel)]="userForm.email"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="userFormGroup.controls.email.hasError('required') && userFormGroup.controls.email.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="userFormGroup.controls.email.hasError('maxlength') && userFormGroup.controls.email.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!userFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>
