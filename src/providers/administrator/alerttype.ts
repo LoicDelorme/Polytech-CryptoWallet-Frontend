@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorAlertTypeProvider {
 
-  private readonly allAlertTypesPath: string = "cryptowallet/administrator/TOKEN/alert-type";
-  private readonly getAlertTypePath: string = "cryptowallet/administrator/TOKEN/alert-type/ID";
-  private readonly insertAlertTypePath: string = "cryptowallet/administrator/TOKEN/alert-type";
-  private readonly updateAlertTypePath: string = "cryptowallet/administrator/TOKEN/alert-type/ID";
-  private readonly deleteAlertTypePath: string = "cryptowallet/administrator/TOKEN/alert-type/ID";
+  private readonly allAlertTypesPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert-type";
+  private readonly getAlertTypePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert-type/ID";
+  private readonly insertAlertTypePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert-type";
+  private readonly updateAlertTypePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert-type/ID";
+  private readonly deleteAlertTypePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert-type/ID";
 
   constructor(private http: HttpClient) {}
 

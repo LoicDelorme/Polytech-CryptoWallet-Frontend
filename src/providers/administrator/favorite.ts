@@ -11,13 +11,13 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorFavoriteProvider {
 
-  private readonly allFavoritesPath: string = "cryptowallet/administrator/TOKEN/favorite";
-  private readonly getFavoritePath: string = "cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
-  private readonly getFavoritesByUserPath: string = "cryptowallet/administrator/TOKEN/favorite/user/ID";
-  private readonly getFavoritesByCryptocurrencyPath: string = "cryptowallet/administrator/TOKEN/favorite/cryptocurrency/ID";
-  private readonly insertFavoritePath: string = "cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
-  private readonly updateFavoritePath: string = "cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
-  private readonly deleteFavoritePath: string = "cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly allFavoritesPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/favorite";
+  private readonly getFavoritePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly getFavoritesByUserPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/favorite/user/ID";
+  private readonly getFavoritesByCryptocurrencyPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/favorite/cryptocurrency/ID";
+  private readonly insertFavoritePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly updateFavoritePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly deleteFavoritePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/favorite/user/USER_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
   constructor(private http: HttpClient) {}
 

@@ -8,8 +8,8 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class UnregisteredChartPeriodProvider {
 
-  private readonly allChartPeriodsPath: string = "cryptowallet/unregistered/chart-period";
-  private readonly getChartPeriodPath: string = "cryptowallet/unregistered/chart-period/ID";
+  private readonly allChartPeriodsPath: string = "http://51.15.205.40/api/cryptowallet/unregistered/chart-period";
+  private readonly getChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/unregistered/chart-period/ID";
 
   constructor(private http: HttpClient) {}
 

@@ -8,8 +8,8 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class RegisteredThemeProvider {
 
-  private readonly allThemesPath: string = "cryptowallet/registered/TOKEN/theme";
-  private readonly getThemePath: string = "cryptowallet/registered/TOKEN/theme/ID";
+  private readonly allThemesPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/theme";
+  private readonly getThemePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/theme/ID";
 
   constructor(private http: HttpClient) {}
 

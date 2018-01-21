@@ -23,42 +23,42 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class RegisteredUserProvider {
 
-  private readonly getUserPath: string = "cryptowallet/registered/TOKEN/user";
-  private readonly updateUserPath: string = "cryptowallet/registered/TOKEN/user";
-  private readonly deleteUserPath: string = "cryptowallet/registered/TOKEN/user";
+  private readonly getUserPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user";
+  private readonly updateUserPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user";
+  private readonly deleteUserPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user";
 
-  private readonly allFavoritesPath: string = "cryptowallet/registered/TOKEN/user/favorites";
-  private readonly allWalletsPath: string = "cryptowallet/registered/TOKEN/user/wallets";
-  private readonly allAlertsPath: string = "cryptowallet/registered/TOKEN/user/alerts";
-  private readonly allSettingsPath: string = "cryptowallet/registered/TOKEN/user/settings";
-  private readonly allTokensPath: string = "cryptowallet/registered/TOKEN/user/tokens";
-  private readonly allLogsPath: string = "cryptowallet/registered/TOKEN/user/logs";
-  private readonly allDevicesPath: string = "cryptowallet/registered/TOKEN/user/devices";
-  private readonly allAssetsPath: string = "cryptowallet/registered/TOKEN/user/wallet/ID/assets";
+  private readonly allFavoritesPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/favorites";
+  private readonly allWalletsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallets";
+  private readonly allAlertsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alerts";
+  private readonly allSettingsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/settings";
+  private readonly allTokensPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/tokens";
+  private readonly allLogsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/logs";
+  private readonly allDevicesPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/devices";
+  private readonly allAssetsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID/assets";
   
-  private readonly getWalletPath: string = "cryptowallet/registered/TOKEN/user/wallet/ID";
-  private readonly getAlertPath: string = "cryptowallet/registered/TOKEN/user/alert/ID";
-  private readonly getTokenPath: string = "cryptowallet/registered/TOKEN/user/token/ID";
-  private readonly getLogPath: string = "cryptowallet/registered/TOKEN/user/log/ID";
-  private readonly getDevicePath: string = "cryptowallet/registered/TOKEN/user/device/ID";
-  private readonly getAssetPath: string = "cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly getWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID";
+  private readonly getAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert/ID";
+  private readonly getTokenPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/token/ID";
+  private readonly getLogPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/log/ID";
+  private readonly getDevicePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/device/ID";
+  private readonly getAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
-  private readonly insertFavoritePath: string = "cryptowallet/registered/TOKEN/user/favorite/ID";
-  private readonly insertWalletPath: string = "cryptowallet/registered/TOKEN/user/wallet";
-  private readonly insertAlertPath: string = "cryptowallet/registered/TOKEN/user/alert";
-  private readonly insertAssetPath: string = "cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly insertFavoritePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/favorite/ID";
+  private readonly insertWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet";
+  private readonly insertAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert";
+  private readonly insertAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
-  private readonly updateWalletPath: string = "cryptowallet/registered/TOKEN/user/wallet/ID";
-  private readonly updateAlertPath: string = "cryptowallet/registered/TOKEN/user/alert/ID";
-  private readonly updateSettingsPath: string = "cryptowallet/registered/TOKEN/user/settings";
-  private readonly updateAssetPath: string = "cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly updateWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID";
+  private readonly updateAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert/ID";
+  private readonly updateSettingsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/settings";
+  private readonly updateAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
-  private readonly deleteFavoritePath: string = "cryptowallet/registered/TOKEN/user/favorite/ID";
-  private readonly deleteWalletPath: string = "cryptowallet/registered/TOKEN/user/wallet/ID";
-  private readonly deleteAlertPath: string = "cryptowallet/registered/TOKEN/user/alert/ID";
-  private readonly deleteTokenPath: string = "cryptowallet/registered/TOKEN/user/token/ID";
-  private readonly deleteDevicePath: string = "cryptowallet/registered/TOKEN/user/device/ID";
-  private readonly deleteAssetPath: string = "cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly deleteFavoritePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/favorite/ID";
+  private readonly deleteWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID";
+  private readonly deleteAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert/ID";
+  private readonly deleteTokenPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/token/ID";
+  private readonly deleteDevicePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/device/ID";
+  private readonly deleteAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
   constructor(private http: HttpClient) {}
 
