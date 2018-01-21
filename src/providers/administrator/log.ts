@@ -8,8 +8,8 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorLogProvider {
 
-  private readonly allLogsPath: string = "cryptowallet/administrator/TOKEN/log";
-  private readonly getLogPath: string = "cryptowallet/administrator/TOKEN/log/ID";
+  private readonly allLogsPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/log";
+  private readonly getLogPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/log/ID";
 
   constructor(private http: HttpClient) {}
 
