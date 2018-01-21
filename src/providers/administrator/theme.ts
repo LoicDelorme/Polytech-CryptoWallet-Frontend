@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorThemeProvider {
 
-  private readonly allThemesPath: string = "cryptowallet/administrator/TOKEN/theme";
-  private readonly getThemePath: string = "cryptowallet/administrator/TOKEN/theme/ID";
-  private readonly insertThemePath: string = "cryptowallet/administrator/TOKEN/theme";
-  private readonly updateThemePath: string = "cryptowallet/administrator/TOKEN/theme/ID";
-  private readonly deleteThemePath: string = "cryptowallet/administrator/TOKEN/theme/ID";
+  private readonly allThemesPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/theme";
+  private readonly getThemePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/theme/ID";
+  private readonly insertThemePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/theme";
+  private readonly updateThemePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/theme/ID";
+  private readonly deleteThemePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/theme/ID";
 
   constructor(private http: HttpClient) {}
 

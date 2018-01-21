@@ -8,8 +8,8 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class RegisteredCurrencyProvider {
 
-  private readonly allCurrenciesPath: string = "cryptowallet/registered/TOKEN/currency";
-  private readonly getCurrencyPath: string = "cryptowallet/registered/TOKEN/currency/ID";
+  private readonly allCurrenciesPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/currency";
+  private readonly getCurrencyPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/currency/ID";
 
   constructor(private http: HttpClient) {}
 

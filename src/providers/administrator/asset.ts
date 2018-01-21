@@ -11,13 +11,13 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorAssetProvider {
 
-  private readonly allAssetsPath: string = "cryptowallet/administrator/TOKEN/asset";
-  private readonly getAssetPath: string = "cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
-  private readonly getAssetsByWalletPath: string = "cryptowallet/administrator/TOKEN/asset/wallet/ID";
-  private readonly getAssetsByCryptocurrencyPath: string = "cryptowallet/administrator/TOKEN/asset/cryptocurrency/ID";
-  private readonly insertAssetPath: string = "cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
-  private readonly updateAssetPath: string = "cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
-  private readonly deleteAssetPath: string = "cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly allAssetsPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/asset";
+  private readonly getAssetPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly getAssetsByWalletPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/asset/wallet/ID";
+  private readonly getAssetsByCryptocurrencyPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/asset/cryptocurrency/ID";
+  private readonly insertAssetPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly updateAssetPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly deleteAssetPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
   constructor(private http: HttpClient) {}
 

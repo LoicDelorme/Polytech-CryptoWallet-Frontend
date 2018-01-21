@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorWalletProvider {
 
-  private readonly allWalletsPath: string = "cryptowallet/administrator/TOKEN/wallet";
-  private readonly getWalletPath: string = "cryptowallet/administrator/TOKEN/wallet/ID";
-  private readonly insertWalletPath: string = "cryptowallet/administrator/TOKEN/wallet";
-  private readonly updateWalletPath: string = "cryptowallet/administrator/TOKEN/wallet/ID";
-  private readonly deleteWalletPath: string = "cryptowallet/administrator/TOKEN/wallet/ID";
+  private readonly allWalletsPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/wallet";
+  private readonly getWalletPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/wallet/ID";
+  private readonly insertWalletPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/wallet";
+  private readonly updateWalletPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/wallet/ID";
+  private readonly deleteWalletPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/wallet/ID";
 
   constructor(private http: HttpClient) {}
 

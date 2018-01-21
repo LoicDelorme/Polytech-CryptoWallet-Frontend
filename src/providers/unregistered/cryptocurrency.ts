@@ -8,8 +8,8 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class UnregisteredCryptocurrencyProvider {
 
-  private readonly allCryptocurrenciesPath: string = "cryptowallet/unregistered/cryptocurrency";
-  private readonly getCryptocurrencyPath: string = "cryptowallet/unregistered/cryptocurrency/ID";
+  private readonly allCryptocurrenciesPath: string = "http://51.15.205.40/api/cryptowallet/unregistered/cryptocurrency";
+  private readonly getCryptocurrencyPath: string = "http://51.15.205.40/api/cryptowallet/unregistered/cryptocurrency/ID";
 
   constructor(private http: HttpClient) {}
 

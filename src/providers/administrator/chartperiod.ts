@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorChartPeriodProvider {
 
-  private readonly allChartPeriodsPath: string = "cryptowallet/administrator/TOKEN/chart-period";
-  private readonly getChartPeriodPath: string = "cryptowallet/administrator/TOKEN/chart-period/ID";
-  private readonly insertChartPeriodPath: string = "cryptowallet/administrator/TOKEN/chart-period";
-  private readonly updateChartPeriodPath: string = "cryptowallet/administrator/TOKEN/chart-period/ID";
-  private readonly deleteChartPeriodPath: string = "cryptowallet/administrator/TOKEN/chart-period/ID";
+  private readonly allChartPeriodsPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period";
+  private readonly getChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period/ID";
+  private readonly insertChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period";
+  private readonly updateChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period/ID";
+  private readonly deleteChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period/ID";
 
   constructor(private http: HttpClient) {}
 
