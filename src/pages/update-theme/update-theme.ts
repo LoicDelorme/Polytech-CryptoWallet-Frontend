@@ -26,6 +26,10 @@ export class UpdateThemePage {
     this.themeFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
+
+    let theme: Theme = this.navParams.get("theme");
+    this.themeForm.id = theme.id;
+    this.themeForm.name = theme.name;
   }
 
   public ionViewWillEnter(): void {
@@ -33,10 +37,6 @@ export class UpdateThemePage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllThemesPage });
       return;
     }
-
-    let theme: Theme = this.navParams.get("theme");
-    this.themeForm.id = theme.id;
-    this.themeForm.name = theme.name;
   }
 
   public onSubmit(value: any): void {

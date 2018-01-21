@@ -29,13 +29,6 @@ export class UpdateCryptocurrencyPage {
       imageUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       resourceUrl: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
-  }
-
-  public ionViewWillEnter(): void {
-    if (!this.localStorageProvider.isUserAdministrator()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
-      return;
-    }
 
     let cryptocurrency: Cryptocurrency = this.navParams.get("cryptocurrency");
     this.cryptocurrencyForm.id = cryptocurrency.id;
@@ -43,6 +36,13 @@ export class UpdateCryptocurrencyPage {
     this.cryptocurrencyForm.symbol = cryptocurrency.symbol;
     this.cryptocurrencyForm.imageUrl = cryptocurrency.imageUrl;
     this.cryptocurrencyForm.resourceUrl = cryptocurrency.resourceUrl;
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localStorageProvider.isUserAdministrator()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCryptocurrenciesPage });
+      return;
+    }
   }
 
   public onSubmit(value: any): void {

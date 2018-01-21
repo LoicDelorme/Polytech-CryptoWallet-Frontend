@@ -36,13 +36,6 @@ export class UpdateAlertPage {
       oneShot: [false],
       active: [false]
     });
-  }
-
-  public ionViewWillEnter(): void {
-    if (!this.localStorageProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
-      return;
-    }
 
     let alert: Alert = this.navParams.get("alert");
     this.alertForm.id = alert.id;
@@ -53,6 +46,13 @@ export class UpdateAlertPage {
     this.alertForm.userId = alert.userId;
     this.alertForm.cryptocurrencyId = alert.cryptocurrency.id;
     this.alertForm.typeId = alert.type.id;
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertsPage });
+      return;
+    }
   }
 
   public ionViewDidEnter(): void {

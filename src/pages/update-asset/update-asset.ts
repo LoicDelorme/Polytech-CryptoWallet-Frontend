@@ -31,13 +31,6 @@ export class UpdateAssetPage {
       amount: ['', Validators.compose([Validators.required])],
       purchasePrice: ['', Validators.compose([Validators.required])]
     });
-  }
-
-  public ionViewWillEnter(): void {
-    if (!this.localStorageProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
-      return;
-    }
 
     let asset: Asset = this.navParams.get("asset");
     let wallet: Wallet = this.navParams.get("wallet");
@@ -45,6 +38,13 @@ export class UpdateAssetPage {
     this.wallet = wallet;
     this.assetForm.amount = asset.amount;
     this.assetForm.purchasePrice = asset.purchasePrice;
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
+      return;
+    }
   }
 
   public onSubmit(value: any): void {

@@ -26,6 +26,11 @@ export class UpdateWalletPage {
     this.walletFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
+
+    let wallet: Wallet = this.navParams.get("wallet");
+    this.walletForm.id = wallet.id;
+    this.walletForm.name = wallet.name;
+    this.walletForm.userId = wallet.userId;
   }
 
   public ionViewWillEnter(): void {
@@ -33,11 +38,6 @@ export class UpdateWalletPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllWalletsPage });
       return;
     }
-
-    let wallet: Wallet = this.navParams.get("wallet");
-    this.walletForm.id = wallet.id;
-    this.walletForm.name = wallet.name;
-    this.walletForm.userId = wallet.userId;
   }
 
   public onSubmit(value: any): void {

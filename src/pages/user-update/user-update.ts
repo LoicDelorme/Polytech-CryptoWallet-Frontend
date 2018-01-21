@@ -26,16 +26,8 @@ export class UserUpdatePage {
     this.userFormGroup = this.formBuilder.group({
       lastname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       firstname: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      email: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
-      password: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
+      email: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
-  }
-
-  public ionViewWillEnter(): void {
-    if (!this.localStorageProvider.isUserRegistered()) {
-      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: SettingsPage });
-      return;
-    }
 
     let user: User = this.navParams.get("user");
     this.userForm.id = user.id;
@@ -45,6 +37,13 @@ export class UserUpdatePage {
     this.userForm.password = user.password;
     this.userForm.enabled = user.enabled;
     this.userForm.administrator = user.administrator;
+  }
+
+  public ionViewWillEnter(): void {
+    if (!this.localStorageProvider.isUserRegistered()) {
+      this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: SettingsPage });
+      return;
+    }
   }
 
   public onSubmit(value: any): void {

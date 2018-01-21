@@ -26,6 +26,10 @@ export class UpdateAlertTypePage {
     this.alertTypeFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
+
+    let alertType: AlertType = this.navParams.get("alertType");
+    this.alertTypeForm.id = alertType.id;
+    this.alertTypeForm.name = alertType.name;
   }
 
   public ionViewWillEnter(): void {
@@ -33,10 +37,6 @@ export class UpdateAlertTypePage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllAlertTypesPage });
       return;
     }
-
-    let alertType: AlertType = this.navParams.get("alertType");
-    this.alertTypeForm.id = alertType.id;
-    this.alertTypeForm.name = alertType.name;
   }
 
   public onSubmit(value: any): void {

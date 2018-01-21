@@ -26,14 +26,16 @@ export class InsertAlertPage {
 
   constructor(private navCtrl: NavController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private formBuilder: FormBuilder, private registeredUserProvider: RegisteredUserProvider, private registeredAlertTypeProvider: RegisteredAlertTypeProvider, private localStorageProvider: LocalStorageProvider) {
     this.alertForm = new AlertForm();
+    this.alertForm.oneShot = false;
+    this.alertForm.active = false;
 
     this.alertFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       cryptocurrencyId: ['', Validators.compose([Validators.required])],
       typeId: ['', Validators.compose([Validators.required])],
       threshold: ['', Validators.compose([Validators.required])],
-      oneShot: [false, Validators.compose([Validators.required])],
-      active: [false, Validators.compose([Validators.required])]
+      oneShot: [false],
+      active: [false]
     });
   }
 

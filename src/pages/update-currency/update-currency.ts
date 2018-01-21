@@ -27,6 +27,11 @@ export class UpdateCurrencyPage {
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])],
       symbol: ['', Validators.compose([Validators.required, Validators.maxLength(3)])]
     });
+
+    let currency: Currency = this.navParams.get("currency");
+    this.currencyForm.id = currency.id;
+    this.currencyForm.name = currency.name;
+    this.currencyForm.symbol = currency.symbol;
   }
 
   public ionViewWillEnter(): void {
@@ -34,11 +39,6 @@ export class UpdateCurrencyPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllCurrenciesPage });
       return;
     }
-
-    let currency: Currency = this.navParams.get("currency");
-    this.currencyForm.id = currency.id;
-    this.currencyForm.name = currency.name;
-    this.currencyForm.symbol = currency.symbol;
   }
 
   public onSubmit(value: any): void {

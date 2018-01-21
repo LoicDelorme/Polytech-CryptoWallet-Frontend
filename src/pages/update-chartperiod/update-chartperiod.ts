@@ -26,6 +26,10 @@ export class UpdateChartPeriodPage {
     this.chartPeriodFormGroup = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
+
+    let chartPeriod: ChartPeriod = this.navParams.get("chartPeriod");
+    this.chartPeriodForm.id = chartPeriod.id;
+    this.chartPeriodForm.name = chartPeriod.name;
   }
 
   public ionViewWillEnter(): void {
@@ -33,10 +37,6 @@ export class UpdateChartPeriodPage {
       this.navCtrl.setRoot(UserAuthenticationPage, { onSuccessRedirect: AllChartPeriodsPage });
       return;
     }
-
-    let chartPeriod: ChartPeriod = this.navParams.get("chartPeriod");
-    this.chartPeriodForm.id = chartPeriod.id;
-    this.chartPeriodForm.name = chartPeriod.name;
   }
 
   public onSubmit(value: any): void {

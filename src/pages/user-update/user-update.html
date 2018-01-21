@@ -45,19 +45,6 @@
       <p>The maximum length is 250</p>
     </ion-item>
 
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input formControlName="password" type="password" [(ngModel)]="userForm.password"></ion-input>
-    </ion-item>
-
-    <ion-item *ngIf="userFormGroup.controls.password.hasError('required') && userFormGroup.controls.password.touched">
-      <p>The field is required</p>
-    </ion-item>
-
-    <ion-item *ngIf="userFormGroup.controls.password.hasError('maxlength') && userFormGroup.controls.password.touched">
-      <p>The maximum length is 250</p>
-    </ion-item>
-
     <button ion-button block [disabled]="!userFormGroup.valid" type="submit" icon-left>
       <ion-icon name="submit"></ion-icon> Submit
     </button>

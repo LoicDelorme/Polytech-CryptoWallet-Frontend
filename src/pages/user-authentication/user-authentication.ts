@@ -30,8 +30,8 @@ export class UserAuthenticationPage {
   }
 
   public onSubmit(value: any): void {
-    this.userAuthenticationForm.deviceUuid = this.device.uuid;
-    this.userAuthenticationForm.devicePlatform = this.device.platform;
+    this.userAuthenticationForm.deviceUuid = "this.device.uuid";
+    this.userAuthenticationForm.devicePlatform = "this.device.platform";
 
     this.unregisteredUserProvider.authenticate(this.userAuthenticationForm).subscribe(result => {
       this.localStorageProvider.saveTokenInformation(result.data);
