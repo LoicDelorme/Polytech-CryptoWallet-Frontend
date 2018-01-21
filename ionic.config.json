@@ -5,7 +5,7 @@
   "proxies": [
     {
       "path": "/cryptowallet",
-      "proxyUrl": "http://localhost/api/cryptowallet/"
+      "proxyUrl": "http://51.15.205.40/api/cryptowallet/"
     },
     {
       "path": "/coinmarketcapticker",
