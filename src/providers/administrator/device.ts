@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorDeviceProvider {
 
-  private readonly allDevicesPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/device";
-  private readonly getDevicePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/device/ID";
-  private readonly insertDevicePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/device";
-  private readonly updateDevicePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/device/ID";
-  private readonly deleteDevicePath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/device/ID";
+  private readonly allDevicesPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/device";
+  private readonly getDevicePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/device/ID";
+  private readonly insertDevicePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/device";
+  private readonly updateDevicePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/device/ID";
+  private readonly deleteDevicePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/device/ID";
 
   constructor(private http: HttpClient) {}
 

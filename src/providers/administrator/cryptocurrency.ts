@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorCryptocurrencyProvider {
 
-  private readonly allCryptocurrenciesPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/cryptocurrency";
-  private readonly getCryptocurrencyPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/cryptocurrency/ID";
-  private readonly insertCryptocurrencyPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/cryptocurrency";
-  private readonly updateCryptocurrencyPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/cryptocurrency/ID";
-  private readonly deleteCryptocurrencyPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/cryptocurrency/ID";
+  private readonly allCryptocurrenciesPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/cryptocurrency";
+  private readonly getCryptocurrencyPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/cryptocurrency/ID";
+  private readonly insertCryptocurrencyPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/cryptocurrency";
+  private readonly updateCryptocurrencyPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/cryptocurrency/ID";
+  private readonly deleteCryptocurrencyPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/cryptocurrency/ID";
 
   constructor(private http: HttpClient) {}
 

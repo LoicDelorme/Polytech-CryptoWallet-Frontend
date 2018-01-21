@@ -11,8 +11,8 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class UnregisteredUserProvider {
 
-  private readonly subscribePath: string = "http://51.15.205.40/api/cryptowallet/unregistered/user/subscribe";
-  private readonly authenticatePath: string = "http://51.15.205.40/api/cryptowallet/unregistered/user/authenticate";
+  private readonly subscribePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/unregistered/user/subscribe";
+  private readonly authenticatePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/unregistered/user/authenticate";
 
   constructor(private http: HttpClient) {}
 
