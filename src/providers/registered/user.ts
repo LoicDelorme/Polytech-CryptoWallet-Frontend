@@ -23,42 +23,42 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class RegisteredUserProvider {
 
-  private readonly getUserPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user";
-  private readonly updateUserPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user";
-  private readonly deleteUserPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user";
+  private readonly getUserPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user";
+  private readonly updateUserPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user";
+  private readonly deleteUserPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user";
 
-  private readonly allFavoritesPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/favorites";
-  private readonly allWalletsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallets";
-  private readonly allAlertsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alerts";
-  private readonly allSettingsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/settings";
-  private readonly allTokensPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/tokens";
-  private readonly allLogsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/logs";
-  private readonly allDevicesPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/devices";
-  private readonly allAssetsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID/assets";
+  private readonly allFavoritesPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/favorites";
+  private readonly allWalletsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/wallets";
+  private readonly allAlertsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/alerts";
+  private readonly allSettingsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/settings";
+  private readonly allTokensPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/tokens";
+  private readonly allLogsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/logs";
+  private readonly allDevicesPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/devices";
+  private readonly allAssetsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/wallet/ID/assets";
   
-  private readonly getWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID";
-  private readonly getAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert/ID";
-  private readonly getTokenPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/token/ID";
-  private readonly getLogPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/log/ID";
-  private readonly getDevicePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/device/ID";
-  private readonly getAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly getWalletPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/wallet/ID";
+  private readonly getAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/alert/ID";
+  private readonly getTokenPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/token/ID";
+  private readonly getLogPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/log/ID";
+  private readonly getDevicePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/device/ID";
+  private readonly getAssetPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
-  private readonly insertFavoritePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/favorite/ID";
-  private readonly insertWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet";
-  private readonly insertAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert";
-  private readonly insertAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly insertFavoritePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/favorite/ID";
+  private readonly insertWalletPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/wallet";
+  private readonly insertAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/alert";
+  private readonly insertAssetPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
-  private readonly updateWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID";
-  private readonly updateAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert/ID";
-  private readonly updateSettingsPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/settings";
-  private readonly updateAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly updateWalletPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/wallet/ID";
+  private readonly updateAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/alert/ID";
+  private readonly updateSettingsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/settings";
+  private readonly updateAssetPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
-  private readonly deleteFavoritePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/favorite/ID";
-  private readonly deleteWalletPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/wallet/ID";
-  private readonly deleteAlertPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/alert/ID";
-  private readonly deleteTokenPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/token/ID";
-  private readonly deleteDevicePath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/device/ID";
-  private readonly deleteAssetPath: string = "http://51.15.205.40/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
+  private readonly deleteFavoritePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/favorite/ID";
+  private readonly deleteWalletPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/wallet/ID";
+  private readonly deleteAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/alert/ID";
+  private readonly deleteTokenPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/token/ID";
+  private readonly deleteDevicePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/device/ID";
+  private readonly deleteAssetPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/registered/TOKEN/user/asset/wallet/WALLET_ID/cryptocurrency/CRYPTOCURRENCY_ID";
 
   constructor(private http: HttpClient) {}
 

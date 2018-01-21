@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorChartPeriodProvider {
 
-  private readonly allChartPeriodsPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period";
-  private readonly getChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period/ID";
-  private readonly insertChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period";
-  private readonly updateChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period/ID";
-  private readonly deleteChartPeriodPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/chart-period/ID";
+  private readonly allChartPeriodsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/chart-period";
+  private readonly getChartPeriodPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/chart-period/ID";
+  private readonly insertChartPeriodPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/chart-period";
+  private readonly updateChartPeriodPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/chart-period/ID";
+  private readonly deleteChartPeriodPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/chart-period/ID";
 
   constructor(private http: HttpClient) {}
 

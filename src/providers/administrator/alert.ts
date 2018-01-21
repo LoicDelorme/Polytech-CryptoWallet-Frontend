@@ -9,11 +9,11 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class AdministratorAlertProvider {
 
-  private readonly allAlertsPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert";
-  private readonly getAlertPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert/ID";
-  private readonly insertAlertPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert";
-  private readonly updateAlertPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert/ID";
-  private readonly deleteAlertPath: string = "http://51.15.205.40/api/cryptowallet/administrator/TOKEN/alert/ID";
+  private readonly allAlertsPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/alert";
+  private readonly getAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/alert/ID";
+  private readonly insertAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/alert";
+  private readonly updateAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/alert/ID";
+  private readonly deleteAlertPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/administrator/TOKEN/alert/ID";
 
   constructor(private http: HttpClient) {}
 
