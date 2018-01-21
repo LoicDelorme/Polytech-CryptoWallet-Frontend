@@ -1,0 +1,79 @@
+// http://ionicframework.com/docs/theming/
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+.ion-ios-menu,
+.ion-ios-menu-outline,
+.ion-md-menu {
+    content: url(../../assets/imgs/black/menu.svg);
+    width: 28px;
+    height: 28px;
+}
+
+.ion-ios-home_,
+.ion-ios-home_-outline,
+.ion-md-home_ {
+    content: url(../../assets/imgs/black/home.svg);
+    width: 22px;
+    height: 22px;
+}
+
+.ion-ios-favorite_,
+.ion-ios-favorite_-outline,
+.ion-md-favorite_ {
+    content: url(../../assets/imgs/black/favorite.svg);
+    width: 22px;
+    height: 22px;
+}
+
+.ion-ios-wallet_,
+.ion-ios-wallet_-outline,
+.ion-md-wallet_ {
+    content: url(../../assets/imgs/black/wallet.svg);
+    width: 22px;
+    height: 22px;
+}
+
+.ion-ios-alert_,
+.ion-ios-alert_-outline,
+.ion-md-alert_ {
+    content: url(../../assets/imgs/black/alert.svg);
+    width: 22px;
+    height: 22px;
+}
+
+.ion-ios-setting_,
+.ion-ios-setting_-outline,
+.ion-md-setting_ {
+    content: url(../../assets/imgs/black/setting.svg);
+    width: 22px;
+    height: 22px;
+}
+
+.ion-ios-log-in_,
+.ion-ios-log-in_-outline,
+.ion-md-log-in_ {
+    content: url(../../assets/imgs/black/log-in.svg);
+    width: 22px;
+    height: 22px;
+}
+
+.ion-ios-subscribe_,
+.ion-ios-subscribe_-outline,
+.ion-md-subscribe_ {
+    content: url(../../assets/imgs/black/subscribe.svg);
+    width: 22px;
+    height: 22px;
+}

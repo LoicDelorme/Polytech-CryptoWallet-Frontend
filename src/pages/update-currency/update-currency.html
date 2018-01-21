@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Update currency</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="currencyFormGroup" (ngSubmit)="onSubmit(currencyFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input formControlName="name" type="text" [(ngModel)]="currencyForm.name"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="currencyFormGroup.controls.name.hasError('required') && currencyFormGroup.controls.name.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="currencyFormGroup.controls.name.hasError('maxlength') && currencyFormGroup.controls.name.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Symbol</ion-label>
+      <ion-input formControlName="symbol" type="text" [(ngModel)]="currencyForm.symbol"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="currencyFormGroup.controls.symbol.hasError('required') && currencyFormGroup.controls.symbol.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="currencyFormGroup.controls.symbol.hasError('maxlength') && currencyFormGroup.controls.symbol.touched">
+      <p>The maximum length is 3</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!currencyFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>

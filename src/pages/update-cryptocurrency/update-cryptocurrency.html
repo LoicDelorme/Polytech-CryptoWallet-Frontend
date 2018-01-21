@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Update cryptocurrency</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="cryptocurrencyFormGroup" (ngSubmit)="onSubmit(cryptocurrencyFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input formControlName="name" type="text" [(ngModel)]="cryptocurrencyForm.name"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.name.hasError('required') && cryptocurrencyFormGroup.controls.name.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.name.hasError('maxlength') && cryptocurrencyFormGroup.controls.name.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Symbol</ion-label>
+      <ion-input formControlName="symbol" type="text" [(ngModel)]="cryptocurrencyForm.symbol"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.symbol.hasError('required') && cryptocurrencyFormGroup.controls.symbol.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.symbol.hasError('maxlength') && cryptocurrencyFormGroup.controls.symbol.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Image URL</ion-label>
+      <ion-input formControlName="imageUrl" type="text" [(ngModel)]="cryptocurrencyForm.imageUrl"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.imageUrl.hasError('required') && cryptocurrencyFormGroup.controls.imageUrl.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.imageUrl.hasError('maxlength') && cryptocurrencyFormGroup.controls.imageUrl.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Resource URL</ion-label>
+      <ion-input formControlName="resourceUrl" type="text" [(ngModel)]="cryptocurrencyForm.resourceUrl"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.resourceUrl.hasError('required') && cryptocurrencyFormGroup.controls.resourceUrl.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="cryptocurrencyFormGroup.controls.resourceUrl.hasError('maxlength') && cryptocurrencyFormGroup.controls.resourceUrl.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!cryptocurrencyFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>

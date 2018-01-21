@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My favorites</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshFavoritesButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
+  <ion-list inset>
+    <ion-item-sliding *ngFor="let favorite of filtered">
+      <button ion-item (click)="onOverviewFavoriteButtonClicked(favorite)">
+        <ion-avatar item-start>
+          <img src="{{ favorite.imageUrl }}" />
+        </ion-avatar>
+
+        <h3>{{ favorite.name }}</h3>
+        <p>{{ favorite.symbol }}</p>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="onDeleteFavoriteButtonClicked(favorite)" icon-start>
+          <ion-icon name="delete"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

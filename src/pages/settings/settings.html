@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="outer-content">
+  <ion-list>
+    <ion-list-header>Account</ion-list-header>
+
+    <button ion-item (click)="onOverviewAccountButtonClicked()">
+      <ion-icon name="overview" item-start></ion-icon>
+      <ion-label>Overview</ion-label>
+    </button>
+
+    <button ion-item (click)="onLogOutButtonClicked()">
+      <ion-icon name="log-out" item-start></ion-icon>
+      <ion-label>Log out</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Preferences</ion-list-header>
+
+    <ion-item>
+      <ion-icon name="theme" item-start></ion-icon>
+      <ion-label>Theme</ion-label>
+      <ion-select [(ngModel)]="settingForm.themeId" (ngModelChange)="updateSettings()">
+        <ion-option *ngFor="let theme of allThemes" value="{{ theme.id }}">{{ theme.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="currency" item-start></ion-icon>
+      <ion-label>Currency</ion-label>
+      <ion-select [(ngModel)]="settingForm.currencyId" (ngModelChange)="updateSettings()">
+        <ion-option *ngFor="let currency of allCurrencies" value="{{ currency.id }}">{{ currency.symbol }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="chart" item-start></ion-icon>
+      <ion-label>Chart period</ion-label>
+      <ion-select [(ngModel)]="settingForm.chartPeriodId" (ngModelChange)="updateSettings()">
+        <ion-option *ngFor="let chartPeriod of allChartPeriods" value="{{ chartPeriod.id }}">{{ chartPeriod.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Security</ion-list-header>
+
+    <button ion-item (click)="onOverviewTokensButtonClicked()">
+      <ion-icon name="token" item-start></ion-icon>
+      <ion-label>My tokens</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewDevicesButtonClicked()">
+      <ion-icon name="device" item-start></ion-icon>
+      <ion-label>My devices</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewLogsButtonClicked()">
+      <ion-icon name="log" item-start></ion-icon>
+      <ion-label>My logs</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list *ngIf="isAdministrator">
+    <ion-list-header>Administration</ion-list-header>
+
+    <button ion-item (click)="onOverviewCryptocurrenciesButtonClicked()">
+      <ion-icon name="cryptocurrency" item-start></ion-icon>
+      <ion-label>Cryptocurrencies</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewCurrenciesButtonClicked()">
+      <ion-icon name="currency" item-start></ion-icon>
+      <ion-label>Currencies</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewAlertTypesButtonClicked()">
+      <ion-icon name="parameter" item-start></ion-icon>
+      <ion-label>Alert types</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewChartPeriodsButtonClicked()">
+      <ion-icon name="chart" item-start></ion-icon>
+      <ion-label>Chart periods</ion-label>
+    </button>
+
+    <button ion-item (click)="onOverviewThemesButtonClicked()">
+      <ion-icon name="parameter" item-start></ion-icon>
+      <ion-label>Themes</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Community</ion-list-header>
+
+    <button ion-item (click)="onTelegramButtonClicked()">
+      <ion-label>Telegram</ion-label>
+    </button>
+
+    <button ion-item (click)="onSlackButtonClicked()">
+      <ion-label>Slack</ion-label>
+    </button>
+
+    <button ion-item (click)="onFacebookButtonClicked()">
+      <ion-label>Facebook</ion-label>
+    </button>
+
+    <button ion-item (click)="onTwitterButtonClicked()">
+      <ion-label>Twitter</ion-label>
+    </button>
+
+    <button ion-item (click)="onBlogButtonClicked()">
+      <ion-label>Blog</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>About</ion-list-header>
+
+    <button ion-item (click)="onReviewButtonClicked()">
+      <ion-label>Review this application</ion-label>
+    </button>
+
+    <button ion-item (click)="onShareButtonClicked()">
+      <ion-label>Share this application</ion-label>
+    </button>
+
+    <button ion-item (click)="onPrivacyPolicyButtonClicked()">
+      <ion-label>Privacy policy</ion-label>
+    </button>
+
+    <button ion-item (click)="onTermsAndConditionsButtonClicked()">
+      <ion-label>Terms & conditions</ion-label>
+    </button>
+
+    <button ion-item (click)="onSupportButtonClicked()">
+      <ion-label>Support</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Version</ion-list-header>
+
+    <ion-item>
+      <h2>Application</h2>
+      <p>1.0.0</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

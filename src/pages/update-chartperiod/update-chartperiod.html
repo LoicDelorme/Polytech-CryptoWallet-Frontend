@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Update chart period</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="chartPeriodFormGroup" (ngSubmit)="onSubmit(chartPeriodFormGroup.value)">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input formControlName="name" type="text" [(ngModel)]="chartPeriodForm.name"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="chartPeriodFormGroup.controls.name.hasError('required') && chartPeriodFormGroup.controls.name.touched">
+      <p>The field is required</p>
+    </ion-item>
+
+    <ion-item *ngIf="chartPeriodFormGroup.controls.name.hasError('maxlength') && chartPeriodFormGroup.controls.name.touched">
+      <p>The maximum length is 250</p>
+    </ion-item>
+
+    <button ion-button block [disabled]="!chartPeriodFormGroup.valid" type="submit" icon-left>
+      <ion-icon name="submit"></ion-icon> Submit
+    </button>
+  </form>
+</ion-content>

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button menuToggle icon-only>
+        <ion-icon name='menu'></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>My tokens</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onRefreshTokensButtonClicked()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
+
+  <ion-list inset>
+    <ion-item-sliding *ngFor="let token of filtered">
+      <button ion-item (click)="onOverviewTokenButtonClicked(token)">
+        <ion-avatar item-start>
+          <ion-icon name="token"></ion-icon>
+        </ion-avatar>
+
+        <h3>{{ token.value }} ({{ token.creationDate }})</h3>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="onDeleteTokenButtonClicked(token)" icon-start>
+          <ion-icon name="delete"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
