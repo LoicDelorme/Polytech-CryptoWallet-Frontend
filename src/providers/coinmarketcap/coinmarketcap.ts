@@ -15,8 +15,8 @@ export class CoinMarketCapProvider {
 
   constructor(private http: HttpClient) {}
 
-  public getPrice(cryptocurrency: Cryptocurrency): Observable<CoinMarketCapTickerResponse> {
-    return this.http.get<CoinMarketCapTickerResponse>(this.getPricePath.replace("RESOURCE_URL", cryptocurrency.resourceUrl));
+  public getPrice(cryptocurrency: Cryptocurrency): Observable<Array<CoinMarketCapTickerResponse>> {
+    return this.http.get<Array<CoinMarketCapTickerResponse>>(this.getPricePath.replace("RESOURCE_URL", cryptocurrency.resourceUrl));
   }
 
   public allPrices(cryptocurrency: Cryptocurrency): Observable<CoinMarketCapGraphsResponse> {
