@@ -45,6 +45,9 @@ export class AllAssetsPage {
   }
 
   private refreshData(): void {
+    this.purchasePrice = 0;
+    this.currentPrice = 0;
+
     let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
