@@ -24,6 +24,16 @@
   <ion-searchbar (ionInput)="onFilterTriggered($event)"></ion-searchbar>
 
   <ion-list inset>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/cryptocurrencies/bitcoin.png" />
+      </ion-avatar>
+
+      <h3>Purchase price: {{ (purchasePrice).toFixed(3) }} BTC</h3>
+      <h3>Current price: {{ (currentPrice).toFixed(3) }} BTC</h3>
+      <h3>Change: {{ (((currentPrice - purchasePrice) / purchasePrice) * 100).toFixed(3) }} %</h3>
+    </ion-item>
+
     <ion-item-sliding *ngFor="let asset of filtered" #slidingItem>
       <ion-item>
         <ion-avatar item-start>
