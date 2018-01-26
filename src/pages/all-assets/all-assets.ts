@@ -11,6 +11,7 @@ import { UserAuthenticationPage } from '../user-authentication/user-authenticati
 import { InsertAssetPage } from '../insert-asset/insert-asset';
 import { UpdateAssetPage } from '../update-asset/update-asset';
 import { AllWalletsPage } from '../all-wallets/all-wallets';
+import { CoinMarketCapProvider } from '../../providers/coinmarketcap/coinmarketcap';
 
 @Component({
   selector: 'page-all-assets',
@@ -21,8 +22,10 @@ export class AllAssetsPage {
   public wallet: Wallet;
   public filtered: Array<Asset> = [];
   public all: Array<Asset> = [];
+  public purchasePrice: number = 0;
+  public currentPrice: number = 0;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private localStorageProvider: LocalStorageProvider) {}
+  constructor(private navCtrl: NavController, private navParams: NavParams, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private alertCtrl: AlertController, private registeredUserProvider: RegisteredUserProvider, private coinMarketCapProvider: CoinMarketCapProvider, private localStorageProvider: LocalStorageProvider) {}
 
   public ionViewWillEnter(): void {
     if (!this.localStorageProvider.isUserRegistered()) {
@@ -48,6 +51,18 @@ export class AllAssetsPage {
     this.registeredUserProvider.allAssets(this.localStorageProvider.getUserTokenValue(), this.wallet).subscribe(result => {
       this.all = result.data;
       this.filtered = result.data;
+
+      for (let offset = 0; offset < this.all.length; offset++) {
+        let asset: Asset = this.all[offset];
+        this.purchasePrice = this.purchasePrice + asset.purchasePrice;
+        this.coinMarketCapProvider.getPrice(asset.cryptocurrency).subscribe(result => {
+          console.log(result);console.log(asset.amount);console.log(parseFloat(result[0].price_btc));
+          this.currentPrice = this.currentPrice + (asset.amount * parseFloat(result[0].price_btc));
+        }, error => {
+          console.error(error);
+          this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
+        });
+      }
 
       loadingOverlay.dismiss();
     }, error => {
