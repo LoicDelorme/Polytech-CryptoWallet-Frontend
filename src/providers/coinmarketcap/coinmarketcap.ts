@@ -10,9 +10,9 @@ import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 @Injectable()
 export class CoinMarketCapProvider {
 
-  private readonly getCurrentPricePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/coinmarketcap/RESOURCE_URL";
-  private readonly allPricesPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/coinmarketcap/RESOURCE_URL";
-  private readonly allPricesBetweenPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/coinmarketcap/RESOURCE_URL/START_DATE/END_DATE";
+  private readonly getCurrentPricePath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/coinmarketcap/ticker/RESOURCE_URL";
+  private readonly allPricesPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/coinmarketcap/graphs/RESOURCE_URL";
+  private readonly allPricesBetweenPath: string = "https://cryptowallet.loic-delorme.fr/api/cryptowallet/coinmarketcap/graphs/RESOURCE_URL/START_DATE/END_DATE";
 
   constructor(private http: HttpClient) {}
 
