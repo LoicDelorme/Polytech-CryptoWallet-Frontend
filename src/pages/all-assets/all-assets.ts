@@ -5,13 +5,13 @@ import { Wallet } from '../../entities/wallet';
 import { Asset } from '../../entities/asset';
 
 import { RegisteredUserProvider } from '../../providers/registered/user';
+import { CoinMarketCapProvider } from '../../providers/coinmarketcap/coinmarketcap';
 import { LocalStorageProvider } from '../../providers/storage/localstorage';
 
 import { UserAuthenticationPage } from '../user-authentication/user-authentication';
 import { InsertAssetPage } from '../insert-asset/insert-asset';
 import { UpdateAssetPage } from '../update-asset/update-asset';
 import { AllWalletsPage } from '../all-wallets/all-wallets';
-import { CoinMarketCapProvider } from '../../providers/coinmarketcap/coinmarketcap';
 
 @Component({
   selector: 'page-all-assets',
@@ -58,9 +58,9 @@ export class AllAssetsPage {
       for (let offset = 0; offset < this.all.length; offset++) {
         let asset: Asset = this.all[offset];
         this.purchasePrice = this.purchasePrice + asset.purchasePrice;
-        this.coinMarketCapProvider.getPrice(asset.cryptocurrency).subscribe(result => {
-          console.log(result);console.log(asset.amount);console.log(parseFloat(result[0].price_btc));
-          this.currentPrice = this.currentPrice + (asset.amount * parseFloat(result[0].price_btc));
+
+        this.coinMarketCapProvider.getCurrentPrice(asset.cryptocurrency).subscribe(result => {
+          this.currentPrice = this.currentPrice + (asset.amount * result.data.priceBtc);
         }, error => {
           console.error(error);
           this.toastCtrl.create({ message: 'An error occured...', duration: 3000, position: 'top' }).present();
