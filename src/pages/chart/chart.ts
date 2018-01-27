@@ -6,7 +6,8 @@ import * as moment from 'moment';
 
 import { Cryptocurrency } from '../../entities/cryptocurrency';
 import { ChartPeriod } from '../../entities/chartperiod';
-import { CoinMarketCapGraphsResponse } from '../../responses/coinmarketcapgraphsresponse';
+import { Graphs } from '../../entities/graphs';
+import { CryptoWalletResponse } from '../../responses/cryptowalletresponse';
 
 import { CoinMarketCapProvider } from '../../providers/coinmarketcap/coinmarketcap';
 import { UnregisteredChartPeriodProvider } from '../../providers/unregistered/chartperiod';
@@ -242,9 +243,9 @@ export class ChartPage {
     let loadingOverlay = this.loadingCtrl.create({ content: 'Please wait...' });
     loadingOverlay.present();
 
-    let coinMarketCapGraphsResponse: Observable<CoinMarketCapGraphsResponse> = (period === "ALL" ? this.coinMarketCapProvider.allPrices(this.cryptocurrency) : this.coinMarketCapProvider.allPricesBetween(this.cryptocurrency, startDateValue, endDateValue));
-    coinMarketCapGraphsResponse.subscribe(result => {
-      refreshChartCallback(refreshChart, chart, result, this.getFormatValue(period), this.getMaxTicksValue(period));
+    let graphsResponse: Observable<CryptoWalletResponse<Graphs>> = (period === "ALL" ? this.coinMarketCapProvider.allPrices(this.cryptocurrency) : this.coinMarketCapProvider.allPricesBetween(this.cryptocurrency, startDateValue, endDateValue));
+    graphsResponse.subscribe(result => {
+      refreshChartCallback(refreshChart, chart, result.data, this.getFormatValue(period), this.getMaxTicksValue(period));
 
       loadingOverlay.dismiss();
     }, error => {
@@ -308,20 +309,20 @@ export class ChartPage {
     }
   }
 
-  private refreshUsdChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapGraphsResponse.price_usd, labelFormat, maxTicksValue);
+  private refreshUsdChart(refreshChart: Function, chart: Chart, graphs: Graphs, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, graphs.priceUsd, labelFormat, maxTicksValue);
   }
 
-  private refreshBtcChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapGraphsResponse.price_btc, labelFormat, maxTicksValue);
+  private refreshBtcChart(refreshChart: Function, chart: Chart, graphs: Graphs, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, graphs.priceBtc, labelFormat, maxTicksValue);
   }
 
-  private refreshMarketCapChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapGraphsResponse.market_cap_by_available_supply, labelFormat, maxTicksValue);
+  private refreshMarketCapChart(refreshChart: Function, chart: Chart, graphs: Graphs, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, graphs.marketCapByAvailableSupply, labelFormat, maxTicksValue);
   }
 
-  private refreshVolumesChart(refreshChart: Function, chart: Chart, coinMarketCapGraphsResponse: CoinMarketCapGraphsResponse, labelFormat: string, maxTicksValue: number): void {
-    refreshChart(chart, coinMarketCapGraphsResponse.volume_usd, labelFormat, maxTicksValue);
+  private refreshVolumesChart(refreshChart: Function, chart: Chart, graphs: Graphs, labelFormat: string, maxTicksValue: number): void {
+    refreshChart(chart, graphs.volumeUsd, labelFormat, maxTicksValue);
   }
 
   private refreshChart(chart: Chart, values: Array<Array<number>>, labelFormat: string, maxTicksValue: number): void {
